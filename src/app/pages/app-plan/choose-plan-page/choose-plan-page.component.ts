@@ -11,7 +11,7 @@ import { ApplicationService } from 'app/shared/applications/application.service'
 } )
 export class ChoosePlanPageComponent implements OnInit {
 
-  private applicationTypes: any[];
+  public applicationTypes: any[];
 
   constructor (
     private authService: AuthService,

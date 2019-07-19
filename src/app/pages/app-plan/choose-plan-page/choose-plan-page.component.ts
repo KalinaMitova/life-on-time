@@ -11,7 +11,7 @@ import { ApplicationService } from 'app/shared/applications/application.service'
 } )
 export class ChoosePlanPageComponent implements OnInit {
 
-  private applicationsTypes: any[];
+  private applicationTypes: any[];
 
   constructor (
     private authService: AuthService,
@@ -21,8 +21,9 @@ export class ChoosePlanPageComponent implements OnInit {
   ngOnInit() {
     this.applicationService.getAll()
       .subscribe( data => {
-        this.applicationsTypes = data[ 'data' ];
-        console.log( this.applicationsTypes );
+        console.log( data );
+        this.applicationTypes = data[ 'data' ];
+        console.log( this.applicationTypes );
       } );
   }
 

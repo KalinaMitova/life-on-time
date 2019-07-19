@@ -1,5 +1,5 @@
 <!--Choose Plan Page Starts-->
-<section id="login">
+<!-- <section id="login">
     <div class="container-fluid">
         <div class="recover-pass">
             <button class="btn btn-primary" (click)="logout()">
@@ -96,30 +96,11 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!--Choose Plan Page Ends-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--Choose Plan Page Starts with request to server-->
-<!-- <section id="login">
+<section id="login">
     <div class="container-fluid">
         <div class="recover-pass">
             <button class="btn btn-primary" (click)="logout()">
@@ -128,37 +109,38 @@
         </div>
         <div class="row text-left" matchHeight="card">
             <h1>Choose Plan</h1>
-            <ng-template *ngIf="applicationTypes">
-                <div class="col-xl-3 col-lg-6 col-md-12" *ngFor="let type of applicationTypes">
-                    <div class="card" *ngIf="type.name == 'free'; else plan">
-                        <div class="card-content">
-                            <div class="card-header">
-                                Limited Time Offer
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">7-Day Free Trial</h4>
-                                <p class="card-text">then $--.-- USD billed annually,cancel anytime</p>
-                                <a class="btn btn-raised btn-warning">Get Started</a>
-                            </div>
-                        </div>
+            <!-- <ng-template> -->
+            <div class="col-xl-3 col-lg-6 col-md-12" *ngFor="let type of applicationTypes">
 
-                        <ng-template #plan>
-                            <div class="card">
-                                <div class="card-content">
-                                    <div class="card-header">Get everything, forever</div>
-                                    <div class="card-body">
-                                        <h4 class="card-title">type.name</h4>
-                                        <p class="card-text">$--.-- USD billed once,get it forever</p>
-                                        <a class="btn btn-raised btn-secondary">By now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
+                <div class="card" *ngIf="type.name === 'Free'">
+                    <div class="card-content">
+                        <!-- * -->
+                        <div class="card-header">
+                            {{type.name}} Limited Time Offer
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">7-Day Free Trial</h4>
+                            <p class="card-text">then $--.-- USD billed annually,cancel anytime</p>
+                            <a class="btn btn-raised btn-warning">Get Started</a>
+                        </div>
                     </div>
                 </div>
-            </ng-template>
+
+                <div class="card" *ngIf="type.name !== 'Free'">
+                    <div class="card-content">
+                        <div class="card-header">Get everything, forever</div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{type.name}}</h4>
+                            <p class="card-text">$--.-- USD billed once,get it forever</p>
+                            <a class="btn btn-raised btn-secondary">By now</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- </ng-template> -->
 
         </div>
     </div>
-</section> -->
+</section>
 <!--Choose Plan Page Ends-->

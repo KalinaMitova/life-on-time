@@ -1,113 +1,753 @@
-<!-- Navbar (Header) Starts -->
-<nav class="header-navbar navbar navbar-expand-lg navbar-light bg-faded">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle d-lg-none float-left" data-toggle="collapse" (click)="toggleSidebar()">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="d-lg-none navbar-right navbar-collapse-toggle">
-                <a class="open-navbar-container" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarSupportedContent">
-                    <i class="ft-more-vertical"></i>
-                </a>
-            </span>
-            <!-- <form class="navbar-form navbar-right mt-1" role="search">
-                <div class="position-relative has-icon-right">
-                    <input type="text" class="form-control round" placeholder="Search">
-                    <div class="form-control-position">
-                        <i class="ft-search"></i>
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<!-- BEGIN : Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Life on Time Dashboard application">
+    <meta name="keywords" content="LoT application, Life on Time, web app">
+    <meta name="author" content="Creative Web Bulgaria">
+    <title>Life on Time - Web Application</title>
+    <link rel="apple-touch-icon" sizes="60x60" href="app-assets/img/ico/apple-icon-60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="app-assets/img/ico/apple-icon-76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="app-assets/img/ico/apple-icon-120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="app-assets/img/ico/apple-icon-152.png">
+    <link rel="shortcut icon" type="image/x-icon" href="app-assets/img/ico/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="app-assets/img/ico/favicon-32.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900|Montserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <!-- BEGIN VENDOR CSS-->
+    <!-- font icons-->
+    <link rel="stylesheet" type="text/css" href="app-assets/fonts/feather/style.min.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/fonts/simple-line-icons/style.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/prism.min.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/chartist.min.css">
+    <link rel="stylesheet" type="text/css" href="app-assets/vendors/css/fullcalendar.min.css">
+    <!-- END VENDOR CSS-->
+    <!-- BEGIN APEX CSS-->
+    <link rel="stylesheet" type="text/css" href="app-assets/css/app.css">
+    <!-- END APEX CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <!-- END Page Level CSS-->
+</head>
+<!-- END : Head-->
+
+<!-- BEGIN : Body-->
+
+<body data-col="2-columns" class=" 2-columns ">
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="wrapper">
+
+
+        <!-- main menu-->
+        <!--.main-menu(class="#{menuColor} #{menuOpenType}", class=(menuShadow == true ? 'menu-shadow' : ''))-->
+        <div data-active-color="white" data-background-color="man-of-steel" data-image="app-assets/img/sidebar-bg/01.jpg" class="app-sidebar">
+            <!-- main menu header-->
+            <!-- Sidebar Header starts-->
+            <div class="sidebar-header">
+                <div class="logo clearfix">
+                    <a href="index.html" class="logo-text float-left">
+                        <div class="logo-img"><img src="app-assets/img/logo.png" /></div><span class="text align-middle">Life on Time</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Sidebar Header Ends-->
+            <!-- / main menu header-->
+            <!-- main menu content-->
+            <div class="sidebar-content">
+                <div class="nav-container">
+                    <ul id="main-menu-navigation" data-menu="menu-navigation" data-scroll-to-active="true" class="navigation navigation-main">
+                        <li class="active"><a href="index.html" class="menu-item"><i class="ft-home"></i>Progress</a>
+                        </li>
+                        <li class="has-sub nav-item"><a href="#"><i class="ft-target"></i><span data-i18n=""
+                                    class="menu-title">My Goals</span></a>
+                            <ul class="menu-content">
+                                <li><a href="goals-health-wellbeing.html" class="menu-item">Health and Wellbeing</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Personel Development</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Relationship</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Physical Activity</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Financial</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=" nav-item"><a href="#"><i class="ft-clipboard"></i><span data-i18n=""
+                                    class="menu-title">My Ideas</span></a>
+                        </li>
+                        <li class="has-sub nav-item"><a href="#"><i class="ft-headphones"></i><span data-i18n=""
+                                    class="menu-title">My Wellbeing</span></a>
+                            <ul class="menu-content">
+                                <li><a href="#" class="menu-item">Relax me</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Inspire me</a>
+                                </li>
+                                <li><a href="#" class="menu-item">Teach me</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=" nav-item"><a href="#"><i class="ft-calendar"></i><span data-i18n=""
+                                    class="menu-title">Calendar</span></a>
+                        </li>
+                        <li class=" nav-item"><a href="#"><i class="ft-life-buoy"></i><span data-i18n=""
+                                    class="menu-title">Help</span></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- main menu content-->
+            <div class="sidebar-background"></div>
+            <!-- main menu footer-->
+            <!-- include includes/menu-footer-->
+            <!-- main menu footer-->
+        </div>
+        <!-- / main menu-->
+        <!-- Navbar (Header) Starts-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-faded header-navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" data-toggle="collapse" class="navbar-toggle d-lg-none float-left"><span
+                            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                            class="icon-bar"></span><span class="icon-bar"></span></button><span class="d-lg-none navbar-right navbar-collapse-toggle"><a aria-controls="navbarSupportedContent"
+                            href="javascript:;" class="open-navbar-container black"><i
+                                class="ft-more-vertical"></i></a></span>
+                </div>
+                <div class="navbar-container">
+                    <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                        <ul class="navbar-nav">
+                            <li class="nav-item mr-2 d-none d-lg-block"><a id="navbar-fullscreen" href="javascript:;" class="nav-link apptogglefullscreen"><i
+                                        class="ft-maximize font-medium-3 blue-grey darken-4"></i>
+                                    <p class="d-none">fullscreen</p>
+                                </a>
+                            </li>
+                            <li class="dropdown nav-item"><a id="dropdownBasic2" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i
+                                        class="ft-bell font-medium-3 blue-grey darken-4"></i><span
+                                        class="notification badge badge-pill badge-danger">4</span>
+                                    <p class="d-none">Notifications</p>
+                                </a>
+                                <div class="notification-dropdown dropdown-menu dropdown-menu-right">
+                                    <div class="noti-list"><a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4"><i
+                                                class="ft-bell info float-left d-block font-large-1 mt-1 mr-2"></i><span
+                                                class="noti-wrapper"><span
+                                                    class="noti-title line-height-1 d-block text-bold-400 info">New
+                                                    Order Received</span><span class="noti-text">Lorem ipsum dolor sit
+                                                    ametitaque in, et!</span></span></a><a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4"><i
+                                                class="ft-bell warning float-left d-block font-large-1 mt-1 mr-2"></i><span
+                                                class="noti-wrapper"><span
+                                                    class="noti-title line-height-1 d-block text-bold-400 warning">New
+                                                    User Registered</span><span class="noti-text">Lorem ipsum dolor sit
+                                                    ametitaque in </span></span></a><a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4"><i
+                                                class="ft-bell danger float-left d-block font-large-1 mt-1 mr-2"></i><span
+                                                class="noti-wrapper"><span
+                                                    class="noti-title line-height-1 d-block text-bold-400 danger">New
+                                                    Order Received</span><span class="noti-text">Lorem ipsum dolor sit
+                                                    ametest?</span></span></a><a class="dropdown-item noti-container py-3"><i
+                                                class="ft-bell success float-left d-block font-large-1 mt-1 mr-2"></i><span
+                                                class="noti-wrapper"><span
+                                                    class="noti-title line-height-1 d-block text-bold-400 success">New
+                                                    User Registered</span><span class="noti-text">Lorem ipsum dolor sit
+                                                    ametnatus aut.</span></span></a></div><a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1">Read
+                                        All Notifications</a>
+                                </div>
+                            </li>
+                            <li class="dropdown nav-item"><a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-toggle"><i
+                                        class="ft-user font-medium-3 blue-grey darken-4"></i>
+                                    <p class="d-none">User Settings</p>
+                                </a>
+                                <div ngbdropdownmenu="" aria-labelledby="dropdownBasic3" class="dropdown-menu text-left dropdown-menu-right">
+                                    <a href="../../../html/html/ltr/user-profile-page.html" class="dropdown-item py-1"><i class="ft-edit mr-2"></i><span>My
+                                            Profile</span></a>
+                                    <a href="../../../html/html/ltr/inbox.html" class="dropdown-item py-1"><i
+                                            class="ft-credit-card mr-2"></i><span>Billings</span></a>
+                                    <a href="javascript:;" class="dropdown-item py-1 customizer-toggle"><i
+                                            class="ft-settings mr-2"></i><span>App Settings</span></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="../../../html/html/ltr/login-page.html" class="dropdown-item"><i
+                                            class="ft-power mr-2"></i><span>Logout</span></a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </form> -->
+            </div>
+        </nav>
+        <!-- Navbar (Header) Ends-->
 
-        </div>
-        <div class="navbar-container">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
-                <ul class="navbar-nav">
-                    <li class="nav-item mr-2  d-none d-lg-block">
-                        <a href="javascript:;" class="nav-link" id="navbar-fullscreen" appToggleFullscreen (click)="ToggleClass()">
-                            <i class="{{toggleClass}} font-medium-3 blue-grey darken-4"></i>
-                            <p class="d-none">fullscreen</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" ngbDropdown [placement]="placement">
-                        <a class="nav-link position-relative" id="dropdownBasic2" ngbDropdownToggle>
-                            <i class="ft-bell font-medium-3 blue-grey darken-4"></i>
-                            <span class="notification badge badge-pill badge-danger">4</span>
-                            <p class="d-none">Notifications</p>
-                        </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="notification-dropdown">
-                            <div class="noti-list" [perfectScrollbar]>
-                                <a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
-                                    <i class="ft-bell info float-left d-block font-large-1 mt-1 mr-2"></i>
-                                    <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 info">New Order Received</span>
-                                    <span class="noti-text">Lorem ipsum dolor sit ametitaque in, et!</span>
-                                    </span>
-                                </a>
-                                <a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
-                                    <i class="ft-bell warning float-left d-block font-large-1 mt-1 mr-2"></i>
-                                    <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 warning">New User Registered</span>
-                                    <span class="noti-text">Lorem ipsum dolor sit ametitaque in </span>
-                                    </span>
-                                </a>
-                                <a class="dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4">
-                                    <i class="ft-bell danger float-left d-block font-large-1 mt-1 mr-2"></i>
-                                    <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 danger">New Order Received</span>
-                                    <span class="noti-text">Lorem ipsum dolor sit ametest?</span>
-                                    </span>
-                                </a>
-                                <a class="dropdown-item noti-container py-3">
-                                    <i class="ft-bell success float-left d-block font-large-1 mt-1 mr-2"></i>
-                                    <span class="noti-wrapper">
-                                        <span class="noti-title line-height-1 d-block text-bold-400 success">New User Registered</span>
-                                    <span class="noti-text">Lorem ipsum dolor sit ametnatus aut.</span>
-                                    </span>
-                                </a>
+        <div class="main-panel">
+            <!-- BEGIN : Main Content-->
+            <div class="main-content">
+                <div class="content-wrapper">
+                    <section id="minimal-statistics">
+                        <div class="row">
+                            <div class="col-10 mb-1">
+                                <div class="content-header">Your progress dashboard</div>
+                                <p class="content-sub-header">This is summary of goals, actions and ideas added by you and your achievement rate.</p>
                             </div>
-                            <a class="noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1">Read All Notifications</a>
+                            <div class="col-2 mb-1">
+                                <img class="img-fluid" src="./app-assets/img/logos/lot-logo-white-full.png" alt="">
+                            </div>
                         </div>
-                    </li>
-                    <li class="nav-item" ngbDropdown [placement]="placement">
-                        <a class="nav-link position-relative" id="dropdownBasic3" ngbDropdownToggle>
-                            <i class="ft-user font-medium-3 blue-grey darken-4"></i>
-                            <p class="d-none">User Settings</p>
-                        </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic3" class="text-left">
-                            <!-- <a class="dropdown-item py-1" href="javascript:;">
-                                <i class="ft-edit mr-2"></i>
-                                <span>My Profile</span>
-                            </a>
-                            <a class="dropdown-item py-1" href="javascript:;">
-                                <i class="ft-mail mr-2"></i>
-                                <span>My Inbox</span>
-                            </a>
-                            <a class="dropdown-item py-1" href="javascript:;">
-                                <i class="ft-settings mr-2"></i>
-                                <span>Settings</span>
-                            </a> -->
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:;">
-                                <i class="ft-power mr-2"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </li>
-                    <!-- <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link position-relative notification-sidebar-toggle" (click)="toggleNotificationSidebar();">
-                            <i class="ft-align-left font-medium-3 blue-grey darken-4"></i>
-                            <p class="d-none">Notifications Sidebar</p>
-                        </a>
-                    </li> -->
+                        <div class="row" matchHeight="card">
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body text-left">
+                                                    <h3 class="mb-1 danger">8</h3>
+                                                    <span>Goals created since 20 Jan 2019</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-rocket danger font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body text-left">
+                                                    <h3 class="mb-1 success">56</h3>
+                                                    <span>To Complete Actions</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-clock success font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                </ul>
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body text-left">
+                                                    <h3 class="mb-1 warning">12</h3>
+                                                    <span>Ideas Created since 20 Jan 2019</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-bulb warning font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body text-left">
+                                                    <h3 class="mb-1 primary">36</h3>
+                                                    <span>Days to complete actions</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-calendar primary font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- // Minimal statistics section end -->
+                    <section id="minimal-statistics-bg">
+
+                        <div class="row" matchHeight="card">
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card bg-warning">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body white text-left">
+                                                    <h3>2</h3>
+                                                    <span>Goals Complete</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-check white font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card bg-primary">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body white text-left">
+                                                    <h3>13</h3>
+                                                    <span>Actions complete</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-note white font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card bg-success">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body white text-left">
+                                                    <h3>16</h3>
+                                                    <span>Ideas turned into goals</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-refresh white font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-lg-6 col-12">
+                                <div class="card bg-danger">
+                                    <div class="card-content">
+                                        <div class="px-3 py-3">
+                                            <div class="media">
+                                                <div class="media-body white text-left">
+                                                    <h3>24.89 %</h3>
+                                                    <span>Achievement Rate</span>
+                                                </div>
+                                                <div class="media-right align-self-center">
+                                                    <i class="icon-pie-chart white font-large-2 float-right"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 mt-3 mb1">
+                            <div class="content-header">Latest Goals</div>
+                            <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row match-height">
+                        <div class="col-xl-4 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Run Maraton under 4 hour</h4>
+                                </div>
+                                <div class="card-content">
+
+                                    <p class="font-medium-2 text-muted text-center">Goal Actions</p>
+                                    <div id="donut-dashboard-chart" class="height-250 donut">
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Overdue - 2</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 23%;" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Upcoming - 1</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-amber" role="progressbar" style="width: 14%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Set - 5</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-deep-purple bg-lighten-1" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Done - 2</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-blue" role="progressbar" style="width: 28%;" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Buy Dream House</h4>
+                                </div>
+                                <div class="card-content">
+
+                                    <p class="font-medium-2 text-muted text-center">Goal Actions</p>
+                                    <div id="donut-dashboard-chart" class="height-250 donut">
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Overdue - 1</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 23%;" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Upcoming - 4</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-amber" role="progressbar" style="width: 14%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Set - 8</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-deep-purple bg-lighten-1" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Done - 3</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-blue" role="progressbar" style="width: 28%;" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Start New Business</h4>
+                                </div>
+                                <div class="card-content">
+
+                                    <p class="font-medium-2 text-muted text-center">Goal Actions</p>
+                                    <div id="donut-dashboard-chart" class="height-250 donut">
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Overdue - 0</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 23%;" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Upcoming - 4</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-amber" role="progressbar" style="width: 14%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Set - 9</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-deep-purple bg-lighten-1" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <span class="mb-1 text-muted d-block">Done - 5</span>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar bg-blue" role="progressbar" style="width: 28%;" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Bar Chart Starts-->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Goals and Actions by Category</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="bar-chart" class="height-400"></div>
+                                        <p style="color: #009DA0">Goals</p>
+                                        <p style="color: #FF8D60">Actions</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Bar Chart Ends-->
+
+
+                    <div class="row match-height">
+                        <div class="col-xl-6 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">My shedule</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <div class="card-body">
+                                                            <div id='fc-default'></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Latest blog posts</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row match-height">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <img class="card-img-top img-fluid" src="app-assets/img/photos/06.jpg" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Card title</h4>
+                                                            <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.</p>
+                                                            <a class="btn btn-raised btn-warning">Go somewhere</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <img class="card-img-top img-fluid" src="app-assets/img/photos/06.jpg" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Card title</h4>
+                                                            <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.</p>
+                                                            <a class="btn btn-raised btn-warning">Go somewhere</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <img class="card-img-top img-fluid" src="app-assets/img/photos/06.jpg" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Card title</h4>
+                                                            <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.</p>
+                                                            <a class="btn btn-raised btn-warning">Go somewhere</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="card-content">
+                                                        <img class="card-img-top img-fluid" src="app-assets/img/photos/06.jpg" alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">Card title</h4>
+                                                            <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.</p>
+                                                            <a class="btn btn-raised btn-warning">Go somewhere</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- END : End Main Content-->
+
+
+
+                </div>
             </div>
         </div>
     </div>
-</nav>
-<!-- Navbar (Header) Ends -->
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+
+    <!-- Theme customizer Starts-->
+    <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-sm-none d-md-block"><a class="customizer-close"><i class="ft-x font-medium-3"></i></a>
+        <div data-ps-id="df6a5ce4-a175-9172-4402-dabd98fc9c0a" class="customizer-content p-3 ps-container ps-theme-dark">
+            <h4 class="text-uppercase mb-0 text-bold-400">Application Customizer</h4>
+            <p>Customize & Preview in Real Time</p>
+            <hr>
+            <!-- Layout Options-->
+            <h6 class="text-center text-bold-500 mb-3 text-uppercase">Layout Options</h6>
+            <div class="layout-switch ml-4">
+                <div class="custom-control custom-radio d-inline-block custom-control-inline light-layout">
+                    <input id="ll-switch" type="radio" name="layout-switch" checked class="custom-control-input">
+                    <label for="ll-switch" class="custom-control-label">Light</label>
+                </div>
+                <div class="custom-control custom-radio d-inline-block custom-control-inline dark-layout">
+                    <input id="dl-switch" type="radio" name="layout-switch" class="custom-control-input">
+                    <label for="dl-switch" class="custom-control-label">Dark</label>
+                </div>
+                <div class="custom-control custom-radio d-inline-block custom-control-inline transparent-layout">
+                    <input id="tl-switch" type="radio" name="layout-switch" class="custom-control-input">
+                    <label for="tl-switch" class="custom-control-label">Transparent</label>
+                </div>
+            </div>
+            <hr>
+            <!-- Sidebar Options Starts-->
+            <h6 class="text-center text-bold-500 mb-3 text-uppercase sb-options">Sidebar Color Options</h6>
+            <div class="cz-bg-color sb-color-options">
+                <div class="row p-1">
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="pomegranate" class="gradient-pomegranate d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="king-yna" class="gradient-king-yna d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="ibiza-sunset" class="gradient-ibiza-sunset d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="flickr" class="gradient-flickr d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="purple-bliss" class="gradient-purple-bliss d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="man-of-steel" class="gradient-man-of-steel d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="purple-love" class="gradient-purple-love d-block rounded-circle"></span></div>
+                </div>
+                <div class="row p-1">
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="black" class="bg-black d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="white" class="bg-grey d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="primary" class="bg-primary d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="success" class="bg-success d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="warning" class="bg-warning d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="info" class="bg-info d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="danger" class="bg-danger d-block rounded-circle"></span></div>
+                </div>
+            </div>
+            <!-- Sidebar Options Ends-->
+            <!-- Transparent Layout Bg color Options-->
+            <h6 class="text-center text-bold-500 mb-3 text-uppercase tl-color-options d-none">Background Colors</h6>
+            <div class="cz-tl-bg-color d-none">
+                <div class="row p-1">
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="hibiscus" class="bg-hibiscus d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="bg-purple-pizzazz" class="bg-purple-pizzazz d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="bg-blue-lagoon" class="bg-blue-lagoon d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="bg-electric-viloet" class="bg-electric-violet d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="bg-protage" class="bg-portage d-block rounded-circle"></span></div>
+                    <div class="col"><span style="width:20px; height:20px;" data-bg-color="bg-tundora" class="bg-tundora d-block rounded-circle"></span></div>
+                </div>
+            </div>
+            <!-- Transparent Layout Bg color Ends-->
+            <hr>
+            <!-- Sidebar BG Image Starts-->
+            <h6 class="text-center text-bold-500 mb-3 text-uppercase sb-bg-img">Sidebar Bg Image</h6>
+            <div class="cz-bg-image row sb-bg-img">
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/01.jpg" width="90" class="rounded sb-bg-01"></div>
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/02.jpg" width="90" class="rounded sb-bg-02"></div>
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/03.jpg" width="90" class="rounded sb-bg-03"></div>
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/04.jpg" width="90" class="rounded sb-bg-04"></div>
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/05.jpg" width="90" class="rounded sb-bg-05"></div>
+                <div class="col-sm-2 mb-3"><img src="app-assets/img/sidebar-bg/06.jpg" width="90" class="rounded sb-bg-06"></div>
+            </div>
+            <!-- Transparent BG Image Ends-->
+            <div class="tl-bg-img d-none">
+                <h6 class="text-center text-bold-500 text-uppercase">Background Images</h6>
+                <div class="cz-tl-bg-image row">
+                    <div class="col-sm-3"><img src="app-assets/img/gallery/bg-glass-1.jpg" width="90" class="rounded bg-glass-1 selected"></div>
+                    <div class="col-sm-3"><img src="app-assets/img/gallery/bg-glass-2.jpg" width="90" class="rounded bg-glass-2"></div>
+                    <div class="col-sm-3"><img src="app-assets/img/gallery/bg-glass-3.jpg" width="90" class="rounded bg-glass-3"></div>
+                    <div class="col-sm-3"><img src="app-assets/img/gallery/bg-glass-4.jpg" width="90" class="rounded bg-glass-4"></div>
+                </div>
+            </div>
+            <!-- Transparent BG Image Ends    -->
+            <hr>
+            <!-- Sidebar BG Image Toggle Starts-->
+            <div class="togglebutton toggle-sb-bg-img">
+                <div class="switch"><span>Sidebar Bg Image</span>
+                    <div class="float-right">
+                        <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input id="sidebar-bg-img" type="checkbox" checked class="custom-control-input cz-bg-image-display">
+                            <label for="sidebar-bg-img" class="custom-control-label"></label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <!-- Sidebar BG Image Toggle Ends-->
+            <!-- Sidebar Width Starts-->
+            <div>
+                <label for="cz-sidebar-width">Sidebar Width</label>
+                <select id="cz-sidebar-width" class="custom-select cz-sidebar-width float-right">
+                    <option value="small">Small</option>
+                    <option value="medium" selected="">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <!-- Sidebar Width Ends-->
+        </div>
+    </div>
+    <!-- Theme customizer Ends-->
+    <!-- BEGIN VENDOR JS-->
+    <script src="app-assets/vendors/js/core/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/prism.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/screenfull.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/pace/pace.min.js" type="text/javascript"></script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="app-assets/vendors/js/moment.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/chartist.min.js" type="text/javascript"></script>
+    <script src="app-assets/vendors/js/fullcalendar.min.js" type="text/javascript"></script>
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN APEX JS-->
+    <script src="app-assets/js/app-sidebar.js" type="text/javascript"></script>
+    <script src="app-assets/js/notification-sidebar.js" type="text/javascript"></script>
+    <script src="app-assets/js/customizer.js" type="text/javascript"></script>
+    <!-- END APEX JS-->
+    <!-- BEGIN PAGE LEVEL JS-->
+    <script src="app-assets/js/chartist.js" type="text/javascript"></script>
+    <script src="app-assets/js/dashboard1.js" type="text/javascript"></script>
+    <script src="app-assets/js/fullcalendar.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL JS-->
+</body>
+<!-- END : Body-->
+
+</html>

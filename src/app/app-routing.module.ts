@@ -8,7 +8,6 @@ import { Full_ROUTES } from "./shared/routes/full-layout.routes";
 import { CONTENT_ROUTES } from "./shared/routes/content-layout.routes";
 
 import { AuthGuard } from './shared/auth/auth-guard.service';
-import { NonAuthGuard } from './shared/auth/non-auth-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -16,11 +15,6 @@ const appRoutes: Routes = [
     redirectTo: 'user/login',
     pathMatch: 'full',
   },
-  // {
-  //   path: '',
-  //   loadChildren: () => import( './pages/auth/auth.module' ).then( m => m.AuthModule ),
-  //   canActivate: [ NonAuthGuard ]
-  // },
   {
     path: 'app',
     loadChildren: () => import( './pages/app-plan/app-plan.module' ).then( m => m.AppPlanModule ),

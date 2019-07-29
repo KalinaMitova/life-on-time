@@ -15,11 +15,6 @@ const appRoutes: Routes = [
     redirectTo: 'user/login',
     pathMatch: 'full',
   },
-  {
-    path: 'app',
-    loadChildren: () => import( './pages/app-plan/app-plan.module' ).then( m => m.AppPlanModule ),
-    canActivate: [ AuthGuard ]
-  },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [ AuthGuard ] },
   { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES },
 ];

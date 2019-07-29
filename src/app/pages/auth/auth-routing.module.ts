@@ -7,19 +7,25 @@ import { LoginPageComponent } from './login/login-page.component';
 import { RegisterPageComponent } from './register/register-page.component';
 import { ForgotPasswordPageComponent } from './forgot-password/forgot-password-page.component';
 
-const childRoutes = [
+const childRoutes: Routes = [
   {
-    path: 'login',
-    component: LoginPageComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterPageComponent,
-  },
-  {
-    path: 'forgotpassword',
-    component: ForgotPasswordPageComponent,
-  },
+    path: '',
+    children: [
+
+      {
+        path: 'login',
+        component: LoginPageComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterPageComponent,
+      },
+      {
+        path: 'forgotpassword',
+        component: ForgotPasswordPageComponent,
+      },
+    ]
+  }
 ]
 
 @NgModule( {

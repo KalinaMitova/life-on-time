@@ -31,7 +31,7 @@ export class LoginPageComponent {
         if ( this.loginForm.valid ) {
           this.loginForm.reset();
           localStorage.setItem( 'isAuthenticated', 'true' )
-          this.router.navigate( [ '/app/chooseplan' ] )
+          this.router.navigate( [ '/chooseplan' ] )
         }
       } )
   }

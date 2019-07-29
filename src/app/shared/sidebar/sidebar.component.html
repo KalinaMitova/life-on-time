@@ -1,5 +1,5 @@
-<!-- Sidebar Header starts -->
-<div class="sidebar-header">
+<!-- Sidebar Header starts  FROM TEMPLATE-->
+<!-- <div class="sidebar-header">
     <div class="logo clearfix">
         <a [routerLink]="['/']" class="logo-text float-left">
             <div class="logo-img">
@@ -14,18 +14,18 @@
             <i class="ft-x"></i>
         </a>
     </div>
-</div>
+</div> -->
+<!-- Sidebar Header Ends-->
 
 <!-- Sidebar Header starts-->
 <div class="sidebar-header">
     <div class="logo clearfix">
-        <a href="index.html" class="logo-text float-left">
-            <div class="logo-img"><img src="app-assets/img/logo.png" /></div><span class="text align-middle">Life on
+        <a [routerLink]="['/progress-dashboard']" class="logo-text float-left">
+            <div class="logo-img"><img [src]="logoUrl" /></div><span class="text align-middle">Life on
                 Time</span>
         </a>
     </div>
 </div>
-<!-- Sidebar Header Ends-->
 <!-- Sidebar Header Ends -->
 
 <!-- Sidebar Content starts -->

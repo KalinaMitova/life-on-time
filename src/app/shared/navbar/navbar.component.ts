@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   constructor (
     // public translate: TranslateService,
-    // private layoutService: LayoutService,
+    private layoutService: LayoutService,
     // private configService: ConfigService
   ) {
     // const browserLang: string = translate.getBrowserLang();
@@ -57,9 +57,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // toggleNotificationSidebar() {
-  //   this.layoutService.emitChange(true);
-  // }
+  toggleNotificationSidebar() {
+    this.layoutService.emitChange( true );
+  }
 
   toggleSidebar() {
     const appSidebar = document.getElementsByClassName( "app-sidebar" )[ 0 ];

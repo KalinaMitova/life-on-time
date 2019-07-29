@@ -31,7 +31,7 @@ export class ChoosePlanPageComponent implements OnInit {
     this.authService.logout()
       .subscribe( data => {
         localStorage.removeItem( 'isAuthenticated' );
-        this.router.navigate( [ "/login" ] );
+        this.router.navigate( [ "/user/login" ] );
       } )
   }
 

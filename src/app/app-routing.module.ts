@@ -13,21 +13,21 @@ import { NonAuthGuard } from './shared/auth/non-auth-guard.service';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: 'user/login',
     pathMatch: 'full',
   },
-  {
-    path: '',
-    loadChildren: () => import( './pages/auth/auth.module' ).then( m => m.AuthModule ),
-    canActivate: [ NonAuthGuard ]
-  },
+  // {
+  //   path: '',
+  //   loadChildren: () => import( './pages/auth/auth.module' ).then( m => m.AuthModule ),
+  //   canActivate: [ NonAuthGuard ]
+  // },
   {
     path: 'app',
     loadChildren: () => import( './pages/app-plan/app-plan.module' ).then( m => m.AppPlanModule ),
     canActivate: [ AuthGuard ]
   },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [ AuthGuard ] },
-  { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES, canActivate: [ AuthGuard ] },
+  { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES },
 ];
 
 @NgModule( {

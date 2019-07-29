@@ -31,7 +31,7 @@ export class RegisterPageComponent {
         console.log( data );
         if ( this.registerForm.valid ) {
           this.registerForm.reset();
-          this.router.navigate( [ '/login' ] );
+          this.router.navigate( [ '/user/login' ] );
         }
       } )
   }

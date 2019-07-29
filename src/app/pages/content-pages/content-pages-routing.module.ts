@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../shared/auth/auth-guard.service';
 
 import { ChoosePlanPageComponent } from './choose-plan-page/choose-plan-page.component';
+import { ErrorPageComponent } from './error/error-page.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,11 @@ const routes: Routes = [
         path: 'chooseplan',
         component: ChoosePlanPageComponent,
         canActivate: [ AuthGuard ]
-      }
+      },
+      {
+        path: 'error',
+        component: ErrorPageComponent,
+      },
     ]
   }
 ];

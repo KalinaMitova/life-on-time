@@ -12,7 +12,7 @@ import { ConfigService } from '../services/config.service';
 export class NavbarComponent implements OnInit, AfterViewInit {
   // currentLang = "en";
   toggleClass = "ft-maximize";
-  // placement = "bottom-right";
+  placement = "bottom-right";
   public isCollapsed = true;
   @Output()
   toggleHideSidebar = new EventEmitter<Object>();
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   constructor (
     // public translate: TranslateService,
     private layoutService: LayoutService,
-    // private configService: ConfigService
+    private configService: ConfigService
   ) {
     // const browserLang: string = translate.getBrowserLang();
     // translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
@@ -30,18 +30,18 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.config = this.configService.templateConf;
+    this.config = this.configService.templateConf;
   }
 
   ngAfterViewInit() {
-    //   if(this.config.layout.dir) {
-    //     const dir = this.config.layout.dir;
-    //       if (dir === "rtl") {
-    //         this.placement = "bottom-left";
-    //       } else if (dir === "ltr") {
-    //         this.placement = "bottom-right";
-    //       }
-    //   }
+    if ( this.config.layout.dir ) {
+      const dir = this.config.layout.dir;
+      if ( dir === "rtl" ) {
+        this.placement = "bottom-left";
+      } else if ( dir === "ltr" ) {
+        this.placement = "bottom-right";
+      }
+    }
   }
 
 

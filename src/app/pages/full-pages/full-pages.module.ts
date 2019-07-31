@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FullPagesRoutingModule } from './full-pages-routing.module';
-import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard.component';
+import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
+import { ProgressDashboardModule } from './progress-dashboard/progress-dashboard.module';
 
 @NgModule( {
-  declarations: [ ProgressDashboardComponent ],
+  declarations: [],
   imports: [
     CommonModule,
-    FullPagesRoutingModule
+    FullPagesRoutingModule,
+    ProgressDashboardModule,
   ]
 } )
 export class FullPagesModule { }

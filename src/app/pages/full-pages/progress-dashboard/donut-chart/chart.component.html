@@ -1,0 +1,50 @@
+<div class="col-xl-4 col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">{{chart.goal}}</h4>
+        </div>
+        <div class="card-content">
+
+            <p class="font-medium-2 text-muted text-center">Goal Actions</p>
+            <div id="donut-dashboard-chart" class="height-250 donut">
+                <x-chartist class="" [data]="Chart.data" [type]="Chart.type" [options]="Chart.options" [responsiveOptions]="Chart.responsiveOptions" [events]="Chart.events">
+                </x-chartist>
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col">
+                        <span class="mb-1 text-muted d-block">Overdue - {{chart.series[0].value}}</span>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-success" role="progressbar" [style.width.%]="chart.series[0].value" [attr.aria-valuenow]="chart.series[0].value" aria-valuemin="0" aria-valuemax="20">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <span class="mb-1 text-muted d-block">Upcoming - {{chart.series[1].value}}</span>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-amber" role="progressbar" [style.width.%]="chart.series[1].value" [attr.aria-valuenow]="chart.series[1].value" aria-valuemin="0" aria-valuemax="20">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <span class="mb-1 text-muted d-block">Set - {{chart.series[2].value}}</span>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-deep-purple bg-lighten-1" role="progressbar" [style.width.%]="chart.series[2].value" [attr.aria-valuenow]="
+                                  chart.series[2].value" aria-valuemin="0" aria-valuemax="20">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <span class="mb-1 text-muted d-block">Done - {{chart.series[3].value}}</span>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-blue" role="progressbar" [style.width.%]="chart.series[3].value" [attr.aria-valuenow]="chart.series[3].value" aria-valuemin="0" aria-valuemax="20">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

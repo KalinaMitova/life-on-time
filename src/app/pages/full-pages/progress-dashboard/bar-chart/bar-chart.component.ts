@@ -19,18 +19,19 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit() {
     const dataChart = this.chart;
+    console.log( dataChart );
     this.Chart = {
       type: 'Bar',
       data: dataChart,
       options: {
-        seriesBarDistance: 21,
+        seriesBarDistance: 100,
         plugins: [
           Chartist.plugins.legend( {
-            position: 'bottom'
+            // position: 'bottom'
           } )
         ],
         axisX: {
-          showGrid: false, offset: 1
+          showGrid: false, offset: 10
         },
         axisY: {
           scaleMinSpace: 10,

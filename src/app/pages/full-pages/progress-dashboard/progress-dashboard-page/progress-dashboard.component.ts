@@ -11,13 +11,13 @@ const ChartData: any = require( '../../../../shared/data/chartsData.json' );
 export class ProgressDashboardComponent implements OnInit {
 
   private dataChart = [];
-  private barChart = [];
+  private barChart;
 
   constructor () {
     for ( let chart of Object.values( ChartData ) ) {
       this.dataChart.push( chart );
     }
-    this.barChart[ 0 ] = this.dataChart.pop();
+    this.barChart = this.dataChart.pop();
   }
 
   ngOnInit() {

@@ -83,21 +83,12 @@
             "Physical Activity",
             "Financial"
         ],
-        "series": [
-            [
-                3,
-                2,
-                2,
-                4,
-                5
-            ],
-            [
-                10,
-                12,
-                6,
-                9,
-                8
-            ]
-        ]
+        "series": [{
+            "name": "Goals",
+            "value": [3, 2, 2, 4, 5]
+        }, {
+            "name": "Actions",
+            "data": [10, 12, 6, 9, 8]
+        }]
     }
 }

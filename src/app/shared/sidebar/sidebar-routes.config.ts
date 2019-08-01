@@ -8,7 +8,7 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'My Goals', icon: 'ft-target', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
         submenu: [
-            { path: 'javascript:;', title: 'Health and Wellbeing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/goals/health-wellbeing', title: 'Health and Wellbeing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: 'javascript:;', title: 'Personel Development', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: 'javascript:;', title: 'Relationships', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: 'javascript:;', title: 'Physical Activity', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },

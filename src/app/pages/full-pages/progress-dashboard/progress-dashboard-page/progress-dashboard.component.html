@@ -162,98 +162,19 @@
 
 <!-- статистика от примера старт-->
 
-<!-- <div class="row">
-    <div class="col-xl-4 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Project Stats</h4>
-            </div>
-            <div class="card-content">
-
-                <p class="font-medium-2 text-muted text-center">Project Tasks</p>
-                <div id="donut-dashboard-chart" class="height-250 donut">
-                    <x-chartist class="" [data]="DonutChart.data" [type]="DonutChart.type" [options]="DonutChart.options" [responsiveOptions]="DonutChart.responsiveOptions" [events]="DonutChart.events">
-                    </x-chartist>
-                </div>
-
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <span class="mb-1 text-muted d-block">23% - Started</span>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 23%;" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <span class="mb-1 text-muted d-block">14% - In Progress</span>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar bg-amber" role="progressbar" style="width: 14%;" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col">
-                            <span class="mb-1 text-muted d-block">35% - Remaining</span>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar bg-deep-purple bg-lighten-1" role="progressbar" style="width: 35%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <span class="mb-1 text-muted d-block">28% - Done</span>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar bg-blue" role="progressbar" style="width: 28%;" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-<!-- статистика от примера край-->
 
 
-<!-- статистика от свилен начало-->
 <div class="col-sm-12 mt-3 mb1">
     <div class="content-header">Latest Goals</div>
     <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.</p>
 </div>
 
-
-<!-- <ng-template ngFor let-chart [ngForOf]="dataChart" let-i="index"> -->
 <div class="row">
     <div class="col-xl-4 col-lg-12" *ngFor="let chart of dataChart">
         <app-chart [chart]='chart'></app-chart>
     </div>
 </div>
-
 <app-bar-chart [chart]='barChart'></app-bar-chart>
-
-<!-- </ng-template> -->
-
-
-
-<!--Bar Chart Starts-->
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Goals and Actions by Category</h4>
-            </div>
-            <div class="card-content">
-                <div class="card-body">
-                    <div id="bar-chart" class="height-400"></div>
-                    <p style="color: #009DA0">Goals</p>
-                    <p style="color: #FF8D60">Actions</p>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-<!--Bar Chart Ends-->
-
 
 <div class="row match-height">
     <div class="col-xl-6 col-lg-12">
@@ -282,7 +203,8 @@
             </div>
         </div>
     </div>
-
-    <app-blog-posts></app-blog-posts>
+    <div class="col-xl-6 col-lg-12">
+        <app-blog-posts></app-blog-posts>
+    </div>
 
 </div>

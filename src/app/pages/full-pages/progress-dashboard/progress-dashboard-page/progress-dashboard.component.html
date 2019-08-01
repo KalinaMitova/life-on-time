@@ -222,8 +222,11 @@
 
 <!-- <ng-template ngFor let-chart [ngForOf]="dataChart" let-i="index"> -->
 <div class="row">
-    <app-chart *ngFor="let chart of dataChart" [chart]='chart'></app-chart>
+    <div class="col-xl-4 col-lg-12" *ngFor="let chart of dataChart">
+        <app-chart [chart]='chart'></app-chart>
+    </div>
 </div>
+
 <app-bar-chart [chart]='barChart'></app-bar-chart>
 
 <!-- </ng-template> -->
@@ -279,69 +282,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Latest blog posts</h4>
-            </div>
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="row match-height">
-                        <div class="col-sm-12 col-md-6">
-                            <div class="card">
-                                <div class="card-content">
-                                    <img class="card-img-top img-fluid" src="assets/img/photos/06.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.
-                                        </p>
-                                        <a class="btn btn-raised btn-warning">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="card">
-                                <div class="card-content">
-                                    <img class="card-img-top img-fluid" src="assets/img/photos/06.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.
-                                        </p>
-                                        <a class="btn btn-raised btn-warning">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="card">
-                                <div class="card-content">
-                                    <img class="card-img-top img-fluid" src="assets/img/photos/06.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.
-                                        </p>
-                                        <a class="btn btn-raised btn-warning">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6">
-                            <div class="card">
-                                <div class="card-content">
-                                    <img class="card-img-top img-fluid" src="assets/img/photos/06.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Card title</h4>
-                                        <p class="card-text">Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.
-                                        </p>
-                                        <a class="btn btn-raised btn-warning">Go somewhere</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <app-blog-posts></app-blog-posts>
+
 </div>

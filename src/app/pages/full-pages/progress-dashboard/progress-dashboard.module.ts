@@ -5,6 +5,8 @@ import { ChartistModule } from "ng-chartist"
 import { ProgressDashboardComponent } from './progress-dashboard-page/progress-dashboard.component';
 import { ChartComponent } from './donut-chart/chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { SinglePostComponent } from './single-post/single-post.component';
+import { BlogPostsComponent } from './blog-posts/blog-posts.component';
 
 
 
@@ -14,6 +16,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     ProgressDashboardComponent,
     ChartComponent,
     BarChartComponent,
+    SinglePostComponent,
+    BlogPostsComponent,
   ],
   imports: [
     CommonModule,

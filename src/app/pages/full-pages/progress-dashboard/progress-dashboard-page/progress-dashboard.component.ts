@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { threadId } from 'worker_threads';
 
 const ChartData: any = require( '../../../../shared/data/chartsData.json' );
 
@@ -9,14 +10,14 @@ const ChartData: any = require( '../../../../shared/data/chartsData.json' );
 } )
 export class ProgressDashboardComponent implements OnInit {
 
-  private dataChart: [ any ] = [ 0 ];
+  private dataChart = [];
+  private barChart = [];
 
   constructor () {
     for ( let chart of Object.values( ChartData ) ) {
       this.dataChart.push( chart );
     }
-    this.dataChart.shift();
-    console.log( this.dataChart );
+    this.barChart[ 0 ] = this.dataChart.pop();
   }
 
   ngOnInit() {

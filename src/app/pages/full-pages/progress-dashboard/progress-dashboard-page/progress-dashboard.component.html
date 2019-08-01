@@ -220,13 +220,13 @@
 </div>
 
 
-<ng-template ngFor let-chart [ngForOf]="dataChart">
-    <div class="row" *ngIf="chart.type === 'Pie'">
-        <app-chart [chart]='chart'></app-chart>
-    </div>
-    <app-bar-chart *ngIf="chart.type === 'Bar'" [chart]='chart'></app-bar-chart>
+<!-- <ng-template ngFor let-chart [ngForOf]="dataChart" let-i="index"> -->
+<div class="row">
+    <app-chart *ngFor="let chart of dataChart" [chart]='chart'></app-chart>
+</div>
+<app-bar-chart [chart]='barChart'></app-bar-chart>
 
-</ng-template>
+<!-- </ng-template> -->
 
 
 

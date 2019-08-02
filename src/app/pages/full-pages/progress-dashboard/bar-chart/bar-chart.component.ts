@@ -24,20 +24,30 @@ export class BarChartComponent implements OnInit {
       type: 'Bar',
       data: dataChart,
       options: {
-        seriesBarDistance: 100,
-        plugins: [
-          Chartist.plugins.legend( {
-            // position: 'bottom'
-          } )
-        ],
+        seriesBarDistance: 21,
         axisX: {
-          showGrid: false, offset: 10
+          showGrid: false, offset: 50
         },
         axisY: {
           scaleMinSpace: 10,
-        }
+        },
+        plugins: [
+          Chartist.plugins.legend( {
+            position: 'bottom'
+          } )
+        ],
       },
     };
   }
 
 }
+
+// options: {
+//   seriesBarDistance: 21,
+//     axisX: {
+//     showGrid: false, offset: 100
+//   },
+//   axisY: {
+//     scaleMinSpace: 30,
+//             }
+// },

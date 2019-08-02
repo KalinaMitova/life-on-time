@@ -13,19 +13,22 @@
     font-size: 0.9rem;
 }
 
-// Bar Chart CSS Starts
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+1) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient7);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+2) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient5);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+3) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient6);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+4) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient4);
-// }
+Bar Chart CSS Starts:host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+1) {
+    stroke: url($progress-dashboard-gradient-path +  #gradient7);
+}
+
+:host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+2) {
+    stroke: url($progress-dashboard-gradient-path +  #gradient5);
+}
+
+:host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+3) {
+    stroke: url($progress-dashboard-gradient-path +  #gradient6);
+}
+
+:host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+4) {
+    stroke: url($progress-dashboard-gradient-path +  #gradient4);
+}
+
 :host /deep/ .BarChartShadow {
     -webkit-filter: drop-shadow(0px 20px 8px rgba(0, 0, 0, 0.3));
     filter: drop-shadow(0px 20px 8px rgba(0, 0, 0, 0.3));

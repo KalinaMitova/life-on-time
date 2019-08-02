@@ -1,15 +1,13 @@
 @import "../../../../../assets/sass/scss/gradient-variables";
-// :host /deep/ .ct-area {
-//     stroke: none;
-//     fill-opacity: 0.1;
-// }
-// :host /deep/ .ct-grid {
-//     stroke-dasharray: 0px;
-//     stroke: rgba(0, 0, 0, 0.1);
-// }
-// :host /deep/ .ct-label {
-//     font-size: 0.9rem;
-// }
+:host /deep/ .ct-grid {
+    stroke-dasharray: 0px;
+    stroke: rgba(0, 0, 0, 0.1);
+}
+
+:host /deep/ .ct-label {
+    font-size: 0.9rem;
+}
+
 // Donut Chart  CSS Starts
 :host /deep/ .donut .ct-overdue .ct-slice-donut {
     stroke: #0CC27E;

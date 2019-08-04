@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component( {
   selector: 'app-health-wellbeing',
@@ -8,12 +9,40 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 } )
 export class HealthWellbeingComponent implements OnInit {
 
+  private title: string;
+  private path: string
   closeResult: string;
 
-  constructor ( private modalService: NgbModal ) { }
+  constructor (
+    private modalService: NgbModal,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-
+    this.path = this.route.snapshot.routeConfig.path;
+    switch ( this.path ) {
+      case 'health-wellbeing':
+        {
+          this.title = 'Health and Wellbeing';
+        } break;
+      case 'personal-development':
+        {
+          this.title = 'Personal Development';
+        } break;
+      case 'physical-activity':
+        {
+          this.title = 'Physical Activity';
+        } break;
+      case 'relationships':
+        {
+          this.title = 'Relationships';
+        } break;
+      case 'financial':
+        {
+          this.title = 'Financial';
+        } break;
+    }
   }
 
   open( content ) {

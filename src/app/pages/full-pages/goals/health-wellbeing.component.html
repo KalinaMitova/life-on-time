@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-10">
-        <div class="content-header">GOALS | Health and Wellbeing</div>
+        <div class="content-header">GOALS | {{title}}</div>
         <p class="content-sub-header">You can check your current goals and set new ones</p>
     </div>
     <div class="content-header col-sm-2" style="text-align: right;">
@@ -65,7 +65,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-sm-12 col-lg-6"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#action" (click)="open(createActionModal)">+ New
-                      Action</a></div>
+                            Action</a></div>
                     <div class="col-sm-12 col-lg-6 text-right">
                         <a class="btn btn-sm btn-raised btn-outline-info round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#goal" (click)="open(createGoalModal)">Edit Goal</a>
                         <a class="btn btn-sm btn-raised btn-outline-danger round btn-min-width mr-1 mb-1" onclick="if (confirm('Are you sure you want to delete this goal/action?')) {
@@ -155,7 +155,7 @@
             <h4 class="modal-title" id="goalModal">Create Goal</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
         </div>
         <div class="modal-body">
             <form>
@@ -176,7 +176,7 @@
                         <input id="dueDate" class="form-control" placeholder="Select due date" name="dp" ngbDatepicker #dp="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"><span
-                          class="fa fa-calendar-o"></span></button>
+                                    class="fa fa-calendar-o"></span></button>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
             <h4 class="modal-title" id="actionModal">Create Action</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
         </div>
         <div class="modal-body">
             <form>
@@ -216,7 +216,7 @@
                         <input id="dueDate" class="form-control" placeholder="Select due date" name="dp" ngbDatepicker #dp="ngbDatepicker">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"><span
-                          class="fa fa-calendar-o"></span></button>
+                                    class="fa fa-calendar-o"></span></button>
                         </div>
                     </div>
                 </div>

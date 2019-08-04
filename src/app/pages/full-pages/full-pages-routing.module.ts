@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
-import { HealthWellbeingComponent } from './health-wellbeing/health-wellbeing.component';
+import { HealthWellbeingComponent } from './goals/health-wellbeing.component';
 
 const routes: Routes = [
   {
@@ -18,6 +18,19 @@ const routes: Routes = [
     children: [
       {
         path: 'health-wellbeing',
+        component: HealthWellbeingComponent,
+      },
+      {
+        path: 'personal-development',
+        component: HealthWellbeingComponent,
+      }, {
+        path: 'relationships',
+        component: HealthWellbeingComponent,
+      }, {
+        path: 'physical-activity',
+        component: HealthWellbeingComponent,
+      }, {
+        path: 'financial',
         component: HealthWellbeingComponent,
       },
     ]

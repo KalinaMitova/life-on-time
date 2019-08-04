@@ -3,11 +3,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component( {
-  selector: 'app-health-wellbeing',
-  templateUrl: './health-wellbeing.component.html',
-  styleUrls: [ './health-wellbeing.component.scss' ]
+  selector: 'app-goals-page',
+  templateUrl: './goals-page.component.html',
+  styleUrls: [ './goals-page.component.scss' ]
 } )
-export class HealthWellbeingComponent implements OnInit {
+export class GoalsPageComponent implements OnInit {
 
   private title: string;
   private path: string

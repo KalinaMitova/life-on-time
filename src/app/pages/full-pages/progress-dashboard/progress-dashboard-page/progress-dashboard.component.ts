@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { threadId } from 'worker_threads';
 
+//Declarations
+declare var require: any;
 const ChartData: any = require( '../../../../shared/data/chartsData.json' );
 
 @Component( {
@@ -14,13 +15,16 @@ export class ProgressDashboardComponent implements OnInit {
   private barChart;
 
   constructor () {
-    for ( let chart of Object.values( ChartData ) ) {
+
+  }
+
+
+  ngOnInit() {
+    const values = Object.keys( ChartData ).map( key => ChartData[ key ] );
+    for ( let chart of values ) {
       this.dataChart.push( chart );
     }
     this.barChart = this.dataChart.pop();
-  }
-
-  ngOnInit() {
   }
 
 }

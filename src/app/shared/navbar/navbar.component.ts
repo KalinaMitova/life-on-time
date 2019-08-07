@@ -1,8 +1,10 @@
 import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 
 import { LayoutService } from '../services/layout.service';
 import { ConfigService } from '../services/config.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: "app-navbar",
@@ -22,7 +24,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   constructor (
     // public translate: TranslateService,
     private layoutService: LayoutService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private authService: AuthService,
+    private router: Router
   ) {
     // const browserLang: string = translate.getBrowserLang();
     // translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
@@ -31,6 +35,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
+  }
+
+  logout() {
+    this.authService.logout()
+      .subscribe( data => {
+        localStorage.removeItem( 'isAuthenticated' );
+
+        this.router.navigate( [ "/user/login" ] );
+      } )
   }
 
   ngAfterViewInit() {

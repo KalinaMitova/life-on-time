@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "matngular": {
+        "life-on-time": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -62,20 +62,21 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "matngular:build",
+                        "browserTarget": "life-on-time:build",
                         "host": "lifeontime.com",
-                        "port": 4200
+                        "port": 4200,
+                        "proxyConfig": "proxy.conf.json"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "matngular:build:production"
+                            "browserTarget": "life-on-time:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "matngular:build"
+                        "browserTarget": "life-on-time:build"
                     }
                 },
                 "test": {
@@ -125,7 +126,7 @@
                 }
             }
         },
-        "matngular-e2e": {
+        "life-on-time-e2e": {
             "root": "",
             "sourceRoot": "",
             "projectType": "application",
@@ -134,7 +135,7 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "matngular:serve"
+                        "devServerTarget": "life-on-time:serve"
                     }
                 },
                 "lint": {
@@ -151,7 +152,7 @@
             }
         }
     },
-    "defaultProject": "matngular",
+    "defaultProject": "life-on-time",
     "schematics": {
         "@schematics/angular:component": {
             "prefix": "app",

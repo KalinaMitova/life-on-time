@@ -20,6 +20,7 @@ import { SidebarListDirective } from './directives/sidebarlist.directive';
 import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.directive';
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-validator.directive';
+import { CustomizerComponent } from './customizer/customizer.component';
 
 @NgModule( {
     exports: [
@@ -27,6 +28,7 @@ import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-valid
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
+        CustomizerComponent,
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         ConfirmEqualValidatorDirective,
@@ -53,6 +55,7 @@ import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-valid
         SidebarAnchorToggleDirective,
         SidebarToggleDirective,
         ConfirmEqualValidatorDirective,
+        CustomizerComponent,
     ]
 } )
 export class SharedModule { }

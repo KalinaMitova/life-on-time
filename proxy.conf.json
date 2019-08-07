@@ -1,0 +1,22 @@
+{
+    "/auth/login": {
+        "target": "http://136.244.71.69",
+        "secure": false
+
+    },
+    "/me": {
+        "target": "http://136.244.71.69",
+        "secure": false
+
+    },
+    "/api/applicationtypes": {
+        "target": "http://136.244.71.69",
+        "secure": false
+
+    },
+    "/auth/logout": {
+        "target": "http://136.244.71.69",
+        "secure": false
+
+    }
+}

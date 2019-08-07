@@ -1,13 +1,13 @@
-import { MatngularPage } from './app.po';
+import { LifeontimePage } from './app.po';
 
-describe('matngular App', () => {
-  let page: MatngularPage;
+describe( 'life-on-time App', () => {
+  let page: LifeontimePage;
 
-  beforeEach(() => {
-    page = new MatngularPage();
-  });
+  beforeEach( () => {
+    page = new LifeontimePage();
+  } );
 
-  it('should expect true to be true', () => {
-    expect(true).toBe(true);
-  });
-});
+  it( 'should expect true to be true', () => {
+    expect( true ).toBe( true );
+  } );
+} );

@@ -9,159 +9,18 @@
             <img class="img-fluid" src="./assets/img/logos/lot-logo-white-full.png" alt="">
         </div>
     </div>
-    <div class="row" matchHeight="card">
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body text-left">
-                                <h3 class="mb-1 danger">8</h3>
-                                <span>Goals created since 20 Jan 2019</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-rocket danger font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body text-left">
-                                <h3 class="mb-1 success">56</h3>
-                                <span>To Complete Actions</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-clock success font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body text-left">
-                                <h3 class="mb-1 warning">12</h3>
-                                <span>Ideas Created since 20 Jan 2019</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-bulb warning font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body text-left">
-                                <h3 class="mb-1 primary">36</h3>
-                                <span>Days to complete actions</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-calendar primary font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</section>
-<!-- // Minimal statistics section end -->
-<section id="minimal-statistics-bg">
 
     <div class="row" matchHeight="card">
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-warning">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3>2</h3>
-                                <span>Goals Complete</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-check white font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xl-3 col-lg-6 col-12" *ngFor="let stat of minStaticsDataFirstRow">
+            <app-min-statistic-card [stat]="stat"></app-min-statistic-card>
         </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-primary">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3>13</h3>
-                                <span>Actions complete</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-note white font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-success">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3>16</h3>
-                                <span>Ideas turned into goals</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-refresh white font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-3 col-lg-6 col-12">
-            <div class="card bg-danger">
-                <div class="card-content">
-                    <div class="px-3 py-3">
-                        <div class="media">
-                            <div class="media-body white text-left">
-                                <h3>24.89 %</h3>
-                                <span>Achievement Rate</span>
-                            </div>
-                            <div class="media-right align-self-center">
-                                <i class="icon-pie-chart white font-large-2 float-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
-
+    <div class="row" matchHeight="card">
+        <div class="col-xl-3 col-lg-6 col-12" *ngFor="let stat of minStaticsDataSecondRow">
+            <app-min-statistic-card [stat]="stat"></app-min-statistic-card>
+        </div>
+    </div>
 </section>
-
-<!-- статистика от примера старт-->
-
 
 
 <div class="col-sm-12 mt-3 mb1">

@@ -32,7 +32,7 @@ export class CustomizerComponent implements OnInit, AfterViewInit, OnDestroy {
     layout: "Light"
   };
   size = "sidebar-md";
-  isOpen = true;
+  // isOpen = false;
   public config: any = {};
   layoutSub: Subscription;
   isBgImageDisplay = true;
@@ -63,7 +63,8 @@ export class CustomizerComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
-    this.isOpen = !this.config.layout.customizer.hidden;
+    // console.log( this.config );
+    // this.isOpen = !this.config.layout.customizer.hidden;
 
     if ( this.config.layout.sidebar.size ) {
       this.options.sidebarSize = this.config.layout.sidebar.size;
@@ -226,19 +227,19 @@ export class CustomizerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.layoutService.emitCustomizerChange( this.options );
   }
 
-  toggleCustomizer() {
-    if ( this.isOpen ) {
-      this.renderer.removeClass( this.customizer.nativeElement, "open" );
-      this.isOpen = false;
-    } else {
-      this.renderer.addClass( this.customizer.nativeElement, "open" );
-      this.isOpen = true;
-    }
-  }
+  // toggleCustomizer() {
+  //   if ( this.isOpen ) {
+  //     this.renderer.removeClass( this.customizer.nativeElement, "open" );
+  //     this.isOpen = false;
+  //   } else {
+  //     this.renderer.addClass( this.customizer.nativeElement, "open" );
+  //     this.isOpen = true;
+  //   }
+  // }
 
   closeCustomizer() {
     this.renderer.removeClass( this.customizer.nativeElement, "open" );
-    this.isOpen = false;
+    // this.isOpen = false;
   }
 
   changeSidebarBgColor( color ) {

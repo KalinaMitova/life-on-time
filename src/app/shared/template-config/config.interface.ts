@@ -1,8 +1,7 @@
-export interface TemplateConfig
-{
+export interface TemplateConfig {
     layout: {
         variant: string
-        dir: string,          
+        dir: string,
         sidebar: {
             collapsed: boolean,
             size: string,

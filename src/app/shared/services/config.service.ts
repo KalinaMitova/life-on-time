@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { TemplateConfig } from '../template-config/config.interface';
 
-@Injectable({
+@Injectable( {
     providedIn: 'root'
-})
+} )
 export class ConfigService {
 
     public templateConf: TemplateConfig;
 
-    constructor( ) {
+    constructor () {
         this.setConfigValue();
     }
 
@@ -16,7 +16,7 @@ export class ConfigService {
         this.templateConf = {
             layout: {
                 variant: 'Light', // options:  Dark, Light & Transparent
-                dir:'ltr', //Options: ltr, rtl
+                dir: 'ltr', //Options: ltr, rtl
                 sidebar: {
                     collapsed: false, //options: true, false
                     size: 'sidebar-md', // Options: 'sidebar-lg', 'sidebar-md', 'sidebar-sm'

@@ -1,4 +1,11 @@
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  AfterViewInit,
+  Renderer2
+} from '@angular/core';
 // import { TranslateService } from '@ngx-translate/core';
 
 import { LayoutService } from '../services/layout.service';
@@ -26,7 +33,8 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     private layoutService: LayoutService,
     private configService: ConfigService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
     // const browserLang: string = translate.getBrowserLang();
     // translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
@@ -44,6 +52,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
         this.router.navigate( [ "/user/login" ] );
       } )
+  }
+
+  showCustomizer() {
+    const customizer: Element = this.renderer.selectRootElement( '.customizer', true );
+    this.renderer.addClass( customizer, "open" );
   }
 
   ngAfterViewInit() {

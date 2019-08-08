@@ -19,7 +19,6 @@ export class BarChartComponent implements OnInit {
 
   ngOnInit() {
     const dataChart = this.chart;
-    console.log( dataChart );
     this.Chart = {
       type: 'Bar',
       data: dataChart,

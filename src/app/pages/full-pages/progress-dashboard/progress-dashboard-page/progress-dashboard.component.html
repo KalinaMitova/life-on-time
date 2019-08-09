@@ -1,3 +1,4 @@
+<!-- Minimal statistics start-->
 <section id="minimal-statistics">
     <div class="row">
         <div class="col-10 mb-1">
@@ -10,17 +11,20 @@
         </div>
     </div>
 
+    <!-- Minimal statistics first row-->
     <div class="row" matchHeight="card">
         <div class="col-xl-3 col-lg-6 col-12" *ngFor="let stat of minStaticsDataFirstRow">
             <app-min-statistic-card [stat]="stat"></app-min-statistic-card>
         </div>
     </div>
+    <!-- Minimal statistics second row-->
     <div class="row" matchHeight="card">
         <div class="col-xl-3 col-lg-6 col-12" *ngFor="let stat of minStaticsDataSecondRow">
             <app-min-statistic-card [stat]="stat"></app-min-statistic-card>
         </div>
     </div>
 </section>
+<!-- Min statistics end-->
 
 
 <div class="col-sm-12 mt-3 mb1">
@@ -28,15 +32,26 @@
     <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.</p>
 </div>
 
+<!--Donut chart start-->
 <div class="row">
     <div class="col-xl-4 col-lg-12" *ngFor="let chart of dataChart">
         <app-chart [chart]='chart'></app-chart>
     </div>
 </div>
-<app-bar-chart [chart]='barChart'></app-bar-chart>
+<!--Donut chart end-->
+
+<!--Bar chart starts-->
+<div class="row text-left">
+    <div class="col-sm-12">
+        <app-bar-chart [chart]='barChart'></app-bar-chart>
+    </div>
+</div>
+<!--Bar chart ends-->
+
 
 <div class="row match-height">
     <div class="col-xl-6 col-lg-12">
+        <!-- Calendar starts-->
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">My shedule</h4>
@@ -61,9 +76,11 @@
 
             </div>
         </div>
+        <!-- Calendar ends-->
     </div>
+    <!-- Blog`s posts start-->
     <div class="col-xl-6 col-lg-12">
         <app-blog-posts></app-blog-posts>
     </div>
-
+    <!-- Blog`s posts end-->
 </div>

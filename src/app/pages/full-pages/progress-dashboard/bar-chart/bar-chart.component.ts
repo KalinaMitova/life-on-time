@@ -25,10 +25,10 @@ export class BarChartComponent implements OnInit {
       options: {
         seriesBarDistance: 21,
         axisX: {
-          showGrid: false, offset: 50
+          showGrid: false, offset: 100
         },
         axisY: {
-          scaleMinSpace: 10,
+          scaleMinSpace: 30,
         },
         plugins: [
           Chartist.plugins.legend( {

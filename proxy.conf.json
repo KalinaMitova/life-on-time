@@ -24,7 +24,39 @@
         "secure": false
 
     },
-    "/apitest/users": {
+    "/api/tasks/me": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/tasks/mecompleted": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/tasks/dayscompletelastaction": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/tasks/{id}": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/goals/me": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/goals/mecompleted": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/goals/mefromideas": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/goals/myrate": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+    "/api/goals/{id}": {
         "target": "http://136.244.71.69",
         "secure": false
     }

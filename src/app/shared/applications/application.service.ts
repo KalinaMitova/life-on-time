@@ -8,6 +8,7 @@ const BASE_URL = environment.apiUrl + 'api/applicationtypes';
 // const EDIT_END_URL = "edit/";
 // const DELETE_END_URL = "delete/";
 // const ALL_END_URL = "all";
+const goals_END_URL = '/api/goals';
 
 @Injectable( {
   providedIn: 'root'
@@ -24,6 +25,9 @@ export class ApplicationService {
 
   getAll(): Observable<any[]> {
     return this.http.get<any[]>( BASE_URL );
+  }
+  getAllGoals(): Observable<any[]> {
+    return this.http.get<any[]>( goals_END_URL );
   }
 
   // getById( id: string ): Observable<Category> {

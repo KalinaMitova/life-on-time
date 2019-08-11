@@ -25,6 +25,11 @@ export class ChoosePlanPageComponent implements OnInit {
         this.applicationTypes = data[ 'data' ];
         console.log( this.applicationTypes );
       } );
+
+    this.applicationService.getAllGoals()
+      .subscribe( data => {
+        console.log( data );
+      } )
   }
 
   logout() {

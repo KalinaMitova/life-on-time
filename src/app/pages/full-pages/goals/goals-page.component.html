@@ -196,36 +196,42 @@
 <!-- Actions modal -->
 
 <ng-template #createActionModal let-modal>
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title" id="actionModal">Create Action</h4>
-            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form>
+    <form #actionModalForm="ngForm" (ngSubmit)="submit(actionModalForm.value)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="actionModal">Create Action</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{actionModalForm.value | json}}
                 <div class="form-group">
-                    <label for="action">Action</label>
-                    <input type="text" id="action" placeholder="Set your action" class="form-control">
+                    <label for="title">Action</label>
+                    <input class="form-control" type="text" id="title" name="title" placeholder="Set your action" [(ngModel)]="action.title" #title="ngModel" required>
                 </div>
-
+                <div class="alert alert-danger" *ngIf="title.invalid && (title.dirty || title.touched) && title.errors?.required">
+                    The field is required!
+                </div>
                 <div class="form-group">
                     <label for="dueDate">Select due date for your action</label>
                     <div class="input-group">
-                        <input id="dueDate" class="form-control" placeholder="Select due date" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                        <input id="dueDate" class="form-control" placeholder="Select due date" name="dueDate" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="action.dueDate" #dueDate="ngModel" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"><span
                                     class="fa fa-calendar-o"></span></button>
                         </div>
                     </div>
                 </div>
-            </form>
+                <div class="alert alert-danger" *ngIf="dueDate.invalid && (dueDate.dirty || dueDate.touched) && dueDate.errors?.required">
+                    The field is required!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Cancel</button>
+                <button type="submit" class="btn btn-outline-primary">Create
+                    Action</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Cancel</button>
-            <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Create
-                Action</button>
-        </div>
-    </div>
+    </form>
 </ng-template>

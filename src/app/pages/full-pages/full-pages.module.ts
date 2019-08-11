@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { FullPagesRoutingModule } from './full-pages-routing.module';
-import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
 import { ProgressDashboardModule } from './progress-dashboard/progress-dashboard.module';
-import { GoalsPageComponent } from './goals/goals-page.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { GoalsPagesModule } from './goals/goals-pages.module';
 
 @NgModule( {
-  declarations: [ GoalsPageComponent ],
+  declarations: [],
   imports: [
     CommonModule,
-    FullPagesRoutingModule,
     ProgressDashboardModule,
-    NgbModule
+    // NgbModule,
+    FullPagesRoutingModule,
+    GoalsPagesModule
   ]
 } )
 export class FullPagesModule { }

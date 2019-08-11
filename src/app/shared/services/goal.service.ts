@@ -63,11 +63,15 @@ export class GoalService {
     return this.http.post( BASE_URL, goal );
   }
 
-  putEditGoal( id: number, goal: Goal ) {
+  getGoalById( id: number ): Observable<Goal> {
+    return this.http.get<Goal>( BASE_URL + 'id' );
+  }
+
+  putEditGoalById( id: number, goal: Goal ) {
     return this.http.put( BASE_URL + id, goal );
   }
 
-  deleteGoal( id: number ) {
+  deleteGoalById( id: number ) {
     return this.http.delete( BASE_URL + id );
   }
 

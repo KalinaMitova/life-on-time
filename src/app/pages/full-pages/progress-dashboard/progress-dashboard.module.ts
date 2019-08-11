@@ -9,8 +9,6 @@ import { SinglePostComponent } from './single-post/single-post.component';
 import { BlogPostsComponent } from './blog-posts/blog-posts.component';
 import { MinStatisticCardComponent } from './min-statistic-card/min-statistic-card.component';
 
-
-
 @NgModule( {
   exports: [ ProgressDashboardComponent ],
   declarations: [

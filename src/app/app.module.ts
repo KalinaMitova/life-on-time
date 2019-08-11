@@ -21,10 +21,14 @@ import { FullLayoutComponent } from "./layouts/full/full-layout.component";
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
 import { ApplicationService } from './shared/applications/application.service';
+import { GoalService } from './shared/services/goal.service';
+import { TaskService } from './shared/services/task.service';
+import { IdeaService } from './shared/services/idea.service';
 
 import { ResponceHandlerInterceptor } from './shared/interceptors/responce-handler-interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interseptor';
+
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -65,6 +69,9 @@ export function createTranslateLoader( http: HttpClient ) {
   providers: [
     AuthService,
     ApplicationService,
+    GoalService,
+    TaskService,
+    IdeaService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

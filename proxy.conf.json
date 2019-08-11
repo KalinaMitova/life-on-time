@@ -59,5 +59,9 @@
     "/api/goals/{id}": {
         "target": "http://136.244.71.69",
         "secure": false
+    },
+    "/api/ideas/me": {
+        "target": "http://136.244.71.69",
+        "secure": false
     }
 }

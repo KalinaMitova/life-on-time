@@ -49,7 +49,7 @@ export class GoalsPageComponent implements OnInit {
     this.setPage( this.path );
     this.goalService.getAllHealthGoals()
       .pipe(
-        map( data => data[ 'dataValue' ] ),
+        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] ),
 
       ).subscribe( d => console.log( d ) );
   }

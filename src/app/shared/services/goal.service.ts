@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from "environments/environment";
 
 import { Goal } from '../models/goal';
+import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.apiUrl + "api/me/goals/";
 const ALL_USER_HEALTH_GOALS_END = "";
@@ -32,22 +33,37 @@ export class GoalService {
   }
 
   getAllHealthGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] )
+      );
   }
 
   getAllDevelopmentGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ][ 'Personal Development' ][ 'goals' ] )
+      );
   }
   getAllRelationshipsGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ][ 'Phyisical Activity' ][ 'goals' ] )
+      );
   }
 
   getAllPhysicalActivityGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ][ 'Financial' ][ 'goals' ] )
+      );
   }
 
   getAllFinancialGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] )
+      );
   }
 
   getUserCompletedGoals(): Observable<Array<Goal>> {

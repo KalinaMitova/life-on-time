@@ -1,11 +1,11 @@
 <!-- <tr> -->
-<td>{{item.title}}///Action title</td>
-<td>{{item.dueDate}} ///20/04/2020</td>
+<td>{{task.title}}</td>
+<td>{{task.dueDate}} </td>
 <td>
-    <a class="success p-0" data-original-title="" title="" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit')">
+    <a class="success p-0" data-original-title="" title="" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
         <i class="ft-edit-2 font-medium-3 mr-2"></i>
     </a>
-    <a class="danger p-0" data-original-title="" title="" (click)="openModal('confirmModal', 'action', item.title)">
+    <a class="danger p-0" data-original-title="" title="" (click)="openModal('confirmModal', 'action', task.title)">
         <i class="ft-x font-medium-3 mr-2"></i>
     </a>
 </td>

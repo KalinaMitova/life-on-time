@@ -13,18 +13,22 @@ const MODALS = {
   styleUrls: [ './single-action.component.scss' ]
 } )
 export class SingleActionComponent {
-  @Input() item: any;
+  @Input() task: any;
 
   private closeResult: string;
 
   constructor ( private modalService: NgbModal ) { }
 
-  openModal( name: string, itemType: string, actionTypeOrTitle: string ) {
+  openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: any ) {
     const modalRef = this.modalService.open( MODALS[ name ] );
+    console.log( "FROM SINGLE-ACTION COMPONENT      " );
+    console.log( modalRef );
     modalRef.componentInstance.itemType = itemType;
     if ( name = 'createEditModal' ) {
       modalRef.componentInstance.actionType = actionTypeOrTitle;
-      modalRef.componentInstance.item = this.item;
+      if ( actionTypeOrTitle === 'edit' ) {
+        modalRef.componentInstance.item = item;
+      }
     } else {
       modalRef.componentInstance.title = actionTypeOrTitle;
     }

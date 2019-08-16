@@ -26,7 +26,7 @@ export class GoalsPageComponent implements OnInit {
   // private confirmDelete: ModalConfirmComponent;
   private title: string;
   private path: string;
-  private goals: Observable<Array<Goal>>;
+  private goals$: Observable<Array<Goal>>;
   private closeResult: string;
   private today: string;
   private item = {
@@ -47,11 +47,11 @@ export class GoalsPageComponent implements OnInit {
     console.log( this.today );
     this.path = this.route.snapshot.routeConfig.path;
     this.setPage( this.path );
-    this.goalService.getAllHealthGoals()
-      .pipe(
-        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] ),
+    this.goals$ = this.goalService.getAllHealthGoals();
+    //     .pipe(
+    //       map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] ),
 
-      ).subscribe( d => console.log( d ) );
+    //     ).subscribe( d => console.log( d ) );
   }
 
   submit( form ) {

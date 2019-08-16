@@ -28,6 +28,7 @@ import { IdeaService } from './shared/services/idea.service';
 import { ResponceHandlerInterceptor } from './shared/interceptors/responce-handler-interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interseptor';
+import { ModalConfirmComponent } from './shared/modal-confirm/modal-confirm.component';
 
 
 
@@ -89,6 +90,7 @@ export function createTranslateLoader( http: HttpClient ) {
     },
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG }
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+
 } )
 export class AppModule { }

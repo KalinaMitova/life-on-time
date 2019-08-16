@@ -5,16 +5,17 @@ import { environment } from "environments/environment";
 
 import { Goal } from '../models/goal';
 
-const BASE_URL = environment.apiUrl + "api/goals/";
+const BASE_URL = environment.apiUrl + "api/me/goals/";
 const ALL_USER_HEALTH_GOALS_END = "";
 const ALL_USER_DEVELOPMENT_GOALS_END = "";
 const ALL_USER_RELATIONSHIPS_GOALS_END = "";
 const ALL_USER_PHYSICAL_ACTIVITY_GOALS_END = "";
 const ALL_USER_FINANCIAL_GOALS_END = "";
-const USER_COMPLETED_GOALS_END = "mecompleted";
-const USER_RATE_END = "myrate";
-const USER_GOALS_FROM_IDEAS_END = "mefromideas";
-const USER_GOALS_END = "me";
+const USER_COMPLETED_GOALS_END = "completed";
+const USER_RATE_END = "rate";
+const USER_GOALS_FROM_IDEAS_END = "fromideas";
+const USER_LAST_THREE_GOALS_END = "lastthree";
+const USER_GOALS_END = "bycategoryall";
 
 @Injectable( {
   providedIn: 'root'
@@ -27,11 +28,11 @@ export class GoalService {
   }
 
   getUserGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END );
+    return this.http.get<Array<Goal>>( BASE_URL );
   }
 
   getAllHealthGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END );
   }
 
   getAllDevelopmentGoals(): Observable<Array<Goal>> {

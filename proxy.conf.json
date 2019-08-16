@@ -19,20 +19,15 @@
         "secure": false
 
     },
-    "/api/goals": {
-        "target": "http://136.244.71.69",
-        "secure": false
-
-    },
-    "/api/tasks/me": {
+    "/api/me/tasks": {
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/tasks/mecompleted": {
+    "/api/me/taskscompleted": {
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/tasks/dayscompletelastaction": {
+    "/api/me/tasks/dayscompletelastaction": {
         "target": "http://136.244.71.69",
         "secure": false
     },
@@ -40,19 +35,19 @@
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/goals/me": {
+    "/api/me/goals": {
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/goals/mecompleted": {
+    "/api/me/goals/completed": {
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/goals/mefromideas": {
+    "/api/me/goals/fromideas": {
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/goals/myrate": {
+    "/api/me/goals/rate": {
         "target": "http://136.244.71.69",
         "secure": false
     },
@@ -60,7 +55,12 @@
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/ideas/me": {
+    "/api/me/goals/bycategoryall": {
+        "target": "http://136.244.71.69",
+        "secure": false
+    },
+
+    "/api/me/ideas": {
         "target": "http://136.244.71.69",
         "secure": false
     }

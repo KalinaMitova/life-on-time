@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-@Component({
+@Component( {
   selector: 'app-single-goal-card',
   templateUrl: './single-goal-card.component.html',
-  styleUrls: ['./single-goal-card.component.scss']
-})
-export class SingleGoalCardComponent implements OnInit {
+  styleUrls: [ './single-goal-card.component.scss' ]
+} )
+export class SingleGoalCardComponent {
+  @Input() item: any;
+  @Input() goal: any;
 
-  constructor() { }
+  @Output() deleteConfirm: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit() {
+  deleteSelected() {
+    this.deleteConfirm.emit( null );
   }
-
 }

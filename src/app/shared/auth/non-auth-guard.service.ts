@@ -26,7 +26,7 @@ export class NonAuthGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate( [ '/chooseplan' ] );
+    this.router.navigate( [ '/progress-dashboard' ] );
 
     return false;
   }

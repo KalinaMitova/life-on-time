@@ -6,8 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RegisterUser } from '../models/registerUser';
 import { LoginUser } from '../models/loginUser';
 
-
-// const BASE_URL = 'http://136.244.71.69/auth/';
 const BASE_URL = environment.apiUrl + 'auth/';
 const LOGIN_END_URL = 'login';
 const REGISTER_END_URL = 'register';
@@ -15,7 +13,6 @@ const LOGOUT_END_URL = 'logout';
 
 @Injectable()
 export class AuthService {
-  // token: string;
 
   constructor ( private http: HttpClient ) { }
 
@@ -28,7 +25,7 @@ export class AuthService {
   }
 
   getUsers() {
-    return this.http.get( '/me' );
+    return this.http.get( 'me' );
   }
 
   logout() {

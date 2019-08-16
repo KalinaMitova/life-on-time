@@ -5,9 +5,8 @@ import { environment } from "environments/environment";
 import { Task } from '../../shared/models/task';
 import { Observable } from 'rxjs';
 
-const BASE_URL = environment.apiUrl + 'api/tasks/';
-const USER_TASKS_END = 'me';
-const USER_COMPLETED_TASKS_END = 'mecompleted';
+const BASE_URL = environment.apiUrl + 'api/me/tasks/';
+const USER_COMPLETED_TASKS_END = 'completed';
 const USER_DAYS_LAST_TASKS_FINISH_END = 'dayscompletelastaction';
 
 @Injectable( {
@@ -19,8 +18,8 @@ export class TaskService {
     private http: HttpClient
   ) { }
 
-  getUserTasks() {
-    return this.http.get( BASE_URL + USER_TASKS_END );
+  getUserAllTasks() {
+    return this.http.get( BASE_URL );
   }
 
   getUserCompletedTasks() {

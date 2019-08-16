@@ -19,17 +19,12 @@ export class ChoosePlanPageComponent implements OnInit {
     private router: Router ) { }
 
   ngOnInit() {
-    this.applicationService.getAll()
+    this.applicationService.getAplicationTypes()
       .subscribe( data => {
         console.log( data );
         this.applicationTypes = data[ 'data' ];
         console.log( this.applicationTypes );
       } );
-
-    this.applicationService.getAllGoals()
-      .subscribe( data => {
-        console.log( data );
-      } )
   }
 
   logout() {

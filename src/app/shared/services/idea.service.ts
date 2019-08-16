@@ -5,7 +5,7 @@ import { Idea } from '../models/idea';
 import { Observable } from 'rxjs';
 
 const BASE_URL = environment.apiUrl + 'api/ideas/';
-const USER_IDEAS_END = 'me';
+const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas/';
 
 @Injectable( {
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class IdeaService {
   ) { }
 
   getUserIdeas(): Observable<Array<Idea>> {
-    return this.http.get<Array<Idea>>( BASE_URL + USER_IDEAS_END );
+    return this.http.get<Array<Idea>>( USER_IDEAS_URL );
   }
 
   getIdeaById( id: number ): Observable<Idea> {

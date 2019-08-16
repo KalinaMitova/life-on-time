@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { forkJoin, Subscription } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 
 import { minStatisticData } from '../../../../shared/data/minStatisticFirstRowData';
 import { GoalService } from "../../../../shared/services/goal.service";
@@ -22,6 +22,7 @@ export class ProgressDashboardComponent implements OnInit {
   private barChart;
   private minStaticsDataFirstRow = minStatisticData.firstRow;
   private minStaticsDataSecondRow = minStatisticData.secondRow;
+  private minStatSubscription: Subscription;
   // private userRegistrationDate: string;
   // private userGoals: number = 0;
   // private userTasks: number = 0;
@@ -43,42 +44,47 @@ export class ProgressDashboardComponent implements OnInit {
 
   ngOnInit() {
     //min statistics
+    //this.minStatSubscription =
     forkJoin(
       //first row
       this.goalService.getUserGoals(),
-      this.taskService.getUserTasks(),
+      this.taskService.getUserAllTasks(),
       this.ideasService.getUserIdeas(),
       this.taskService.getDaysToCompleteTasks(),
       //second row
       this.goalService.getUserCompletedGoals(),
       this.taskService.getUserCompletedTasks(),
       this.goalService.getUserGoalsFromIdeas(),
-      // this.goalService.getUserRate(),
+      this.goalService.getUserRate(),
     )
-      // .pipe(
-      //   map( (
-      //     [ goals, tasks, ideas, daysTocompleteTasks,
-      //       completedGoals, completedTasks, ideasToGoals, rate
-      //     ] ) => {
-      //     // forkJoin returns an array of values, here we map those values to an object
-      //     return {
-      //       goals, tasks, ideas, daysTocompleteTasks,
-      //       completedGoals, completedTasks, ideasToGoals, rate
-      //     };
-      //   } )
-      // )
-      .subscribe( ( [ goals, tasks, ideas, daysTocompleteTasks,
-        completedGoals, completedTasks, ideasToGoals,
-        // rate
-      ] ) => {
-        this.minStaticsDataFirstRow[ 0 ].value = goals.data.length;
-        this.minStaticsDataFirstRow[ 1 ].value = tasks.data.length;
-        this.minStaticsDataFirstRow[ 2 ].value = ideas.data.length;
-        this.minStaticsDataFirstRow[ 3 ].value = daysTocompleteTasks.data.length;
-        this.minStaticsDataSecondRow[ 0 ].value = completedGoals.data.length;
-        this.minStaticsDataSecondRow[ 1 ].value = completedTasks.data.length;
-        this.minStaticsDataSecondRow[ 2 ].value = ideasToGoals.data.length;
-        // this.minStaticsDataSecondRow[ 3 ].value = + Math.round( rate.data[ 'percent' ] ).toFixed( 2 );
+      .pipe(
+        map( (
+          [ goals, tasks, ideas, daysTocompleteTasks,
+            completedGoals, completedTasks, ideasToGoals, rate
+          ] ) => {
+          // forkJoin returns an array of values, here we map those values to an object
+          return {
+            goals: goals.dataValue.goalsNumber,
+            tasks: tasks.data.taskNumber,
+            ideas: ideas.dataValue.ideasNumber,
+            daysTocompleteTasks: daysTocompleteTasks.dataValue.days,
+            completedGoals: completedGoals.dataValue.number,
+            completedTasks: completedTasks.dataValue.number,
+            ideasToGoals: ideasToGoals.dataValue.number,
+            rate: rate.dataValue.percent
+          };
+        } )
+      )
+      .subscribe( ( data ) => {
+        console.log( data );
+        this.minStaticsDataFirstRow[ 0 ].value = data.goals;
+        this.minStaticsDataFirstRow[ 1 ].value = data.tasks;
+        this.minStaticsDataFirstRow[ 2 ].value = data.ideas;
+        this.minStaticsDataFirstRow[ 3 ].value = data.daysTocompleteTasks;
+        this.minStaticsDataSecondRow[ 0 ].value = data.completedGoals;
+        this.minStaticsDataSecondRow[ 1 ].value = data.completedTasks;
+        this.minStaticsDataSecondRow[ 2 ].value = data.ideasToGoals;
+        this.minStaticsDataSecondRow[ 3 ].value = + Math.round( data.rate ).toFixed( 2 );
       } );
 
     const values = Object.keys( ChartData ).map( key => ChartData[ key ] );
@@ -88,4 +94,10 @@ export class ProgressDashboardComponent implements OnInit {
     this.barChart = this.dataChart.pop();
   }
 
+  ngOnDestroy() {
+    if ( this.minStatSubscription ) {
+      this.minStatSubscription.unsubscribe();
+
+    }
+  }
 }

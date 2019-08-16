@@ -21,6 +21,8 @@ import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.d
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-validator.directive';
 import { CustomizerComponent } from './customizer/customizer.component';
+// import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+// import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
 
 @NgModule( {
     exports: [
@@ -34,7 +36,7 @@ import { CustomizerComponent } from './customizer/customizer.component';
         ConfirmEqualValidatorDirective,
         SidebarDirective,
         NgbModule,
-        TranslateModule
+        TranslateModule,
     ],
     imports: [
         RouterModule,
@@ -56,6 +58,11 @@ import { CustomizerComponent } from './customizer/customizer.component';
         SidebarToggleDirective,
         ConfirmEqualValidatorDirective,
         CustomizerComponent,
-    ]
+        // ModalConfirmComponent,
+        // ModalCreateEditComponent,
+    ],
+    // entryComponents: [
+    //     ModalConfirmComponent,
+    //     ModalCreateEditComponent ]
 } )
 export class SharedModule { }

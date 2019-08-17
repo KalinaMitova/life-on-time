@@ -1,18 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { GoalService } from 'app/shared/services/goal.service';
 import { Goal } from 'app/shared/models/goal';
-import { ModalConfirmComponent } from 'app/shared/modal-confirm/modal-confirm.component';
-import { ModalCreateEditComponent } from 'app/shared/modal-create-edit/modal-create-edit.component';
-import { map } from 'rxjs/operators';
-const MODALS = {
-  createEditModal: ModalCreateEditComponent,
-  confirmModal: ModalConfirmComponent
-}
+import { ModalService } from "../../../shared/services/modal.service";
 
 @Component( {
   selector: 'app-goals-page',
@@ -20,38 +12,27 @@ const MODALS = {
   styleUrls: [ './goals-page.component.scss' ]
 } )
 export class GoalsPageComponent implements OnInit {
-
   @ViewChild( 'type', { static: false } ) type: any;
 
-  // private confirmDelete: ModalConfirmComponent;
   private title: string;
   private path: string;
   private goals$: Observable<Array<Goal>>;
-  private closeResult: string;
   private today: string;
-  private item = {
-    title: '',
-    description: '',
-    dueDate: ''
-  };
 
   constructor (
-    private modalService: NgbModal,
+    private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
     private goalService: GoalService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.today = this.getCurrentDate( '-' );
+    this.today = this.getCurrentDate( '/' );
     console.log( this.today );
     this.path = this.route.snapshot.routeConfig.path;
     this.setPage( this.path );
-    this.goals$ = this.goalService.getAllHealthGoals();
-    //     .pipe(
-    //       map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] ),
-
-    //     ).subscribe( d => console.log( d ) );
+    this.goals$ = this.goalService.getGoalsByCategory( this.title );
   }
 
   submit( form ) {
@@ -66,7 +47,7 @@ export class GoalsPageComponent implements OnInit {
     switch ( path ) {
       case 'health-wellbeing':
         {
-          this.title = 'Health and Wellbeing';
+          this.title = 'Health & Wellbeing';
         } break;
       case 'personal-development':
         {
@@ -101,57 +82,9 @@ export class GoalsPageComponent implements OnInit {
     return ( yyyy + separator + mm + separator + dd );
   };
 
-  openModal( name: string, itemType: string, actionTypeOrTitle: string ) {
-    const modalRef = this.modalService.open( MODALS[ name ] );
-    modalRef.componentInstance.itemType = itemType;
-    if ( name = 'createEditModal' ) {
-      modalRef.componentInstance.actionType = actionTypeOrTitle;
-      modalRef.componentInstance.item = this.item;
-    } else {
-      modalRef.componentInstance.title = actionTypeOrTitle;
-    }
-    modalRef.result.then( ( result ) => {
-
-      this.closeResult = `Closed with: ${result}`;
-      console.log( this.closeResult );
-    }, ( reason ) => {
-      this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
-    } );
+  openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: string ) {
+    this.modalService.open( name, itemType, actionTypeOrTitle, item );
   }
-
-  private getDismissReason( reason: any ): string {
-    if ( reason === ModalDismissReasons.ESC ) {
-      return 'by pressing ESC';
-    } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
-  // open( content ) {
-  //   // const modalRef = this.modalService.open( NgbdModalContent );
-  //   const modalRef = this.modalService.open( content, { size: 'lg' } );
-  //   modalRef.componentInstance.type = 'Edit';
-
-  //   modalRef.result.then( ( result ) => {
-
-  //     this.closeResult = `Closed with: ${result}`;
-  //     console.log( this.closeResult );
-  //   }, ( reason ) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
-  //   } );
-  // }
-
-  // private getDismissReason( reason: any ): string {
-  //   if ( reason === ModalDismissReasons.ESC ) {
-  //     return 'by pressing ESC';
-  //   } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
 
   // onCancel() {
   //   this.confirmDeleteRef.dismiss( 'cancel click' );

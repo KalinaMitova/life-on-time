@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 
 @Component( {
   selector: 'app-modal-create-edit',
@@ -16,11 +17,12 @@ export class ModalCreateEditComponent implements OnInit {
     this.modal.close( 'Modal Form Closed' )
   }
 
-  onAction( actionType: string, itemType: string ) {
+  onAction( actionType: string, itemType: string, form: NgForm ) {
     const actionInfo = {
       actionType: actionType,
       itemType: itemType,
     }
+    console.log( form.value );
     this.actionSelected.emit( actionInfo );
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }

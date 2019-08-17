@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from "environments/environment";
 
 import { Goal } from '../models/goal';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
+import { TaskService } from './task.service';
 
 const BASE_URL = environment.apiUrl + "api/me/goals/";
 const ALL_USER_HEALTH_GOALS_END = "";
@@ -32,37 +33,33 @@ export class GoalService {
     return this.http.get<Array<Goal>>( BASE_URL );
   }
 
-  getAllHealthGoals(): Observable<Array<Goal>> {
+  getGoalsByCategory( category: string ): Observable<Array<Goal>> {
     return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
       .pipe(
-        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] )
-      );
-  }
-
-  getAllDevelopmentGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
-      .pipe(
-        map( data => data[ 'dataValue' ][ 'Personal Development' ][ 'goals' ] )
-      );
-  }
-  getAllRelationshipsGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
-      .pipe(
-        map( data => data[ 'dataValue' ][ 'Phyisical Activity' ][ 'goals' ] )
-      );
-  }
-
-  getAllPhysicalActivityGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
-      .pipe(
-        map( data => data[ 'dataValue' ][ 'Financial' ][ 'goals' ] )
-      );
-  }
-
-  getAllFinancialGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
-      .pipe(
-        map( data => data[ 'dataValue' ][ 'Health & Wellbeing' ][ 'goals' ] )
+        map( data => {
+          if ( data[ 'dataValue' ][ category ] ) {
+            return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
+              let goalDateAsString = goal.until_date.split( '-' );
+              goal.until_date = {
+                day: Number( goalDateAsString[ 2 ] ),
+                month: Number( goalDateAsString[ 1 ] ),
+                year: Number( goalDateAsString[ 0 ] )
+              }
+              goal.tasks.map( task => {
+                let taskDateAsString = task.until_date.split( '-' );
+                task.until_date = {
+                  day: Number( taskDateAsString[ 2 ] ),
+                  month: Number( taskDateAsString[ 1 ] ),
+                  year: Number( taskDateAsString[ 0 ] )
+                }
+                return task;
+              } )
+              return goal;
+            } )
+          } else {
+            return [];
+          }
+        } )
       );
   }
 

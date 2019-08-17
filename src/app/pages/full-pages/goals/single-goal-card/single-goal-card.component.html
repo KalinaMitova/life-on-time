@@ -41,11 +41,11 @@
         </div>
         <div class="card-footer">
             <div class="row">
-                <div class="col-sm-12 col-lg-6"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal(createEditModal, 'action', 'create')">+ New
+                <div class="col-sm-12 col-lg-6"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create')">+ New
                         Action</a></div>
                 <div class="col-sm-12 col-lg-6 text-right">
-                    <a class="btn btn-sm btn-raised btn-outline-info round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#goal" (click)="openModal(createEditModal, 'goal', 'edit')">Edit Goal</a>
-                    <a class="btn btn-sm btn-raised btn-outline-danger round btn-min-width mr-1 mb-1" (click)="openModal(confirmModal, 'goal', action.title)">Delete Goal</a></div>
+                    <a class="btn btn-sm btn-raised btn-outline-info round btn-min-width mr-1 mb-1" data-toggle="modal" data-target="#goal" (click)="openModal('createEditModal', 'goal', 'edit', goal)">Edit Goal</a>
+                    <a class="btn btn-sm btn-raised btn-outline-danger round btn-min-width mr-1 mb-1" (click)="openModal('confirmModal', 'goal', goal.title)">Delete Goal</a></div>
             </div>
         </div>
     </div>

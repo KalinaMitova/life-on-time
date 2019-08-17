@@ -1,12 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { ModalCreateEditComponent } from '../../../../shared/modal-create-edit/modal-create-edit.component'
-import { ModalConfirmComponent } from '../../../../shared/modal-confirm/modal-confirm.component'
+import { ModalService } from 'app/shared/services/modal.service';
 
-const MODALS = {
-  createEditModal: ModalCreateEditComponent,
-  confirmModal: ModalConfirmComponent
-}
 @Component( {
   selector: 'app-single-action',
   templateUrl: './single-action.component.html',
@@ -15,39 +9,9 @@ const MODALS = {
 export class SingleActionComponent {
   @Input() task: any;
 
-  private closeResult: string;
-
-  constructor ( private modalService: NgbModal ) { }
+  constructor ( private modalService: ModalService ) { }
 
   openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: any ) {
-    const modalRef = this.modalService.open( MODALS[ name ] );
-    console.log( "FROM SINGLE-ACTION COMPONENT      " );
-    console.log( modalRef );
-    modalRef.componentInstance.itemType = itemType;
-    if ( name = 'createEditModal' ) {
-      modalRef.componentInstance.actionType = actionTypeOrTitle;
-      if ( actionTypeOrTitle === 'edit' ) {
-        modalRef.componentInstance.item = item;
-      }
-    } else {
-      modalRef.componentInstance.title = actionTypeOrTitle;
-    }
-    modalRef.result.then( ( result ) => {
-
-      this.closeResult = `Closed with: ${result}`;
-      console.log( this.closeResult );
-    }, ( reason ) => {
-      this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
-    } );
-  }
-
-  private getDismissReason( reason: any ): string {
-    if ( reason === ModalDismissReasons.ESC ) {
-      return 'by pressing ESC';
-    } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+    this.modalService.open( name, itemType, actionTypeOrTitle, item );
   }
 }

@@ -1,10 +1,12 @@
-<form #modalForm="ngForm" (ngSubmit)="submit(modalForm.value)">
+<form #modalForm="ngForm" (ngSubmit)="onAction(actionType, itemType, modalForm)">
+    <!-- "onAction(actionType, itemType)"
+    "submit(modalForm.value)" -->
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title" id="actionModal">{{actionType | titlecase}} {{itemType | titlecase}}</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             {{modalForm.value | json}}
@@ -18,7 +20,7 @@
                 The field is required!
             </div>
 
-            <div class="form-group" *ngIf="itemType==='Goal'">
+            <div class="form-group" *ngIf="itemType==='goal'">
                 <label for="description">{{itemType | titlecase}} Description</label>
                 <textarea id="description" class="form-control" placeholder=" Put your goal description here" name="description" [(ngModel)]="item.description" #description="ngModel"></textarea>
                 <div class="alert alert-danger" *ngIf="description.invalid && (description.dirty || description.touched) && description.errors?.required">
@@ -28,12 +30,12 @@
 
 
             <div class="form-group">
-                <label for="dueDate">Select due date for your {{itemType}}</label>
+                <label for="dueDate">Select due date for your {{itemType}} dd/mm/yyyy</label>
                 <div class="input-group">
-                    <input id="dueDate" class="form-control" placeholder="Select due date" name="dueDate" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="item.dueDate" #dueDate="ngModel" required>
+                    <input id="dueDate" class="form-control" placeholder="Select due date" name="until_date" ngbDatepicker #dp="ngbDatepicker" [(ngModel)]="item.until_date" #dueDate="ngModel" required>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"><span
-                class="fa fa-calendar-o"></span></button>
+                                class="fa fa-calendar-o"></span></button>
                     </div>
                 </div>
             </div>
@@ -43,9 +45,10 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Cancel</button>
-            <button type="submit" class="btn btn-outline-primary" (click)="onAction(actionType, itemType)">{{actionType | titlecase}}
-        {{itemType | titlecase}}
-      </button>
+            <button type="submit" class="btn btn-outline-primary">{{actionType | titlecase}}
+                {{itemType | titlecase}}
+            </button>
+            <!-- (click)="onAction(actionType, itemType)" -->
         </div>
     </div>
 </form>

@@ -1,7 +1,9 @@
+import { SeparatedDate } from './date';
+
 export interface Task {
   id: number,
   title: string,
-  until_date: string,
+  until_date: SeparatedDate,
   description?: string,
   status?: number
 }

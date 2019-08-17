@@ -1,6 +1,6 @@
 <!-- <tr> -->
 <td>{{task.title}}</td>
-<td>{{task.dueDate}} </td>
+<td><span *ngIf='task.until_date.day < 10'>0</span>{{task.until_date.day}} / <span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}} / {{task.until_date.year}} </td>
 <td>
     <a class="success p-0" data-original-title="" title="" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
         <i class="ft-edit-2 font-medium-3 mr-2"></i>

@@ -7,7 +7,7 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-rocket danger ',
-      value: 8
+      value: 0
     },
     {
       title: 'allTasks',
@@ -16,7 +16,7 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-clock success',
-      value: 56
+      value: 0
     },
     {
       title: 'allIdeas',
@@ -25,7 +25,7 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-bulb warning',
-      value: 12
+      value: 0
     },
     {
       title: 'daysRemaining',
@@ -34,7 +34,7 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-calendar primary',
-      value: 36
+      value: 0
     }
   ],
   'secondRow': [
@@ -45,7 +45,7 @@ export let minStatisticData = {
       textClass: 'white',
       class: "bg-warning",
       iconClass: 'icon-check white',
-      value: 2
+      value: 0
     },
     {
       title: 'completedActions',
@@ -54,7 +54,7 @@ export let minStatisticData = {
       textClass: 'white',
       class: "bg-primary",
       iconClass: 'icon-note white',
-      value: 13
+      value: 0
     },
     {
       title: 'ideasToGoals',
@@ -63,7 +63,7 @@ export let minStatisticData = {
       textClass: 'white',
       class: "bg-success",
       iconClass: 'icon-refresh white',
-      value: 16
+      value: 0
     },
     {
       title: 'achievementRate',
@@ -72,7 +72,7 @@ export let minStatisticData = {
       textClass: 'white',
       class: "bg-danger",
       iconClass: 'icon-pie-chart white',
-      value: 24.86
+      value: 0
     },
   ]
 }

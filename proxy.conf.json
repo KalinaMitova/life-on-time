@@ -23,7 +23,7 @@
         "target": "http://136.244.71.69",
         "secure": false
     },
-    "/api/me/taskscompleted": {
+    "/api/me/tasks/completed": {
         "target": "http://136.244.71.69",
         "secure": false
     },

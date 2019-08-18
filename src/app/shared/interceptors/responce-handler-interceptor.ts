@@ -14,7 +14,7 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
     return next.handle( req )
       .pipe( tap( evt => {
         if ( evt instanceof HttpResponse ) {
-          console.log( evt );
+          //console.log( evt );
           if ( evt.status === 201 ) {
             this.toastr.success( evt.statusText, 'Success:', { positionClass: 'toast-top-center' } );
           } else if ( evt.status === 200 && evt.body.message ) {
@@ -23,7 +23,7 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
           }
         }
       } ), catchError( ( err: any ) => {
-        console.log( err );
+        //console.log( err );
         if ( err instanceof HttpErrorResponse ) {
           try {
             if ( err.error.error ) {

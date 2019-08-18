@@ -29,6 +29,7 @@ import { ResponceHandlerInterceptor } from './shared/interceptors/responce-handl
 import { ToastrModule } from 'ngx-toastr';
 import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interseptor';
 import { ModalService } from './shared/services/modal.service';
+import { EventService } from './shared/services/event.service';
 
 
 
@@ -75,6 +76,7 @@ export function createTranslateLoader( http: HttpClient ) {
     IdeaService,
     AuthGuard,
     ModalService,
+    EventService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SetHeadersInterceptor,

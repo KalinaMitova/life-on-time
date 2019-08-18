@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgForm } from '@angular/forms';
+import { EventService } from '../services/event.service';
 
 @Component( {
   selector: 'app-modal-create-edit',
@@ -8,8 +9,11 @@ import { NgForm } from '@angular/forms';
   styleUrls: [ './modal-create-edit.component.scss' ]
 } )
 export class ModalCreateEditComponent implements OnInit {
-  @Output() actionSelected: EventEmitter<any> = new EventEmitter();
-  constructor ( public modal: NgbActiveModal ) { }
+
+  constructor (
+    public modal: NgbActiveModal,
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
   }
@@ -17,13 +21,19 @@ export class ModalCreateEditComponent implements OnInit {
     this.modal.close( 'Modal Form Closed' )
   }
 
-  onAction( actionType: string, itemType: string, form: NgForm ) {
+  onAction( actionType: string, itemType: string, form: NgForm, itemId: string ) {
     const actionInfo = {
-      actionType: actionType,
-      itemType: itemType,
+      actionType,
+      itemType,
+      itemId,
+      form
     }
-    console.log( form.value );
-    this.actionSelected.emit( actionInfo );
+    this.eventService.emit(
+      {
+        name: 'confirm create/edit',
+        value: actionInfo
+      }
+    )
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }
 }

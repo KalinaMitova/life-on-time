@@ -10,6 +10,7 @@ import { ModalService } from '../../../../shared/services/modal.service'
 export class SingleGoalCardComponent {
   @Input() goal: Goal;
   @Output() deleteConfirm: EventEmitter<any> = new EventEmitter();
+  @Output() actionSelected: EventEmitter<any> = new EventEmitter();
 
   constructor ( private modalService: ModalService ) { }
 
@@ -18,7 +19,13 @@ export class SingleGoalCardComponent {
   }
 
   deleteSelected() {
+    console.log( 'from delete modal' )
     this.deleteConfirm.emit( null );
+  }
+
+  onAction( actionInfo ) {
+    console.log( 'Emited from modal edit/create:' + actionInfo );
+    this.actionSelected.emit( actionInfo );
   }
 
 }

@@ -9,6 +9,8 @@ import { SeparatedDate } from "../models/date";
 export class ModalService {
   private closeResult: string;
   private item: any = {
+    id: '',
+    goal_id: '',
     title: '',
     until_date: {
       day: null,
@@ -20,20 +22,19 @@ export class ModalService {
 
   constructor ( private modalService: NgbModal ) { }
 
-  open( name: string, itemType: string, actionTypeOrTitle: string, item: any = this.item ) {
+  open( name: string, itemType: string, actionType: string, item: any = this.item ) {
     const modalRef = this.modalService.open( Modals[ name ] );
-    console.log( modalRef );
     modalRef.componentInstance.itemType = itemType;
     if ( name === 'createEditModal' ) {
-      modalRef.componentInstance.actionType = actionTypeOrTitle;
+      modalRef.componentInstance.actionType = actionType;
       modalRef.componentInstance.item = item;
     } else {
-      modalRef.componentInstance.title = actionTypeOrTitle;
+      modalRef.componentInstance.title = item.title;
+      modalRef.componentInstance.itemId = item.id;
     }
     modalRef.result.then( ( result ) => {
 
       this.closeResult = `Closed with: ${result}`;
-      console.log( this.closeResult );
     }, ( reason ) => {
       this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
     } );

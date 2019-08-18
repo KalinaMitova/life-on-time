@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { GoalService } from 'app/shared/services/goal.service';
 import { Goal } from 'app/shared/models/goal';
 import { ModalService } from "../../../shared/services/modal.service";
+import { EventService } from 'app/shared/services/event.service';
 
 @Component( {
   selector: 'app-goals-page',
@@ -23,20 +24,19 @@ export class GoalsPageComponent implements OnInit {
     private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private eventService: EventService
   ) {
   }
 
   ngOnInit(): void {
-    this.today = this.getCurrentDate( '/' );
-    console.log( this.today );
+    // this.today = this.getCurrentDate( '/' );
+    // console.log( this.today );
     this.path = this.route.snapshot.routeConfig.path;
     this.setPage( this.path );
     this.goals$ = this.goalService.getGoalsByCategory( this.title );
-  }
-
-  submit( form ) {
-    console.log( form );
+    this.eventService.on( 'confirm create/edit', ( actionInfo => console.log( actionInfo ) ) );
+    this.eventService.on( 'confirm delete', ( itemId => console.log( itemId ) ) )
   }
 
   deleteGoal( id: string ) {

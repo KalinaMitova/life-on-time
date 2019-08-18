@@ -1,10 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import * as Chartist from 'chartist';
-
-declare var require: any;
-require( 'chartist-plugin-legend' );
-
-import { Chart } from '../../../../shared/models/chart';
+import { Component, OnInit, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Chart } from "../../../../shared/models/chart";
 
 @Component( {
   selector: 'app-bar-chart',
@@ -12,16 +7,14 @@ import { Chart } from '../../../../shared/models/chart';
   styleUrls: [ './bar-chart.component.scss' ]
 } )
 export class BarChartComponent implements OnInit {
-
   @Input( 'chart' ) chart: any;
 
-  private Chart: Chart;
+  private barChart: Chart;
 
   ngOnInit() {
-    const dataChart = this.chart;
-    this.Chart = {
+    this.barChart = {
       type: 'Bar',
-      data: dataChart,
+      data: this.chart,
       options: {
         seriesBarDistance: 21,
         axisX: {
@@ -30,23 +23,14 @@ export class BarChartComponent implements OnInit {
         axisY: {
           scaleMinSpace: 30,
         },
-        plugins: [
-          Chartist.plugins.legend( {
-            position: 'bottom'
-          } )
-        ],
+        // plugins: [
+        //   Chartist.plugins.legend( {
+        //     position: 'bottom'
+        //   } )
+        // ],
       },
     };
+
   }
 
 }
-
-// options: {
-//   seriesBarDistance: 21,
-//     axisX: {
-//     showGrid: false, offset: 100
-//   },
-//   axisY: {
-//     scaleMinSpace: 30,
-//             }
-// },

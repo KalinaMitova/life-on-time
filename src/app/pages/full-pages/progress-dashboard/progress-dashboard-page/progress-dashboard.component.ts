@@ -1,11 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, Subscription } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, ViewChild, SimpleChange } from '@angular/core';
+import { forkJoin, Subscription, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { SimpleChanges } from '@angular/core';
 
 import { minStatisticData } from '../../../../shared/data/minStatisticFirstRowData';
 import { GoalService } from "../../../../shared/services/goal.service";
 import { TaskService } from "../../../../shared/services/task.service";
 import { IdeaService } from 'app/shared/services/idea.service';
+
+//import { BarChart } from "../../../../shared/models/barChart";
+import { BarChartComponent } from '../bar-chart/bar-chart.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 //Declarations
 declare var require: any;
@@ -19,19 +24,26 @@ const ChartData: any = require( 'app/shared/data/chartsData.json' );
 export class ProgressDashboardComponent implements OnInit {
 
   private dataChart = [];
-  private barChart;
+  private barChart = {
+    "labels": [
+      "Health & Wellbeing",
+      "Personal Development",
+      "Relationships",
+      "Phyisical Activity",
+      "Financial"
+    ],
+    "series": [ {
+      "name": "Goals",
+      "value": []
+    }, {
+      "name": "Actions",
+      "value": []
+    } ]
+  };
   private minStaticsDataFirstRow = minStatisticData.firstRow;
   private minStaticsDataSecondRow = minStatisticData.secondRow;
   private minStatSubscription: Subscription;
-  // private userRegistrationDate: string;
-  // private userGoals: number = 0;
-  // private userTasks: number = 0;
-  // private userIdeas: number = 0;
-  // private daysToCompleteAction: number = 0;
-  // private userCompletedGoals: number = 0;
-  // private userCompletedTasks: number = 0;
-  // private userCompletedIdeas: number = 0;
-  // private achievmentRate: number = 0;
+  private barChartSubscription: Subscription;
 
   constructor (
     private taskService: TaskService,
@@ -41,63 +53,62 @@ export class ProgressDashboardComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
-    //min statistics
-    //this.minStatSubscription =
-    forkJoin(
+    this.minStatSubscription = forkJoin(
       //first row
-      this.goalService.getUserGoals(),
-      this.taskService.getUserAllTasks(),
-      this.ideasService.getUserIdeas(),
-      this.taskService.getDaysToCompleteTasks(),
+      this.goalService.getUserGoals().pipe( catchError( error => of( error ) ) ),
+      this.taskService.getUserAllTasksAsNumber().pipe( catchError( error => of( error ) ) ),
+      this.ideasService.getUserIdeasAsNumber().pipe( catchError( error => of( error ) ) ),
+      this.taskService.getDaysToCompleteTasks().pipe( catchError( error => of( error ) ) ),
       //second row
-      this.goalService.getUserCompletedGoals(),
-      this.taskService.getUserCompletedTasks(),
-      this.goalService.getUserGoalsFromIdeas(),
-      this.goalService.getUserRate(),
+      this.goalService.getUserCompletedGoals().pipe( catchError( error => of( error ) ) ),
+      this.taskService.getUserCompletedTasks().pipe( catchError( error => of( error ) ) ),
+      this.goalService.getUserGoalsFromIdeas().pipe( catchError( error => of( error ) ) ),
+      this.goalService.getUserRate().pipe( catchError( error => of( error ) ) ),
     )
-      .pipe(
-        map( (
-          [ goals, tasks, ideas, daysTocompleteTasks,
-            completedGoals, completedTasks, ideasToGoals, rate
-          ] ) => {
-          // forkJoin returns an array of values, here we map those values to an object
-          return {
-            goals: goals.dataValue.goalsNumber,
-            tasks: tasks.data.taskNumber,
-            ideas: ideas.dataValue.ideasNumber,
-            daysTocompleteTasks: daysTocompleteTasks.dataValue.days,
-            completedGoals: completedGoals.dataValue.number,
-            completedTasks: completedTasks.dataValue.number,
-            ideasToGoals: ideasToGoals.dataValue.number,
-            rate: rate.dataValue.percent
-          };
-        } )
-      )
-      .subscribe( ( data ) => {
-        console.log( data );
-        this.minStaticsDataFirstRow[ 0 ].value = data.goals;
-        this.minStaticsDataFirstRow[ 1 ].value = data.tasks;
-        this.minStaticsDataFirstRow[ 2 ].value = data.ideas;
-        this.minStaticsDataFirstRow[ 3 ].value = data.daysTocompleteTasks;
-        this.minStaticsDataSecondRow[ 0 ].value = data.completedGoals;
-        this.minStaticsDataSecondRow[ 1 ].value = data.completedTasks;
-        this.minStaticsDataSecondRow[ 2 ].value = data.ideasToGoals;
-        this.minStaticsDataSecondRow[ 3 ].value = + Math.round( data.rate ).toFixed( 2 );
+      .subscribe( ( [ goals, tasks, ideas, daysTocompleteTasks,
+        completedGoals, completedTasks, ideasToGoals, rate
+      ] ) => {
+        this.minStaticsDataFirstRow[ 0 ].value = goals;
+        this.minStaticsDataFirstRow[ 1 ].value = tasks;
+        this.minStaticsDataFirstRow[ 2 ].value = ideas;
+        this.minStaticsDataFirstRow[ 3 ].value = daysTocompleteTasks;
+        this.minStaticsDataSecondRow[ 0 ].value = completedGoals;
+        this.minStaticsDataSecondRow[ 1 ].value = completedTasks;
+        this.minStaticsDataSecondRow[ 2 ].value = ideasToGoals;
+        this.minStaticsDataSecondRow[ 3 ].value = rate + ' %';
       } );
 
-    const values = Object.keys( ChartData ).map( key => ChartData[ key ] );
-    for ( let chart of values ) {
-      this.dataChart.push( chart );
-    }
-    this.barChart = this.dataChart.pop();
+
+
+    this.barChartSubscription = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
+      .subscribe( data => {
+        //let counter = 0;
+        this.barChart.labels.forEach( label => {
+          this.barChart.series[ 0 ].value.push( data[ label ] ? data[ label ].goals : 0 );
+          this.barChart.series[ 1 ].value.push( data[ label ] ? data[ label ].tasks : 0 );
+        } );
+      } );
+
+    // this.barChart.labels.forEach( label => {
+    //   this.barChart.series[ 0 ].value[ counter ] = data[ 'dataValue' ][ label ].goals;
+    //   this.barChart.series[ 1 ].value[ counter ] = data[ 'dataValue' ][ label ].tasks;
+    //   counter++;
+    // } );
+
+    // const values = Object.keys( ChartData ).map( key => ChartData[ key ] );
+    // for ( let chart of values ) {
+    //   this.dataChart.push( chart );
+    // }
+    // this.barChart = this.dataChart.pop();
   }
 
   ngOnDestroy() {
     if ( this.minStatSubscription ) {
       this.minStatSubscription.unsubscribe();
-
+    }
+    if ( this.barChartSubscription ) {
+      this.barChartSubscription.unsubscribe();
     }
   }
 }

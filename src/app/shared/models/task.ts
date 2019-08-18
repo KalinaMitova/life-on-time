@@ -2,6 +2,7 @@ import { SeparatedDate } from './date';
 
 export interface Task {
   id: number,
+  goal_id?: string,
   title: string,
   until_date: SeparatedDate,
   description?: string,

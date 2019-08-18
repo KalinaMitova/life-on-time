@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from "environments/environment";
+import { map } from 'rxjs/operators';
 
+import { environment } from "environments/environment";
 import { Goal } from '../models/goal';
-import { map, filter } from 'rxjs/operators';
-import { TaskService } from './task.service';
+
 
 const BASE_URL = environment.apiUrl + "api/me/goals/";
-const ALL_USER_HEALTH_GOALS_END = "";
-const ALL_USER_DEVELOPMENT_GOALS_END = "";
-const ALL_USER_RELATIONSHIPS_GOALS_END = "";
-const ALL_USER_PHYSICAL_ACTIVITY_GOALS_END = "";
-const ALL_USER_FINANCIAL_GOALS_END = "";
 const USER_COMPLETED_GOALS_END = "completed";
 const USER_RATE_END = "rate";
 const USER_GOALS_FROM_IDEAS_END = "fromideas";
 const USER_LAST_THREE_GOALS_END = "lastthree";
 const USER_GOALS_END = "bycategoryall";
+const USER_GOALS_TASKS_END = "bycategory";
 
 @Injectable( {
   providedIn: 'root'
@@ -29,8 +25,11 @@ export class GoalService {
   ) {
   }
 
-  getUserGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL );
+  getUserGoals(): Observable<Number> {
+    return this.http.get<Array<Goal>>( BASE_URL )
+      .pipe(
+        map( goals => goals[ 'dataValue' ].goalsNumber )
+      );
   }
 
   getGoalsByCategory( category: string ): Observable<Array<Goal>> {
@@ -63,14 +62,39 @@ export class GoalService {
       );
   }
 
-  getUserCompletedGoals(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_COMPLETED_GOALS_END );
+  getUserLastThreeGoalsStatistic(): Observable<Array<any>> {
+    return this.http.get<Array<any>>( BASE_URL + USER_LAST_THREE_GOALS_END )
+      .pipe(
+        map( goals => goals[ 'dataValue' ] )
+      )
   }
-  getUserGoalsFromIdeas(): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_FROM_IDEAS_END );
+
+  getUserCompletedGoals(): Observable<Number> {
+    return this.http.get<Number>( BASE_URL + USER_COMPLETED_GOALS_END )
+      .pipe(
+        map( goals => goals[ 'dataValue' ].number )
+      );
   }
-  getUserRate(): Observable<number> {
-    return this.http.get<number>( BASE_URL + USER_RATE_END );
+
+  getUserGoalsFromIdeas(): Observable<Number> {
+    return this.http.get<Number>( BASE_URL + USER_GOALS_FROM_IDEAS_END )
+      .pipe(
+        map( goals => goals[ 'dataValue' ].number )
+      );
+  }
+
+  getUserRate(): Observable<Number> {
+    return this.http.get<Number>( BASE_URL + USER_RATE_END )
+      .pipe(
+        map( rate => rate[ 'dataValue' ].percent )
+      );
+  }
+
+  getUserGoalsAndTasksByCategoryAsNumber() {
+    return this.http.get( BASE_URL + USER_GOALS_TASKS_END )
+      .pipe(
+        map( data => data[ 'dataValue' ] )
+      );
   }
 
   postCreateGoal( goal: Goal ) {

@@ -1,6 +1,7 @@
 <!--Bar Chart Starts-->
 <!-- <div class="row text-left">
     <div class="col-sm-12"> -->
+{{barChart.data | json}}
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">Goals and Actions by Category</h4>
@@ -8,9 +9,11 @@
     <div class="card-content">
         <div class="card-body">
             <div id="bar-chart" class="height-400">
-                <x-chartist [data]="Chart.data" [type]="Chart.type" [options]="Chart.options" [responsiveOptions]="Chart.responsiveOptions" [events]="Chart.events">
+                <x-chartist [data]="barChart.data" [type]="barChart.type" [options]="barChart.options" [responsiveOptions]="barChart.responsiveOptions" [events]="barChart.events">
                 </x-chartist>
             </div>
+            <p style="color: #009DA0">Goals</p>
+            <p style="color: #FF8D60">Actions</p>
         </div>
     </div>
 </div>

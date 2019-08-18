@@ -4,6 +4,7 @@ import { environment } from "environments/environment";
 
 import { Task } from '../../shared/models/task';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.apiUrl + 'api/me/tasks/';
 const USER_COMPLETED_TASKS_END = 'completed';
@@ -22,12 +23,25 @@ export class TaskService {
     return this.http.get( BASE_URL );
   }
 
-  getUserCompletedTasks() {
-    return this.http.get( BASE_URL + USER_COMPLETED_TASKS_END );
+  getUserAllTasksAsNumber() {
+    return this.http.get( BASE_URL )
+      .pipe(
+        map( tasks => tasks[ 'data' ].taskNumber )
+      );
   }
 
-  getDaysToCompleteTasks() {
-    return this.http.get( BASE_URL + USER_DAYS_LAST_TASKS_FINISH_END );
+  getUserCompletedTasks(): Observable<Number> {
+    return this.http.get<Number>( BASE_URL + USER_COMPLETED_TASKS_END )
+      .pipe(
+        map( tasks => tasks[ 'dataValue' ].number )
+      );
+  }
+
+  getDaysToCompleteTasks(): Observable<Number> {
+    return this.http.get<Number>( BASE_URL + USER_DAYS_LAST_TASKS_FINISH_END )
+      .pipe(
+        map( days => days[ 'dataValue' ].days )
+      );
   }
 
   getTaskById( id: number ): Observable<Task> {

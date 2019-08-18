@@ -72,7 +72,7 @@ export let minStatisticData = {
       textClass: 'white',
       class: "bg-danger",
       iconClass: 'icon-pie-chart white',
-      value: 0
+      value: '0'
     },
   ]
 }

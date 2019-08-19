@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../services/event.service';
+import { ItemInfo } from '../models/itemInfo';
 
 @Component( {
   selector: 'app-modal-confirm',
@@ -19,7 +20,7 @@ export class ModalConfirmComponent {
   }
 
   onOK( itemType: string, itemId: string ) {
-    let itemInfo = {
+    let itemInfo: ItemInfo = {
       itemId,
       itemType
     }

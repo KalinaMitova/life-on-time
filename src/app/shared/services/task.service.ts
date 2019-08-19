@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.apiUrl + 'api/me/tasks/';
+const BASE_CRUD_URL = '/api/tasks/';
+//in environment
+//const BASE_CRUD_URL = environment.apiUrl + 'api/tasks/';
 const USER_COMPLETED_TASKS_END = 'completed';
 const USER_DAYS_LAST_TASKS_FINISH_END = 'dayscompletelastaction';
 
@@ -44,19 +47,19 @@ export class TaskService {
       );
   }
 
-  getTaskById( id: number ): Observable<Task> {
-    return this.http.get<Task>( BASE_URL + 'id' );
+  getTaskById( id: string ): Observable<Task> {
+    return this.http.get<Task>( BASE_CRUD_URL + id );
   }
 
-  putEditTaskById( id: number, task: Task ) {
-    return this.http.put( BASE_URL + 'id', task );
+  putEditTaskById( id: string, task: Task ) {
+    return this.http.put( '/api/tasks' + id, task );
   }
 
-  deletTaskById( id: number ) {
-    return this.http.delete( BASE_URL + 'id' );
+  deleteTaskById( id: string ) {
+    return this.http.delete( BASE_CRUD_URL + id );
   }
 
   postCreateTask( task: Task ) {
-    return this.http.post( BASE_URL, task );
+    return this.http.post( '/api/tasks', task );
   }
 }

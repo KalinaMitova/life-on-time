@@ -28,7 +28,7 @@ export class ModalService {
     if ( name === 'createEditModal' ) {
       modalRef.componentInstance.actionType = actionType;
       modalRef.componentInstance.item = item;
-    } else {
+    } else if ( name === 'confirmModal' ) {
       modalRef.componentInstance.title = item.title;
       modalRef.componentInstance.itemId = item.id;
     }

@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.apiUrl + 'api/ideas/';
-const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas/';
+const USER_IDEAS_URL = '/api/me/ideas/';
+//in product environment
+//const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas/';
 
 @Injectable( {
   providedIn: 'root'
@@ -28,16 +30,16 @@ export class IdeaService {
       );
   }
 
-  getIdeaById( id: number ): Observable<Idea> {
+  getIdeaById( id: string ): Observable<Idea> {
     return this.http.get<Idea>( BASE_URL + 'id' );
   }
 
-  putEditIdeaById( id: number, idea: Idea ) {
-    return this.http.put( BASE_URL + 'id', idea );
+  putEditIdeaById( id: string, idea: Idea ) {
+    return this.http.put( BASE_URL + id, idea );
   }
 
-  deletIdeaById( id: number ) {
-    return this.http.delete( BASE_URL + 'id' );
+  deletIdeaById( id: string ) {
+    return this.http.delete( BASE_URL + id );
   }
 
   postCreateIdea( idea: Idea ) {

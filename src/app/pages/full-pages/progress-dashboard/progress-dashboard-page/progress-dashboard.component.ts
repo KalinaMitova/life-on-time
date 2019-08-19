@@ -29,7 +29,7 @@ export class ProgressDashboardComponent implements OnInit {
       "Health & Wellbeing",
       "Personal Development",
       "Relationships",
-      "Phyisical Activity",
+      "Physical Activity",
       "Financial"
     ],
     "series": [ {

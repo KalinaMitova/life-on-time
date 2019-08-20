@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { Chart } from "../../../../shared/models/chart";
 
 @Component( {
@@ -6,7 +6,8 @@ import { Chart } from "../../../../shared/models/chart";
   templateUrl: './bar-chart.component.html',
   styleUrls: [ './bar-chart.component.scss' ]
 } )
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnInit, OnChanges {
+
   @Input( 'chart' ) chart: any;
 
   private barChart: Chart;
@@ -32,5 +33,7 @@ export class BarChartComponent implements OnInit {
     };
 
   }
-
+  ngOnChanges( changes: import( "@angular/core" ).SimpleChanges ): void {
+    throw new Error( "Method not implemented." );
+  }
 }

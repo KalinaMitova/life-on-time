@@ -2,10 +2,10 @@ import { Task } from './task';
 import { SeparatedDate } from './date';
 
 export interface Goal {
-  id: number,
+  id: string,
   title: string,
   description: string,
   until_date: SeparatedDate,
-  status?: number,
+  status: string,
   tasks: Array<Task>
 }

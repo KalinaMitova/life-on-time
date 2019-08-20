@@ -3,10 +3,13 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ResponceHandlerInterceptor implements HttpInterceptor {
-  constructor ( public toastr: ToastrService
+  constructor (
+    private toastr: ToastrService,
+    private router: Router
   ) { }
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
@@ -23,9 +26,13 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
           }
         }
       } ), catchError( ( err: any ) => {
-        //console.log( err );
         if ( err instanceof HttpErrorResponse ) {
           try {
+            //400 must be 401
+            // if ( err.status === 400 ) {
+            //   console.log( err.status )
+            //   this.router.navigate( [ '/user/login' ] );
+            // } else
             if ( err.error.error ) {
               this.toastr.error( err.error.error, 'Error:', {
                 closeButton: true,

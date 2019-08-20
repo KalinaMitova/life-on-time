@@ -8,29 +8,35 @@ import { SeparatedDate } from "../models/date";
 } )
 export class ModalService {
   private closeResult: string;
-  private item: any = {
-    id: '',
-    goal_id: '',
-    title: '',
-    until_date: {
-      day: null,
-      month: null,
-      year: null
-    },
-    description: ''
-  }
 
   constructor ( private modalService: NgbModal ) { }
 
-  open( name: string, itemType: string, actionType: string, item: any = this.item ) {
+  open( name: string, itemType: string, actionType: string, itemInfo: any ) {
     const modalRef = this.modalService.open( Modals[ name ] );
     modalRef.componentInstance.itemType = itemType;
+    debugger;
     if ( name === 'createEditModal' ) {
+      if ( actionType === 'create' ) {
+        let item = {
+          title: '',
+          until_date: {
+            day: null,
+            month: null,
+            year: null
+          },
+          description: ''
+        }
+        if ( itemType === 'action' ) {
+          item[ 'goal_id' ] = itemInfo;
+        }
+        modalRef.componentInstance.item = item;
+      } else if ( actionType === 'edit' ) {
+        modalRef.componentInstance.item = itemInfo;
+      }
       modalRef.componentInstance.actionType = actionType;
-      modalRef.componentInstance.item = item;
     } else if ( name === 'confirmModal' ) {
-      modalRef.componentInstance.title = item.title;
-      modalRef.componentInstance.itemId = item.id;
+      modalRef.componentInstance.title = itemInfo.title;
+      modalRef.componentInstance.itemId = itemInfo.id;
     }
     modalRef.result.then( ( result ) => {
 

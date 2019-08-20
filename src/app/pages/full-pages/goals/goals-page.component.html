@@ -19,18 +19,22 @@
 <!--  *ngFor="let goal of goals$ | async, i=i ndex " -->
 <!--  populate goals starts -->
 
-<ng-template [ngIf]="(goals$ | async)?.length>0">
-    <ng-template ngFor [ngForOf]="goals$ | async" let-goals="ngForOf" let-i="index " let-l=count>
-        <div class="row match-height " *ngIf="(i+1)%3===0 || i === 0">
-            <div class="col-sm-12 col-md-4 ">
-                <app-single-goal-card *ngIf="i+0 < l" [goal]="goals[i+0]">
-                </app-single-goal-card>
-            </div>
-            <app-single-goal-card *ngIf="i+1 < l" [goal]="goals[i+1]  "></app-single-goal-card>
-            <app-single-goal-card *ngIf="i+2 < l" [goal]="goals[i+2]  "></app-single-goal-card>
+<!-- <ng-template [ngIf]="(goals$ | async)?.length>0"> -->
+<ng-template ngFor [ngForOf]="goals$ | async" let-goals="ngForOf" let-i="index " let-l=count>
+    <div class="row match-height " *ngIf="(i+1)%3===0 || i === 0">
+        <div class="col-sm-12 col-md-4" *ngIf="i+0 < l">
+            <app-single-goal-card [goal]="goals[i+0]">
+            </app-single-goal-card>
         </div>
-    </ng-template>
+        <div class="col-sm-12 col-md-4" *ngIf="i+1< l">
+            <app-single-goal-card [goal]="goals[i+1]  "></app-single-goal-card>
+        </div>
+        <div class="col-sm-12 col-md-4" *ngIf="i+2< l">
+            <app-single-goal-card [goal]="goals[i+2]  "></app-single-goal-card>
+        </div>
+    </div>
 </ng-template>
+<!-- </ng-template> -->
 <!--  *ngFor="let goal of goals$ | async, i=i ndex " -->
 <!--  populate goals ends -->
 

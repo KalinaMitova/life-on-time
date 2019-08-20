@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 //apiUrl: ' http://136.244.71.69/'
 //apiUrl: ' http://lotapi.cweb.bg/'
+//apiUrl: '/' // localhost lifeontime
 export const environment = {
   production: false,
   apiUrl: '/'

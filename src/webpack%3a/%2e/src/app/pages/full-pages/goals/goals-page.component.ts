@@ -45,8 +45,11 @@ export class GoalsPageComponent implements OnInit {
   ngOnInit(): void {
     this.path = this.route.snapshot.routeConfig.path;
     this.setPage( this.path );
+    debugger;
     this.goals$ = this.goalService.getGoalsByCategory( this.title );
+    debugger;
     this.eventService.on( 'confirm create/edit', ( actionInfo => {
+      debugger;
       this.mapAction( actionInfo )
     } ) );
     this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) )
@@ -73,8 +76,8 @@ export class GoalsPageComponent implements OnInit {
     let goal: GoalCreate = form.value;
     const date = form.value.until_date;
     goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
-    //goal.category_id = this.title;
-    goal.category_id = "1";
+    goal.category_id = this.title;
+    //goal.category_id = "1";
     console.log( goal );
     this.createGoalSubscription = this.goalService.postCreateGoal( goal )
       .subscribe( data => {
@@ -101,10 +104,9 @@ export class GoalsPageComponent implements OnInit {
   }
 
   private editGoal( form, goalId: string ) {
-    const goal: GoalCreate = form.value;
     const date = form.value.until_date;
-    date.until_date = this.getDate( date.day, date.month, date.year, '-' )
-    this.editTaskSubscription = this.goalService.putEditGoalById( goalId, goal )
+    form.value.until_date = this.getDate( date.day, date.month, date.year, '-' )
+    this.editTaskSubscription = this.goalService.putEditGoalById( goalId, form.value )
       .subscribe( data => {
         if ( form.valid ) {
           form.reset();
@@ -114,11 +116,13 @@ export class GoalsPageComponent implements OnInit {
   }
 
   private editTask( form, taskId: string ) {
+    debugger;
     let task: TaskCreate = form.value;
     const date = form.value.until_date;
     task.until_date = this.getDate( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.taskService.putEditTaskById( taskId, task )
       .subscribe( data => {
+        debugger;
         if ( form.valid ) {
           form.reset();
           this.goals$ = this.goalService.getGoalsByCategory( this.title );

@@ -9,8 +9,8 @@ import { GoalCreate } from '../models/goalCreate';
 
 
 const BASE_URL = environment.apiUrl + "api/me/goals/";
-const BASE_CRUD_URL = "/api/goals/";
-//const BASE_CRUD_URL = environment.apiUrl + "api/goals/";
+//const BASE_CRUD_URL = "/api/goals/";
+const BASE_CRUD_URL = environment.apiUrl + "api/goals";
 const USER_COMPLETED_GOALS_END = "completed";
 const USER_RATE_END = "rate";
 const USER_GOALS_FROM_IDEAS_END = "fromideas";
@@ -41,11 +41,13 @@ export class GoalService {
         map( data => {
           if ( data[ 'dataValue' ][ category ] ) {
             return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
-              let goalDateAsString = goal.until_date.split( '-' );
-              goal.until_date = {
-                day: Number( goalDateAsString[ 2 ] ),
-                month: Number( goalDateAsString[ 1 ] ),
-                year: Number( goalDateAsString[ 0 ] )
+              if ( goal.until_date ) {
+                let goalDateAsString = goal.until_date.split( '-' );
+                goal.until_date = {
+                  day: Number( goalDateAsString[ 2 ] ),
+                  month: Number( goalDateAsString[ 1 ] ),
+                  year: Number( goalDateAsString[ 0 ] )
+                }
               }
               goal.tasks.map( task => {
                 let taskDateAsString = task.until_date.split( '-' );
@@ -101,19 +103,19 @@ export class GoalService {
   }
 
   postCreateGoal( goal: GoalCreate ) {
-    return this.http.post( '/api/goals', goal );
+    return this.http.post( BASE_CRUD_URL, goal );
   }
 
   getGoalById( id: number ): Observable<Goal> {
     return this.http.get<Goal>( BASE_URL + 'id' );
   }
 
-  putEditGoalById( id: string, goal: Goal ) {
-    return this.http.put( BASE_CRUD_URL + id, goal );
+  putEditGoalById( id: string, goal: GoalCreate ) {
+    return this.http.put( BASE_CRUD_URL + `/${id}`, goal );
   }
 
   deleteGoalById( id: string ) {
-    return this.http.delete( BASE_CRUD_URL + id );
+    return this.http.delete( BASE_CRUD_URL + `/${id}` );
   }
 
 }

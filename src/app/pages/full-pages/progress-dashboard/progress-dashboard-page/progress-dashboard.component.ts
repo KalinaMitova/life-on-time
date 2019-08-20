@@ -83,7 +83,6 @@ export class ProgressDashboardComponent implements OnInit {
 
     this.barChartSubscription = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
       .subscribe( data => {
-        //let counter = 0;
         this.barChart.labels.forEach( label => {
           this.barChart.series[ 0 ].value.push( data[ label ] ? data[ label ].goals : 0 );
           this.barChart.series[ 1 ].value.push( data[ label ] ? data[ label ].tasks : 0 );

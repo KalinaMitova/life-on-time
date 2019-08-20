@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, Form, Validators } from '@angular/forms';
 import { EventService } from '../services/event.service';
 import { ActionInfo } from '../models/actionInfo';
 
@@ -10,24 +10,38 @@ import { ActionInfo } from '../models/actionInfo';
   styleUrls: [ './modal-create-edit.component.scss' ]
 } )
 export class ModalCreateEditComponent implements OnInit {
+  @Input() item: any;
+  private modalForm;
 
   constructor (
-    public modal: NgbActiveModal,
-    private eventService: EventService
+    private modal: NgbActiveModal,
+    private eventService: EventService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.modalForm = this.formBuilder.group( {
+      title: [ this.item.title, [ Validators.required ] ],
+      description: [ this.item.description, ],
+      until_date: [ this.item.until_date, [ Validators.required ] ]
+    } );
   }
+
+  get title() { return this.modalForm.get( 'title' ) };
+  get description() { return this.modalForm.get( 'description' ) };
+  get until_date() { return this.modalForm.get( 'until_date' ) };
+
   close() {
+    this.modalForm.reset();
     this.modal.close( 'Modal Form Closed' )
   }
 
-  onAction( actionType: string, itemType: string, form: NgForm, itemId: string, goalId?: string ) {
+  onAction( actionType: string, itemType: string, itemId: string, goalId?: string ) {
     const actionInfo: ActionInfo = {
       actionType,
       itemType,
       itemId,
-      form,
+      form: this.modalForm,
       goalId
     }
     this.eventService.emit(

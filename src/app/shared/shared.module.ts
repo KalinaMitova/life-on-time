@@ -23,7 +23,7 @@ import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-valid
 import { CustomizerComponent } from './customizer/customizer.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule( {
     exports: [
@@ -43,7 +43,8 @@ import { FormsModule } from '@angular/forms';
         RouterModule,
         CommonModule,
         NgbModule,
-        FormsModule,
+        // FormsModule,
+        ReactiveFormsModule,
         TranslateModule,
         PerfectScrollbarModule
     ],

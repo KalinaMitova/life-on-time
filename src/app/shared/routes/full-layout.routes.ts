@@ -6,8 +6,4 @@ export const Full_ROUTES: Routes = [
     path: '',
     loadChildren: () => import( '../../pages/full-pages/full-pages.module' ).then( m => m.FullPagesModule )
   },
-  // {
-  //   path: 'full-layout',
-  //   loadChildren: () => import('../../pages/full-layout-page/full-pages.module').then(m => m.FullPagesModule)
-  // }
 ];

@@ -1,17 +1,19 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { GoalService } from 'app/shared/services/goal.service';
 import { Goal } from 'app/shared/models/goal';
-import { ModalService } from "../../../shared/services/modal.service";
+import { ModalService } from "app/shared/services/modal.service";
 import { EventService } from 'app/shared/services/event.service';
 import { TaskService } from 'app/shared/services/task.service';
-import { NgForm } from '@angular/forms';
 import { ActionInfo } from 'app/shared/models/actionInfo';
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { TaskCreate } from 'app/shared/models/taskCreate';
+import { GOALS_CATEGORIES } from "app/shared/data/goalsCategories";
+
+
 
 @Component( {
   selector: 'app-goals-page',
@@ -21,8 +23,7 @@ import { TaskCreate } from 'app/shared/models/taskCreate';
 export class GoalsPageComponent implements OnInit {
   @ViewChild( 'type', { static: false } ) type: any;
 
-  private title: string;
-  private categoryId: string;
+  private currentGoalPage;
   private path: string;
   private goals$: Observable<Array<Goal>>;
   private deleteSubscription: Subscription;
@@ -30,11 +31,9 @@ export class GoalsPageComponent implements OnInit {
   private createTaskSubscription: Subscription;
   private editGoalSubscription: Subscription;
   private editTaskSubscription: Subscription;
-  //private today: string;
 
   constructor (
     private modalService: ModalService,
-    //private router: Router,
     private route: ActivatedRoute,
     private goalService: GoalService,
     private taskService: TaskService,
@@ -44,8 +43,8 @@ export class GoalsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.path = this.route.snapshot.routeConfig.path;
-    this.setPage( this.path );
-    this.goals$ = this.goalService.getGoalsByCategory( this.title );
+    this.currentGoalPage = GOALS_CATEGORIES[ this.path ];
+    this.loadPageGoals();
     this.eventService.on( 'confirm create/edit', ( actionInfo => {
       this.mapAction( actionInfo )
     } ) );
@@ -73,14 +72,12 @@ export class GoalsPageComponent implements OnInit {
     let goal: GoalCreate = form.value;
     const date = form.value.until_date;
     goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
-    //goal.category_id = this.title;
-    goal.category_id = "1";
-    console.log( goal );
+    goal.category_id = this.currentGoalPage.categoryId;
     this.createGoalSubscription = this.goalService.postCreateGoal( goal )
       .subscribe( data => {
         if ( form.valid ) {
           form.reset();
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         }
       } )
   }
@@ -95,7 +92,7 @@ export class GoalsPageComponent implements OnInit {
       .subscribe( data => {
         if ( form.valid ) {
           form.reset();
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         }
       } )
   }
@@ -103,12 +100,12 @@ export class GoalsPageComponent implements OnInit {
   private editGoal( form, goalId: string ) {
     const goal: GoalCreate = form.value;
     const date = form.value.until_date;
-    date.until_date = this.getDate( date.day, date.month, date.year, '-' )
+    goal.until_date = this.getDate( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.goalService.putEditGoalById( goalId, goal )
       .subscribe( data => {
         if ( form.valid ) {
           form.reset();
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         }
       } )
   }
@@ -121,7 +118,7 @@ export class GoalsPageComponent implements OnInit {
       .subscribe( data => {
         if ( form.valid ) {
           form.reset();
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         }
       } )
   }
@@ -130,42 +127,18 @@ export class GoalsPageComponent implements OnInit {
     if ( itemInfo.itemType === 'goal' ) {
       this.deleteSubscription = this.goalService.deleteGoalById( itemInfo.itemId )
         .subscribe( data => {
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         } )
     } else if ( itemInfo.itemType === 'action' ) {
       this.deleteSubscription = this.taskService.deleteTaskById( itemInfo.itemId )
         .subscribe( data => {
-          this.goals$ = this.goalService.getGoalsByCategory( this.title );
+          this.loadPageGoals();
         } )
     }
   }
 
-  private setPage( path: string ) {
-    switch ( path ) {
-      case 'health-wellbeing':
-        {
-          this.title = 'Health & Wellbeing';
-        } break;
-      case 'personal-development':
-        {
-          this.title = 'Personal Development';
-        } break;
-      case 'physical-activity':
-        {
-          this.title = 'Physical Activity';
-        } break;
-      case 'relationships':
-        {
-          this.title = 'Relationships';
-        } break;
-      case 'financial':
-        {
-          this.title = 'Financial';
-        } break;
-      default: {
-        this.title = "";
-      } break;
-    }
+  private loadPageGoals() {
+    this.goals$ = this.goalService.getGoalsByCategory( this.currentGoalPage.title );
   }
 
   private getDate( dd, mm, yyyy, separator: string ) {

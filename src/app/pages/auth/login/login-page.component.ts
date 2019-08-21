@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from 'app/shared/auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component( {
   selector: 'app-login-page',
@@ -9,28 +10,30 @@ import { AuthService } from 'app/shared/auth/auth.service';
   styleUrls: [ './login-page.component.scss' ]
 } )
 
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
+  ngOnInit(): void {
+    throw new Error( "Method not implemented." );
+  }
 
   @ViewChild( 'loginForm', { static: true } ) loginForm: NgForm;
 
   constructor (
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private cookieService: CookieService ) { }
 
   // On submit button click
 
   login() {
-    console.log( this.loginForm.value );
     this.authService
       .loginUser( this.loginForm.value )
-      .subscribe( data => {
-        console.log( data );
-        this.authService.getUsers().subscribe( d => console.log( d ) )
-        // this.authService.saveUserInfo( data );
+      .subscribe( res => {
+        const token = res.headers.get( 'token' );
+        this.cookieService.set( "token", token, 365, '/' );
         if ( this.loginForm.valid ) {
           this.loginForm.reset();
-          localStorage.setItem( 'isAuthenticated', 'true' )
+          //localStorage.setItem( 'isAuthenticated', 'true' )
           this.router.navigate( [ '/progress-dashboard' ] )
         }
       } )

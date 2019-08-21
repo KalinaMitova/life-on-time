@@ -42,19 +42,29 @@ export class GoalService {
           if ( data[ 'dataValue' ][ category ] ) {
             return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
               if ( goal.until_date ) {
-                let goalDateAsString = goal.until_date.split( '-' );
+                const goalDueDateAsString = goal.until_date.split( '-' );
                 goal.until_date = {
-                  day: Number( goalDateAsString[ 2 ] ),
-                  month: Number( goalDateAsString[ 1 ] ),
-                  year: Number( goalDateAsString[ 0 ] )
-                }
+                  day: Number( goalDueDateAsString[ 2 ] ),
+                  month: Number( goalDueDateAsString[ 1 ] ),
+                  year: Number( goalDueDateAsString[ 0 ] )
+                };
               }
+
+              if ( goal.created_at ) {
+                const goalCreatedDateAsString = goal.created_at.split( '-' );
+                goal.created_at = {
+                  day: Number( goalCreatedDateAsString[ 2 ] ),
+                  month: Number( goalCreatedDateAsString[ 1 ] ),
+                  year: Number( goalCreatedDateAsString[ 0 ] )
+                };
+              }
+
               goal.tasks.map( task => {
-                let taskDateAsString = task.until_date.split( '-' );
+                const taskDueDateAsString = task.until_date.split( '-' );
                 task.until_date = {
-                  day: Number( taskDateAsString[ 2 ] ),
-                  month: Number( taskDateAsString[ 1 ] ),
-                  year: Number( taskDateAsString[ 0 ] )
+                  day: Number( taskDueDateAsString[ 2 ] ),
+                  month: Number( taskDueDateAsString[ 1 ] ),
+                  year: Number( taskDueDateAsString[ 0 ] )
                 }
                 return task;
               } )

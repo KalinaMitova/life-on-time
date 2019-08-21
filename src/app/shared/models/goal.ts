@@ -7,5 +7,6 @@ export interface Goal {
   description: string,
   until_date: SeparatedDate,
   status: string,
-  tasks: Array<Task>
+  tasks: Array<Task>,
+  created_at: string,
 }

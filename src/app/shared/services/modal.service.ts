@@ -14,7 +14,6 @@ export class ModalService {
   open( name: string, itemType: string, actionType: string, itemInfo: any ) {
     const modalRef = this.modalService.open( Modals[ name ] );
     modalRef.componentInstance.itemType = itemType;
-    debugger;
     if ( name === 'createEditModal' ) {
       if ( actionType === 'create' ) {
         let item = {

@@ -24,6 +24,7 @@ import { ApplicationService } from './shared/applications/application.service';
 import { GoalService } from './shared/services/goal.service';
 import { TaskService } from './shared/services/task.service';
 import { IdeaService } from './shared/services/idea.service';
+import { CookieService } from 'ngx-cookie-service';
 
 import { ResponceHandlerInterceptor } from './shared/interceptors/responce-handler-interceptor';
 import { ToastrModule } from 'ngx-toastr';
@@ -76,6 +77,7 @@ export function createTranslateLoader( http: HttpClient ) {
     IdeaService,
     AuthGuard,
     ModalService,
+    CookieService,
     EventService,
     {
       provide: HTTP_INTERCEPTORS,

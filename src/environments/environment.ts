@@ -7,5 +7,5 @@
 //apiUrl: '/' // localhost lifeontime
 export const environment = {
   production: false,
-  apiUrl: '/'
+  apiUrl: 'http://136.244.71.69/'
 };

@@ -1,12 +1,41 @@
 <!-- <tr> -->
-<td>{{task.title}}</td>
-<td><span *ngIf='task.until_date.day < 10'>0</span>{{task.until_date.day}} / <span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}} / {{task.until_date.year}} </td>
-<td>
-    <a class="success p-0" data-original-title="" title="" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
-        <i class="ft-edit-2 font-medium-3 mr-2"></i>
-    </a>
-    <a class="danger p-0" data-original-title="" title="" (click)="openModal('confirmModal', 'action', 'delete', task)">
-        <i class="ft-x font-medium-3 mr-2"></i>
-    </a>
+<!-- <td>
+    <span class="small action-date-over">Due Date: <span
+            *ngIf='task.until_date.day < 10'>0</span>{{task.until_date.day}} /
+    <span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}} / {{task.until_date.year}}</span>
+    <p>{{task.title}}</p>
 </td>
+<td style="width: 25%">
+    <a class="success p-0" data-original-title="" alt="Complete Action" title="Complete Action">
+        <i class="ft-check font-medium-3 mr-1"></i>
+        </а>
+        <a class="success p-0" data-original-title="" alt="Edit Action" title="Edit Action" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
+            <i class="ft-edit-2 font-medium-3 mr-1"></i>
+        </a>
+        <a class="danger p-0" data-original-title="" alt="Delete Action" title="Delete Action" (click)="openModal('confirmModal', 'action', 'delete', task)">
+            <i class="ft-x font-medium-3 mr-1"></i>
+        </a>
+</td> -->
 <!-- </tr> -->
+
+<!-- --------------Action html previos version ------------ -->
+<!-- </tr> -->
+<tr>
+    <td>
+        <span class="small text-muted">Due Date: </span><span class="small action-date-ok"> <span
+                *ngIf='task.until_date < 10'>0</span>{{task.until_date.day}}/<span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}}/{{task.until_date.year}}
+        </span>
+        <p>{{task.title}}</p>
+    </td>
+    <td style="width: 25%">
+        <a class="success p-0" data-original-title="" alt="Complete Action" title="Complete Action" data-toggle="modal" data-target="#action">
+            <i class="ft-check font-medium-3 mr-1"></i>
+        </a>
+        <a class="success p-0" data-original-title="" alt="Edit Action" title="Edit Action" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
+            <i class="ft-edit-2 font-medium-3 mr-2"></i>
+        </a>
+        <a class="danger p-0" data-original-title="" alt="Delete Action" title="Delete Action" (click)="openModal('confirmModal', 'action', 'delete', task)">
+            <i class="ft-x font-medium-3 mr-2"></i>
+        </a>
+    </td>
+</tr>

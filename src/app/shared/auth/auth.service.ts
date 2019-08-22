@@ -1,10 +1,12 @@
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
+//import { CookieService } from 'ngx-cookie-service';
 import { RegisterUser } from '../models/registerUser';
 import { LoginUser } from '../models/loginUser';
-import * as jwt_decode from 'jwt-decode';
+import { JwtHelperService } from "@auth0/angular-jwt";
+
+const helper = new JwtHelperService();
 
 const BASE_URL = environment.apiUrl + 'auth/';
 const LOGIN_END_URL = 'login';
@@ -16,7 +18,7 @@ export class AuthService {
 
   constructor (
     private http: HttpClient,
-    private cookieService: CookieService
+    //private cookieService: CookieService
   ) { }
 
   registerUser( body: RegisterUser ) {
@@ -24,7 +26,8 @@ export class AuthService {
   }
 
   loginUser( body: LoginUser ) {
-    return this.http.post( BASE_URL + LOGIN_END_URL, body, { observe: 'response' } )
+    return this.http.post( BASE_URL + LOGIN_END_URL, body )
+    // { observe: 'response' }
   }
 
   getUsers() {
@@ -36,30 +39,57 @@ export class AuthService {
   }
 
   getTokenPayload( token ) {
-    return jwt_decode( token );
+    return helper.decodeToken( token );
   }
 
   getTokenExp( token ) {
-    const payload = this.getTokenPayload( token );
-    debugger;
-    return payload.exp;
+
+    return helper.getTokenExpirationDate( token );
   }
 
-  setCookie( name: string, value: string, expires?: number | Date, path?: string, domain?: string, secure?: boolean, sameSite?: "Lax" | "Strict" ): void {
-    this.cookieService.set( name, value, expires, path, domain, secure, sameSite );
+  // isTokenExpired( token ) {
+  //   return helper.isTokenExpired( token );
+  // }
+
+  getToken( token ) {
+    return localStorage.getItem( 'token' );
   }
 
-  getCookie() {
-    return this.cookieService.get( 'token' );
+  setToken( token ) {
+    localStorage.setItem( 'token', token );
   }
 
-  deleteCookie( name: string ) {
-    this.cookieService.delete( 'token' );
+  deleteToken( name: string ) {
+    localStorage.removeItem( 'token' );
   }
 
   isAuthenticated() {
-    let cookie = this.cookieService.get( 'token' );
-    return this.cookieService.get( 'token' ) !== '';
-    //localStorage.getItem( 'isAuthenticated' ) !== null;
+    let token: string = this.getToken( 'token' );
+    let isExpired: boolean = helper.isTokenExpired( token );
+    return ( this.getToken( 'token' ) !== null && !isExpired );
+    //
   }
+  //logic only with token
+
+  //---------------------logic with token  saved in cookie start-------------------
+
+  // setCookie( name: string, value: string, expires?: number | Date, path?: string, domain?: string, secure?: boolean, sameSite?: "Lax" | "Strict" ): void {
+  //   this.cookieService.set( name, value, expires, path, domain, secure, sameSite );
+  // }
+
+  // getCookie() {
+  //   return this.cookieService.get( 'token' );
+  // }
+
+  // deleteCookie( name: string ) {
+  //   this.cookieService.delete( 'token' );
+  // }
+
+  // isAuthenticated() {
+  //   let cookie = this.cookieService.get( 'token' );
+  //   return this.cookieService.get( 'token' ) !== '';
+  //   //localStorage.getItem( 'isAuthenticated' ) !== null;
+  // }
+  //-----------------------logic with token  saved in cookie ends--------------
+
 }

@@ -6,9 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const BASE_URL = environment.apiUrl + 'api/ideas';
-const USER_IDEAS_URL = '/api/me/ideas/';
-//in product environment
-//const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas/';
+const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas';
 
 @Injectable( {
   providedIn: 'root'

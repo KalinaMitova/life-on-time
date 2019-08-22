@@ -12,6 +12,7 @@ import { LayoutService } from '../services/layout.service';
 import { ConfigService } from '../services/config.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: "app-navbar",
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   toggleClass = "ft-maximize";
   placement = "bottom-right";
   public isCollapsed = true;
+  private logoutSubscription: Subscription;
   @Output()
   toggleHideSidebar = new EventEmitter<Object>();
 
@@ -46,11 +48,19 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   logout() {
-    this.authService.logout()
-      .subscribe( data => {
-        this.authService.deleteCookie( 'token' );
-        this.router.navigate( [ "/user/login" ] );
-      } )
+    this.logoutSubscription =
+      this.authService.logout()
+        .subscribe( data => {
+          this.authService.deleteToken( 'token' );
+          //this.authService.deleteCookie( 'token' ); ----with token in cookie
+          this.router.navigate( [ "/user/login" ] );
+        } )
+  }
+
+  ngOnDestroy() {
+    if ( this.logoutSubscription ) {
+      this.logoutSubscription.unsubscribe();
+    }
   }
 
   showCustomizer() {

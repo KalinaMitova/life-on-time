@@ -64,8 +64,7 @@
                     "options": {
                         "browserTarget": "life-on-time:build",
                         "host": "lifeontime.com",
-                        "port": 4200,
-                        "proxyConfig": "proxy.conf.ts"
+                        "port": 4200
                     },
                     "configurations": {
                         "production": {

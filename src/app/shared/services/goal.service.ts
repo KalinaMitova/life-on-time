@@ -8,15 +8,15 @@ import { Goal } from '../models/goal';
 import { GoalCreate } from '../models/goalCreate';
 
 
-const BASE_URL = environment.apiUrl + "api/me/goals/";
+const BASE_URL = environment.apiUrl + "api/me/goals";
 //const BASE_CRUD_URL = "/api/goals/";
 const BASE_CRUD_URL = environment.apiUrl + "api/goals";
-const USER_COMPLETED_GOALS_END = "completed";
-const USER_RATE_END = "rate";
-const USER_GOALS_FROM_IDEAS_END = "fromideas";
-const USER_LAST_THREE_GOALS_END = "lastthree";
-const USER_GOALS_END = "bycategoryall";
-const USER_GOALS_TASKS_END = "bycategory";
+const USER_COMPLETED_GOALS_END = "/completed";
+const USER_RATE_END = "/rate";
+const USER_GOALS_FROM_IDEAS_END = "/fromideas";
+const USER_LAST_THREE_GOALS_END = "/lastthree";
+const USER_GOALS_END = "/bycategoryall";
+const USER_GOALS_TASKS_END = "/bycategory";
 
 @Injectable( {
   providedIn: 'root'
@@ -51,7 +51,7 @@ export class GoalService {
               }
 
               if ( goal.created_at ) {
-                const goalCreatedDateAsString = goal.created_at.split( '-' );
+                const goalCreatedDateAsString = ( goal.created_at.split( ' ' ) )[ 0 ].split( '-' );
                 goal.created_at = {
                   day: Number( goalCreatedDateAsString[ 2 ] ),
                   month: Number( goalCreatedDateAsString[ 1 ] ),

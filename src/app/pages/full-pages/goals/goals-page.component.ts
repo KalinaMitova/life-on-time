@@ -85,7 +85,6 @@ export class GoalsPageComponent implements OnInit {
   private createTask( form, goalId: string ) {
     let task: TaskCreate = form.value;
     task.goal_id = goalId;
-    task[ 'description' ] = '';
     const date = form.value.until_date;
     task.until_date = this.getDate( date.day, date.month, date.year, '-' )
     this.createTaskSubscription = this.taskService.postCreateTask( task )

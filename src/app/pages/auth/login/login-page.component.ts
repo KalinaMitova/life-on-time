@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from 'app/shared/auth/auth.service';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component( {
   selector: 'app-login-page',
@@ -20,8 +19,7 @@ export class LoginPageComponent implements OnInit {
   constructor (
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private cookieService: CookieService ) { }
+    private route: ActivatedRoute ) { }
 
   // On submit button click
 
@@ -30,7 +28,9 @@ export class LoginPageComponent implements OnInit {
       .loginUser( this.loginForm.value )
       .subscribe( res => {
         const token = res.headers.get( 'token' );
-        this.cookieService.set( "token", token, 365, '/' );
+        const tokenExp = this.authService.getTokenExp( token );
+        debugger;
+        this.authService.setCookie( 'token', token, tokenExp, '/' );
         if ( this.loginForm.valid ) {
           this.loginForm.reset();
           //localStorage.setItem( 'isAuthenticated', 'true' )

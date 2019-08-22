@@ -48,8 +48,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   logout() {
     this.authService.logout()
       .subscribe( data => {
-        localStorage.removeItem( 'isAuthenticated' );
-
+        this.authService.deleteCookie( 'token' );
         this.router.navigate( [ "/user/login" ] );
       } )
   }

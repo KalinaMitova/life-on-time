@@ -1,11 +1,10 @@
-import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 import { RegisterUser } from '../models/registerUser';
 import { LoginUser } from '../models/loginUser';
-import { CookieService } from 'ngx-cookie-service';
+import * as jwt_decode from 'jwt-decode';
 
 const BASE_URL = environment.apiUrl + 'auth/';
 const LOGIN_END_URL = 'login';
@@ -37,7 +36,13 @@ export class AuthService {
   }
 
   getTokenPayload( token ) {
+    return jwt_decode( token );
+  }
 
+  getTokenExp( token ) {
+    const payload = this.getTokenPayload( token );
+    debugger;
+    return payload.exp;
   }
 
   setCookie( name: string, value: string, expires?: number | Date, path?: string, domain?: string, secure?: boolean, sameSite?: "Lax" | "Strict" ): void {
@@ -57,10 +62,4 @@ export class AuthService {
     return this.cookieService.get( 'token' ) !== '';
     //localStorage.getItem( 'isAuthenticated' ) !== null;
   }
-
-  //    {
-  //   headers: new HttpHeaders( {
-  //     'Content-Type': 'application/json'
-  //   } ), withCredentials: true
-  // }
 }

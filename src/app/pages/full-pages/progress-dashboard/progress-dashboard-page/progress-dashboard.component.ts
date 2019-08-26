@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, SimpleChange } from '@angular/core';
-import { forkJoin, Subscription, of } from 'rxjs';
+import { forkJoin, Subscription, of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SimpleChanges } from '@angular/core';
 
@@ -11,6 +11,7 @@ import { IdeaService } from 'app/shared/services/idea.service';
 //import { BarChart } from "../../../../shared/models/barChart";
 import { BarChartComponent } from '../bar-chart/bar-chart.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { UserService } from 'app/shared/services/user.service';
 
 //Declarations
 declare var require: any;
@@ -23,7 +24,8 @@ const ChartData: any = require( 'app/shared/data/chartsData.json' );
 } )
 export class ProgressDashboardComponent implements OnInit {
 
-  private dataChart = [];
+  private registrationDate: string;
+  private donutChart;
   private barChart = {
     "labels": [
       "Health & Wellbeing",
@@ -43,17 +45,21 @@ export class ProgressDashboardComponent implements OnInit {
   private minStaticsDataFirstRow = minStatisticData.firstRow;
   private minStaticsDataSecondRow = minStatisticData.secondRow;
   private minStatSubscription: Subscription;
+  private donutChartSubscription: Subscription;
   private barChartSubscription: Subscription;
+  private regDateSubscription: Subscription;
 
   constructor (
     private taskService: TaskService,
     private goalService: GoalService,
-    private ideasService: IdeaService
+    private ideasService: IdeaService,
+    private userServise: UserService
   ) {
 
   }
 
   ngOnInit() {
+    this.regDateSubscription = this.userServise.getUserRegistrationDate().subscribe( date => this.registrationDate = date );
     this.minStatSubscription = forkJoin(
       //first row
       this.goalService.getUserGoals().pipe( catchError( error => of( error ) ) ),
@@ -79,7 +85,11 @@ export class ProgressDashboardComponent implements OnInit {
         this.minStaticsDataSecondRow[ 3 ].value = rate + ' %';
       } );
 
-
+    this.donutChartSubscription = this.goalService.getUserLastThreeGoalsStatistic()
+      .subscribe( data => {
+        console.log( data )
+        this.donutChart = data
+      } );
 
     this.barChartSubscription = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
       .subscribe( data => {
@@ -108,6 +118,9 @@ export class ProgressDashboardComponent implements OnInit {
     }
     if ( this.barChartSubscription ) {
       this.barChartSubscription.unsubscribe();
+    }
+    if ( this.regDateSubscription ) {
+      this.regDateSubscription.unsubscribe();
     }
   }
 }

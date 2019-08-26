@@ -17,7 +17,6 @@ export class SetHeadersInterceptor implements HttpInterceptor {
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     const token = this.authService.getToken( 'token' );
-    console.log( req.url );
 
     if ( !req.url.includes( '/auth/' ) ) {
       const request = req.clone( {
@@ -25,7 +24,8 @@ export class SetHeadersInterceptor implements HttpInterceptor {
           'Content-Type': 'application/json',
           'Auth-Token': token,
           //'Authorization': `Bearer ${authToken}`,
-        }, withCredentials: true
+        },
+        //withCredentials: true
       } );
       console.log( request );
       return next.handle( request );

@@ -31,6 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interseptor';
 import { ModalService } from './shared/services/modal.service';
 import { EventService } from './shared/services/event.service';
+import { UserService } from './shared/services/user.service';
 
 
 
@@ -76,6 +77,7 @@ export function createTranslateLoader( http: HttpClient ) {
     TaskService,
     IdeaService,
     AuthGuard,
+    UserService,
     ModalService,
     CookieService,
     EventService,

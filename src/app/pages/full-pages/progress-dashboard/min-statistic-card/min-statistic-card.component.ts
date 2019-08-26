@@ -1,18 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MinStatisticCard } from 'app/shared/models/minStatisticCard';
+
 
 @Component( {
   selector: 'app-min-statistic-card',
   templateUrl: './min-statistic-card.component.html',
   styleUrls: [ './min-statistic-card.component.scss' ]
 } )
-export class MinStatisticCardComponent implements OnInit {
+export class MinStatisticCardComponent {
+  private dateArray = [ 'allGoals', 'allTasks', 'allIdeas' ];
+
   @Input( 'stat' ) stat: MinStatisticCard;
-
-  constructor () {
-  }
-
-  ngOnInit() {
-  }
-
+  @Input( 'registrationDate' ) registrationDate: string;
 }

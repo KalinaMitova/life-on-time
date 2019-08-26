@@ -1,4 +1,5 @@
 export interface ItemInfo {
   itemId: string,
-  itemType: string
+  itemType: string,
+  status?: number
 }

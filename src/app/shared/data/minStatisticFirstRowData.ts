@@ -2,7 +2,7 @@ export let minStatisticData = {
   'firstRow': [
     {
       title: 'allGoals',
-      text: 'Goals created since 20 Jan 2019',
+      text: 'Goals created since ',
       valueClass: 'mb-1 danger',
       textClass: '',
       class: "",
@@ -11,7 +11,7 @@ export let minStatisticData = {
     },
     {
       title: 'allTasks',
-      text: 'Tasks created since 20 Jan 2019',
+      text: 'Tasks created since ',
       valueClass: 'mb-1 success',
       textClass: '',
       class: "",
@@ -20,7 +20,7 @@ export let minStatisticData = {
     },
     {
       title: 'allIdeas',
-      text: 'Ideas created since 20 Jan 2019',
+      text: 'Ideas created since ',
       valueClass: 'mb-1 warning',
       textClass: '',
       class: "",

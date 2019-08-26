@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
@@ -37,7 +37,8 @@ export class GoalsPageComponent implements OnInit {
     private route: ActivatedRoute,
     private goalService: GoalService,
     private taskService: TaskService,
-    private eventService: EventService
+    private eventService: EventService,
+    private renderer: Renderer2
   ) {
   }
 
@@ -45,10 +46,10 @@ export class GoalsPageComponent implements OnInit {
     this.path = this.route.snapshot.routeConfig.path;
     this.currentGoalPage = GOALS_CATEGORIES[ this.path ];
     this.loadPageGoals();
-    this.eventService.on( 'confirm create/edit', ( actionInfo => {
-      this.mapAction( actionInfo )
-    } ) );
-    this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) )
+    this.eventService.on( 'confirm create/edit', ( actionInfo =>
+      this.mapAction( actionInfo ) ) );
+    this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
+    this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
   }
 
   private mapAction( actionInfo: ActionInfo ) {
@@ -133,6 +134,39 @@ export class GoalsPageComponent implements OnInit {
         .subscribe( data => {
           this.loadPageGoals();
         } )
+    }
+  }
+
+  private changeStatus( itemInfo: any ) {
+    const item = {
+      id: itemInfo.itemId,
+      status: itemInfo.status === 0 ? 1 : 0
+    }
+    //console.log( item );
+    const itemElId = itemInfo.itemType + itemInfo.itemId;
+    //const element: Element = this.renderer.selectRootElement( `#${itemElId}`, true );
+    if ( itemInfo.itemType === 'goal' ) {
+      this.editGoalSubscription = this.goalService.putEditGoalById( itemInfo.itemId, item )
+        .subscribe( data => {
+          this.loadPageGoals();
+          // if ( element.classList.contains( 'goal-done' ) ) {
+          //   this.renderer.removeClass( element, 'goal-done' );
+          // } else {
+          //   this.renderer.addClass( element, 'goal-done' );
+          // }
+        } );
+    } else if ( itemInfo.itemType === 'action' ) {
+      this.editTaskSubscription = this.taskService.putEditTaskById( itemInfo.itemId, item )
+        .subscribe( data => {
+          this.loadPageGoals();
+          // const status = data[ 'data' ].status;
+          // console.log( status );
+          // if ( element.classList.contains( 'action-date-ok' ) && status === 0 ) {
+          //   this.renderer.removeClass( element, 'action-date-ok' );
+          // } else if ( !element.classList.contains( 'action-date-ok' ) && status === 1 ) {
+          //   this.renderer.addClass( element, 'action-date-ok' );
+          // }
+        } );
     }
   }
 

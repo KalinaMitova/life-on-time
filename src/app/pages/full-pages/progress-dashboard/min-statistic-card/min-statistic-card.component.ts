@@ -8,7 +8,7 @@ import { MinStatisticCard } from 'app/shared/models/minStatisticCard';
   styleUrls: [ './min-statistic-card.component.scss' ]
 } )
 export class MinStatisticCardComponent {
-  private dateArray = [ 'allGoals', 'allTasks', 'allIdeas' ];
+  dateArray = [ 'allGoals', 'allTasks', 'allIdeas' ];
 
   @Input( 'stat' ) stat: MinStatisticCard;
   @Input( 'registrationDate' ) registrationDate: string;

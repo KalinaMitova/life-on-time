@@ -10,7 +10,7 @@ import { Chart } from '../../../../shared/models/chart';
 export class ChartComponent {
   @Input( 'chart' ) chart: any;
 
-  private donutChart: Chart;
+  donutChart: Chart;
 
   ngOnInit() {
     const dataChart = { ... this.chart };

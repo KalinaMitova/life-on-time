@@ -23,14 +23,17 @@ import { GOALS_CATEGORIES } from "app/shared/data/goalsCategories";
 export class GoalsPageComponent implements OnInit {
   @ViewChild( 'type', { static: false } ) type: any;
 
-  private currentGoalPage;
+  currentGoalPage;
   private path: string;
-  private goals$: Observable<Array<Goal>>;
+  goals$: Observable<Array<Goal>>;
   private deleteSubscription: Subscription;
   private createGoalSubscription: Subscription;
   private createTaskSubscription: Subscription;
   private editGoalSubscription: Subscription;
   private editTaskSubscription: Subscription;
+  private modalCreateSubscription: Subscription;
+  private modalDeleteSubscription: Subscription;
+  private modalStatusSubscription: Subscription;
 
   constructor (
     private modalService: ModalService,
@@ -46,80 +49,68 @@ export class GoalsPageComponent implements OnInit {
     this.path = this.route.snapshot.routeConfig.path;
     this.currentGoalPage = GOALS_CATEGORIES[ this.path ];
     this.loadPageGoals();
-    this.eventService.on( 'confirm create/edit', ( actionInfo =>
-      this.mapAction( actionInfo ) ) );
-    this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
-    this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
+    this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
+    this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
+    this.modalStatusSubscription = this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
   }
 
   private mapAction( actionInfo: ActionInfo ) {
     if ( actionInfo.actionType === 'create' ) {
       if ( actionInfo.itemType === 'goal' ) {
-        this.createGoal( actionInfo.form );
+        this.createGoal( actionInfo.formValue );
       } else if ( actionInfo.itemType === 'action' ) {
-        this.createTask( actionInfo.form, actionInfo.goalId )
+        this.createTask( actionInfo.formValue, actionInfo.goalId )
       }
 
     } else if ( actionInfo.actionType === 'edit' ) {
       if ( actionInfo.itemType === 'goal' ) {
-        this.editGoal( actionInfo.form, actionInfo.itemId );
+        this.editGoal( actionInfo.formValue, actionInfo.itemId );
       } else if ( actionInfo.itemType === 'action' ) {
-        this.editTask( actionInfo.form, actionInfo.itemId );
+        this.editTask( actionInfo.formValue, actionInfo.itemId );
       }
     }
   }
 
-  private createGoal( form ) {
-    let goal: GoalCreate = form.value;
-    const date = form.value.until_date;
+  private createGoal( formValue ) {
+    let goal: GoalCreate = formValue;
+    const date = formValue.until_date;
     goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
     goal.category_id = this.currentGoalPage.categoryId;
     this.createGoalSubscription = this.goalService.postCreateGoal( goal )
       .subscribe( data => {
-        if ( form.valid ) {
-          form.reset();
-          this.loadPageGoals();
-        }
+        this.loadPageGoals();
       } )
   }
 
-  private createTask( form, goalId: string ) {
-    let task: TaskCreate = form.value;
+  private createTask( formValue, goalId: string ) {
+    let task: TaskCreate = formValue;
     task.goal_id = goalId;
-    const date = form.value.until_date;
-    task.until_date = this.getDate( date.day, date.month, date.year, '-' )
+    const date = formValue.until_date;
+    task.until_date = this.getDate( date.day, date.month, date.year, '-' );
+
     this.createTaskSubscription = this.taskService.postCreateTask( task )
       .subscribe( data => {
-        if ( form.valid ) {
-          form.reset();
-          this.loadPageGoals();
-        }
+        this.loadPageGoals();
       } )
   }
 
-  private editGoal( form, goalId: string ) {
-    const goal: GoalCreate = form.value;
-    const date = form.value.until_date;
+  private editGoal( formValue, goalId: string ) {
+    const goal: GoalCreate = formValue;
+    const date = formValue.until_date;
     goal.until_date = this.getDate( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.goalService.putEditGoalById( goalId, goal )
       .subscribe( data => {
-        if ( form.valid ) {
-          form.reset();
-          this.loadPageGoals();
-        }
+        this.loadPageGoals();
       } )
   }
 
-  private editTask( form, taskId: string ) {
-    let task: TaskCreate = form.value;
-    const date = form.value.until_date;
+  private editTask( formValue, taskId: string ) {
+    let task: TaskCreate = formValue;
+    const date = formValue.until_date;
     task.until_date = this.getDate( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.taskService.putEditTaskById( taskId, task )
       .subscribe( data => {
-        if ( form.valid ) {
-          form.reset();
-          this.loadPageGoals();
-        }
+        this.loadPageGoals();
       } )
   }
 
@@ -142,30 +133,16 @@ export class GoalsPageComponent implements OnInit {
       id: itemInfo.itemId,
       status: itemInfo.status === 0 ? 1 : 0
     }
-    //console.log( item );
     const itemElId = itemInfo.itemType + itemInfo.itemId;
-    //const element: Element = this.renderer.selectRootElement( `#${itemElId}`, true );
     if ( itemInfo.itemType === 'goal' ) {
       this.editGoalSubscription = this.goalService.putEditGoalById( itemInfo.itemId, item )
         .subscribe( data => {
           this.loadPageGoals();
-          // if ( element.classList.contains( 'goal-done' ) ) {
-          //   this.renderer.removeClass( element, 'goal-done' );
-          // } else {
-          //   this.renderer.addClass( element, 'goal-done' );
-          // }
         } );
     } else if ( itemInfo.itemType === 'action' ) {
       this.editTaskSubscription = this.taskService.putEditTaskById( itemInfo.itemId, item )
         .subscribe( data => {
           this.loadPageGoals();
-          // const status = data[ 'data' ].status;
-          // console.log( status );
-          // if ( element.classList.contains( 'action-date-ok' ) && status === 0 ) {
-          //   this.renderer.removeClass( element, 'action-date-ok' );
-          // } else if ( !element.classList.contains( 'action-date-ok' ) && status === 1 ) {
-          //   this.renderer.addClass( element, 'action-date-ok' );
-          // }
         } );
     }
   }
@@ -199,6 +176,15 @@ export class GoalsPageComponent implements OnInit {
     }
     if ( this.editTaskSubscription ) {
       this.editTaskSubscription.unsubscribe()
+    }
+    if ( this.modalCreateSubscription ) {
+      this.modalCreateSubscription.unsubscribe()
+    }
+    if ( this.modalDeleteSubscription ) {
+      this.modalDeleteSubscription.unsubscribe();
+    }
+    if ( this.modalStatusSubscription ) {
+      this.modalStatusSubscription.unsubscribe()
     }
   }
 }

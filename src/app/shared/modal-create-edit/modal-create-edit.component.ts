@@ -11,10 +11,12 @@ import { ActionInfo } from '../models/actionInfo';
 } )
 export class ModalCreateEditComponent implements OnInit {
   @Input() item: any;
-  private modalForm;
+  modalForm;
+  itemType: string;
+  actionType: string;
 
   constructor (
-    private modal: NgbActiveModal,
+    public modal: NgbActiveModal,
     private eventService: EventService,
     private formBuilder: FormBuilder
   ) { }
@@ -41,7 +43,7 @@ export class ModalCreateEditComponent implements OnInit {
       actionType,
       itemType,
       itemId,
-      form: this.modalForm,
+      formValue: this.modalForm.value,
       goalId
     }
     this.eventService.emit(
@@ -52,4 +54,6 @@ export class ModalCreateEditComponent implements OnInit {
     )
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }
+
+
 }

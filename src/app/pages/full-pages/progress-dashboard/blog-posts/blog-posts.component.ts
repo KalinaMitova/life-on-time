@@ -9,7 +9,7 @@ import { BlogPost } from 'app/shared/models/blogPost';
 
 export class BlogPostsComponent implements OnInit {
 
-  private posts: Array<BlogPost> = [
+  posts: Array<BlogPost> = [
     {
       title: 'First Post',
       text: 'Icing powder caramels macaroon. Toffee sugar plum brownie pastry gummies jelly.',

@@ -10,7 +10,7 @@ import * as Chartist from 'chartist';
 //, OnChanges
 export class BarChartComponent implements OnInit {
   @Input() chart: Chartist.IChartistData;
-  private barChart: Chart = {
+  barChart: Chart = {
     type: 'Bar',
     data: null,
     options: {

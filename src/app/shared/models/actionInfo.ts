@@ -4,6 +4,6 @@ export interface ActionInfo {
   actionType: string,
   itemType: string,
   itemId: string,
-  form: NgForm,
+  formValue: Object,
   goalId?: string
 }

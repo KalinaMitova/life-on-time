@@ -9,9 +9,12 @@ import { ItemInfo } from '../models/itemInfo';
   styleUrls: [ './modal-confirm.component.scss' ]
 } )
 export class ModalConfirmComponent {
+  title: string;
+  itemId: string;
+  itemType: string;
 
   constructor (
-    private modal: NgbActiveModal,
+    public modal: NgbActiveModal,
     private eventService: EventService
   ) { }
 

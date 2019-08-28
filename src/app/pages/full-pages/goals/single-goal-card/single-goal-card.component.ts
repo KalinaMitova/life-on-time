@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Goal } from 'app/shared/models/goal';
-import { ModalService } from '../../../../shared/services/modal.service'
+import { ModalService } from 'app/shared/services/modal.service'
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { EventService } from 'app/shared/services/event.service';
 
@@ -33,4 +33,8 @@ export class SingleGoalCardComponent {
         value: itemInfo
       } )
   }
+
+  // public ngOnDestroy(): void {
+  //   this.modalService.unsubscribe(); // or something similar
+  // }
 }

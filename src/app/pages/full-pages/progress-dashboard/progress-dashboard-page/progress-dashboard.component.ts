@@ -19,10 +19,10 @@ import { BarChartData } from 'app/shared/models/barChartData';
 export class ProgressDashboardComponent implements OnInit {
 
   private registrationDate: string;
-  private donutCharts = [];
-  private barChart: Observable<BarChartData>;
-  private minStaticsDataFirstRow = minStatisticData.firstRow;
-  private minStaticsDataSecondRow = minStatisticData.secondRow;
+  donutCharts = [];
+  barChart: Observable<BarChartData>;
+  minStaticsDataFirstRow = minStatisticData.firstRow;
+  minStaticsDataSecondRow = minStatisticData.secondRow;
   private minStatSubscription: Subscription;
   private donutChartSubscription: Subscription;
   private regDateSubscription: Subscription;

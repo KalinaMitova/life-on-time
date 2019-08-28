@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from "environments/environment";
 import { Goal } from '../models/goal';
 import { GoalCreate } from '../models/goalCreate';
+import { BarChartData } from '../models/barChartData';
 
 
 const BASE_URL = environment.apiUrl + "api/me/goals";
@@ -80,7 +81,7 @@ export class GoalService {
   getUserLastThreeGoalsStatistic(): Observable<Array<any>> {
     return this.http.get<Array<any>>( BASE_URL + USER_LAST_THREE_GOALS_END )
       .pipe(
-        map( goals => goals[ 'dataValue' ] )
+        map( goals => Object.keys( goals ).map( key => goals[ key ] )[ 0 ] )
       )
   }
 
@@ -105,10 +106,33 @@ export class GoalService {
       );
   }
 
-  getUserGoalsAndTasksByCategoryAsNumber() {
-    return this.http.get( BASE_URL + USER_GOALS_TASKS_END )
+  getUserGoalsAndTasksByCategoryAsNumber(): Observable<BarChartData> {
+    return this.http.get<BarChartData>( BASE_URL + USER_GOALS_TASKS_END )
       .pipe(
-        map( data => data[ 'dataValue' ] )
+        map( data => {
+          const barData = data[ 'dataValue' ]
+          const barChart = {
+            labels: [
+              "Health & Wellbeing",
+              "Personal Development",
+              "Relationships",
+              "Physical Activity",
+              "Financial"
+            ],
+            series: [ {
+              "name": "Goals",
+              "value": []
+            }, {
+              "name": "Actions",
+              "value": []
+            } ]
+          };
+          barChart.labels.forEach( label => {
+            barChart.series[ 0 ].value.push( barData[ label ] ? barData[ label ].goals : 0 );
+            barChart.series[ 1 ].value.push( barData[ label ] ? barData[ label ].tasks : 0 );
+          } );
+          return barChart;
+        } )
       );
   }
 

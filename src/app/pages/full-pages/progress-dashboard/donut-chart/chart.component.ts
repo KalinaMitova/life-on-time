@@ -1,11 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as Chartist from 'chartist';
-
-declare var require: any;
-require( 'chartist-plugin-legend' );
-
 import { Chart } from '../../../../shared/models/chart';
-
+// import * as Chartist from 'chartist';
 
 @Component( {
   selector: 'app-chart',
@@ -15,12 +10,14 @@ import { Chart } from '../../../../shared/models/chart';
 export class ChartComponent {
   @Input( 'chart' ) chart: any;
 
-  private Chart: Chart;
+  private donutChart: Chart;
 
   ngOnInit() {
-    const dataChart = this.chart;
-    this.Chart = {
-      type: dataChart.type,
+    const dataChart = { ... this.chart };
+    dataChart.series = dataChart.series.filter( s => s.name !== 'Set' )
+
+    this.donutChart = {
+      type: "Pie",
       data: dataChart,
       options: {
         donut: true,
@@ -45,27 +42,8 @@ export class ChartComponent {
               data.element.remove();
             }
           }
-
         }
       }
     }
-
-    //   if ( this.Chart.type === 'Bar' ) {
-    //     this.Chart.options = {
-    //       seriesBarDistance: 21,
-    //       plugins: [
-    //         Chartist.plugins.legend( {
-    //           position: 'bottom'
-    //         } )
-    //       ],
-    //       axisX: {
-    //         showGrid: false, offset: 100
-    //       },
-    //       axisY: {
-    //         scaleMinSpace: 30,
-    //       }
-    //     }
-    //   }
-    // }
   }
 }

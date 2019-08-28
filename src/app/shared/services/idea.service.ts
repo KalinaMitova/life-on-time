@@ -24,7 +24,9 @@ export class IdeaService {
   getUserIdeasAsNumber(): Observable<Number> {
     return this.http.get<Number>( USER_IDEAS_URL )
       .pipe(
-        map( ideas => ideas[ 'dataValue' ].ideasNumber )
+        map( ideas => {
+          return ideas[ 'dataValue' ].ideasNumber
+        } )
       );
   }
 

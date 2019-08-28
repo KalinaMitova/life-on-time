@@ -34,8 +34,9 @@
 
 <!--Donut chart start-->
 <div class="row">
-    <div class="col-xl-4 col-lg-12" *ngFor="let chart of dataChart">
-        <app-chart [chart]='chart'></app-chart>
+    <div class="col-xl-4 col-lg-12" *ngFor="let chart of donutCharts">
+        <app-chart [chart]='chart'>
+        </app-chart>
     </div>
 </div>
 <!--Donut chart end-->
@@ -43,7 +44,7 @@
 <!--Bar chart starts-->
 <div class="row text-left">
     <div class="col-sm-12">
-        <app-bar-chart [chart]='barChart'>
+        <app-bar-chart [chart]='barChart | async'>
         </app-bar-chart>
     </div>
 </div>

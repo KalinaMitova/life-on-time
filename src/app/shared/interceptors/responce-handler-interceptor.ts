@@ -19,10 +19,11 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
         if ( evt instanceof HttpResponse ) {
           //console.log( evt );
           if ( evt.status === 201 ) {
-            this.toastr.success( evt.statusText, 'Success:', { positionClass: 'toast-top-center' } );
+            console.log( evt.statusText )
+            // this.toastr.success( evt.statusText, 'Success:', { positionClass: 'toast-top-center' } );
           } else if ( evt.status === 200 && evt.body.message ) {
             console.log( evt.body.message )
-            this.toastr.success( evt.body.message, 'Success:' );
+            //this.toastr.success( evt.body.message, 'Success:' );
           }
         }
       } ), catchError( ( err: any ) => {
@@ -34,26 +35,30 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
             //   this.router.navigate( [ '/user/login' ] );
             // } else
             if ( err.error.error ) {
-              this.toastr.error( err.error.error, 'Error:', {
-                closeButton: true,
-                timeOut: 5000,
-                onActivateTick: true
-              } );
+              console.log( err.error.error )
+              // this.toastr.error( err.error.error, 'Error:', {
+              //   closeButton: true,
+              //   timeOut: 5000,
+              //   onActivateTick: true
+              // } );
             } else if ( err.error.message ) {
-              this.toastr.error( err.error.message, 'Error:' );
+              console.log( err.error.message )
+              // this.toastr.error( err.error.message, 'Error:' );
             } else if ( err.message ) {
-              this.toastr.error( err.message, 'Error:', {
-                positionClass: "toast-top-full-width",
-                timeOut: 5000,
-              } );
+              console.log( err.message )
+              // this.toastr.error( err.message, 'Error:', {
+              //   positionClass: "toast-top-full-width",
+              //   timeOut: 5000,
+              // } );
             }
           } catch ( e ) {
-            this.toastr.error( 'An error occurred', '',
-              {
-                positionClass: "toast-top-full-width",
-                timeOut: 5000,
-                //onActivateTick: true
-              } );
+            console.log( e )
+            // this.toastr.error( 'An error occurred', '',
+            //   {
+            //     positionClass: "toast-top-full-width",
+            //     timeOut: 5000,
+            //     //onActivateTick: true
+            //   } );
           }
         }
         throw ( err );

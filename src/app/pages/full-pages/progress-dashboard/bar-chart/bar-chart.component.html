@@ -8,8 +8,7 @@
     <div class="card-content">
         <div class="card-body">
             <div id="bar-chart" class="height-400">
-                {{barChart | json}}
-                <x-chartist [data]="barChart.data" [type]="barChart.type" [options]="barChart.options" [responsiveOptions]="barChart.responsiveOptions" [events]="barChart.events">
+                <x-chartist [data]="chart" [type]="barChart.type" [options]="barChart.options" [responsiveOptions]="barChart.responsiveOptions" [events]="barChart.events">
                 </x-chartist>
             </div>
             <p style="color: #009DA0">Goals</p>

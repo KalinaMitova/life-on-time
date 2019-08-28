@@ -1,21 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild, SimpleChange } from '@angular/core';
 import { forkJoin, Subscription, of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SimpleChanges } from '@angular/core';
 
 import { minStatisticData } from '../../../../shared/data/minStatisticFirstRowData';
 import { GoalService } from "../../../../shared/services/goal.service";
 import { TaskService } from "../../../../shared/services/task.service";
 import { IdeaService } from 'app/shared/services/idea.service';
 
-//import { BarChart } from "../../../../shared/models/barChart";
-import { BarChartComponent } from '../bar-chart/bar-chart.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { UserService } from 'app/shared/services/user.service';
+import { BarChartData } from 'app/shared/models/barChartData';
 
-//Declarations
-declare var require: any;
-const ChartData: any = require( 'app/shared/data/chartsData.json' );
 
 @Component( {
   selector: 'app-progress-dashboard',
@@ -25,28 +19,12 @@ const ChartData: any = require( 'app/shared/data/chartsData.json' );
 export class ProgressDashboardComponent implements OnInit {
 
   private registrationDate: string;
-  private donutChart;
-  private barChart = {
-    "labels": [
-      "Health & Wellbeing",
-      "Personal Development",
-      "Relationships",
-      "Physical Activity",
-      "Financial"
-    ],
-    "series": [ {
-      "name": "Goals",
-      "value": []
-    }, {
-      "name": "Actions",
-      "value": []
-    } ]
-  };
+  private donutCharts = [];
+  private barChart: Observable<BarChartData>;
   private minStaticsDataFirstRow = minStatisticData.firstRow;
   private minStaticsDataSecondRow = minStatisticData.secondRow;
   private minStatSubscription: Subscription;
   private donutChartSubscription: Subscription;
-  private barChartSubscription: Subscription;
   private regDateSubscription: Subscription;
 
   constructor (
@@ -86,38 +64,46 @@ export class ProgressDashboardComponent implements OnInit {
       } );
 
     this.donutChartSubscription = this.goalService.getUserLastThreeGoalsStatistic()
-      .subscribe( data => {
-        console.log( data )
-        this.donutChart = data
+      .subscribe( goals => {
+        for ( const key of Object.keys( goals ) ) {
+          const goal = {
+            goal: goals[ key ].name,
+            series: [
+              {
+                name: "Overdue",
+                className: "ct-overdue",
+                value: goals[ key ].overdue
+              },
+              {
+                name: "Upcoming",
+                className: "ct-upcoming",
+                value: goals[ key ].upcoming
+              },
+              {
+                name: "Set",
+                className: "ct-set",
+                value: goals[ key ].set
+              },
+              {
+                name: "Done",
+                className: "ct-done",
+                value: goals[ key ].done
+              }
+            ]
+          }
+          this.donutCharts.push( goal )
+        }
       } );
 
-    this.barChartSubscription = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
-      .subscribe( data => {
-        this.barChart.labels.forEach( label => {
-          this.barChart.series[ 0 ].value.push( data[ label ] ? data[ label ].goals : 0 );
-          this.barChart.series[ 1 ].value.push( data[ label ] ? data[ label ].tasks : 0 );
-        } );
-      } );
-
-    // this.barChart.labels.forEach( label => {
-    //   this.barChart.series[ 0 ].value[ counter ] = data[ 'dataValue' ][ label ].goals;
-    //   this.barChart.series[ 1 ].value[ counter ] = data[ 'dataValue' ][ label ].tasks;
-    //   counter++;
-    // } );
-
-    // const values = Object.keys( ChartData ).map( key => ChartData[ key ] );
-    // for ( let chart of values ) {
-    //   this.dataChart.push( chart );
-    // }
-    // this.barChart = this.dataChart.pop();
+    this.barChart = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
   }
 
   ngOnDestroy() {
     if ( this.minStatSubscription ) {
       this.minStatSubscription.unsubscribe();
     }
-    if ( this.barChartSubscription ) {
-      this.barChartSubscription.unsubscribe();
+    if ( this.donutChartSubscription ) {
+      this.donutChartSubscription.unsubscribe();
     }
     if ( this.regDateSubscription ) {
       this.regDateSubscription.unsubscribe();

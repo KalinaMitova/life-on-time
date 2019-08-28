@@ -10,7 +10,6 @@ import * as Chartist from 'chartist';
 //, OnChanges
 export class BarChartComponent implements OnInit {
   @Input() chart: Chartist.IChartistData;
-
   private barChart: Chart = {
     type: 'Bar',
     data: null,
@@ -22,18 +21,9 @@ export class BarChartComponent implements OnInit {
       axisY: {
         scaleMinSpace: 30,
       },
-      // plugins: [
-      //   Chartist.plugins.legend( {
-      //     position: 'bottom'
-      //   } )
-      // ],
     },
   }
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.barChart.data = this.chart;
   }
-
-
-
 }

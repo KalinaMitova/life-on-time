@@ -9,4 +9,5 @@ export interface Goal {
   status: string,
   tasks: Array<Task>,
   created_at: string,
+  goalLeftDays: number
 }

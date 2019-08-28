@@ -22,8 +22,9 @@
 <!-- </tr> -->
 <tr>
     <td>
-        <span class="small text-muted">Due Date: </span><span class="small action-date-ok"> <span
-                *ngIf='task.until_date.day < 10'>0</span>{{task.until_date.day}}/<span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}}/{{task.until_date.year}}
+        <span class="small text-muted">Due Date: </span><span class="small" [ngClass]=" {'action-date-ok': (task.taskLeftDays < -2  || task.status == 1), 'action-date-warn': (task.taskLeftDays < 2 &&
+                    task.taskLeftDays > -3 && task.status == 0), 'action-date-over': (task.taskLeftDays > -1 &&
+                    task.status == 0)}"> <span *ngIf='task.until_date.day < 10'>0</span>{{task.until_date.day}}/<span *ngIf='task.until_date.month< 10'>0</span>{{task.until_date.month}}/{{task.until_date.year}}
         </span>
         <p id="action{{task.id}}" [ngClass]=" {'action-date-ok': task.status == 1}">{{task.title}}</p>
     </td>

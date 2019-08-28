@@ -10,6 +10,7 @@ import { BarChartData } from '../models/barChartData';
 
 
 const BASE_URL = environment.apiUrl + "api/me/goals";
+//const BASE_URL_FOR_ENDPOINTS = environment.apiUrl + "api/me/goals/";
 //const BASE_CRUD_URL = "/api/goals/";
 const BASE_CRUD_URL = environment.apiUrl + "api/goals";
 const USER_COMPLETED_GOALS_END = "/completed";
@@ -42,6 +43,9 @@ export class GoalService {
         map( data => {
           if ( data[ 'dataValue' ][ category ] ) {
             return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
+              const goalLeftDays = Math.round( ( Date.now() - +( new Date( goal.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
+
+              goal.goalLeftDays = goalLeftDays;
               if ( goal.until_date ) {
                 const goalDueDateAsString = goal.until_date.split( '-' );
                 goal.until_date = {
@@ -61,6 +65,8 @@ export class GoalService {
               }
 
               goal.tasks.map( task => {
+                const taskLeftDays = Math.round( ( Date.now() - +( new Date( task.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
+                task.taskLeftDays = taskLeftDays;
                 const taskDueDateAsString = task.until_date.split( '-' );
                 task.until_date = {
                   day: Number( taskDueDateAsString[ 2 ] ),
@@ -141,11 +147,11 @@ export class GoalService {
   }
 
   getGoalById( id: number ): Observable<Goal> {
-    return this.http.get<Goal>( BASE_URL + 'id' );
+    return this.http.get<Goal>( BASE_URL + `/${id}` );
   }
 
   putEditGoalById( id: string, goal: GoalCreate ) {
-    return this.http.put( BASE_CRUD_URL + `/${id}`, goal );
+    return this.http.put( `${BASE_CRUD_URL}/${id}`, goal );
   }
 
   deleteGoalById( id: string ) {

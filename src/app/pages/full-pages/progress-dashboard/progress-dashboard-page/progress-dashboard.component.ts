@@ -91,7 +91,7 @@ export class ProgressDashboardComponent implements OnInit {
               }
             ]
           }
-          this.donutCharts.push( goal )
+          this.donutCharts.unshift( goal )
         }
       } );
 

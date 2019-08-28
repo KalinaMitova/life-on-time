@@ -5,7 +5,9 @@ export interface Task {
   goal_id: string,
   title: string,
   until_date: SeparatedDate,
-  status: string
+  status: string,
+  taskLeftDays: number
+
 }
 
 // "tasks": [

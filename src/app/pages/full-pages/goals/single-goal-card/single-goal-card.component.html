@@ -12,45 +12,49 @@
             <h4 class="card-title" id="goal{{goal.id}}" [ngClass]=" {'goal-done': goal.status === 1}">{{goal.title}}
             </h4>
             <span class="small card-subtitle text-muted">From: &nbsp;
-                <ng-template [ngIf]="goal.created_at">
+                <span [ngClass]=" {'goal-date-ok': (goal.goalLeftDays < -2  || goal.status === 1), 'goal-date-warn': (goal.goalLeftDays < 2 &&
+                    goal.goalLeftDays > -3 && goal.status === 0), 'goal-date-over': (goal.goalLeftDays > -1 &&
+                    goal.status === 0)}" *ngIf="goal.created_at">
                     <span class="small" *ngIf='goal.created_at.day < 10'>0</span>{{goal.created_at.day}}/<span class="small" *ngIf='goal.created_at.month< 10'>0</span>{{goal.created_at.month}}/{{goal.created_at.year}}&nbsp;
-</ng-template>
-to:&nbsp;
-<ng-template [ngIf]="goal.until_date">
-    <span class="small" *ngIf='goal.until_date.day < 10'>0</span>{{goal.until_date.day}}/
-    <span class="small" *ngIf='goal.until_date.month< 10'>0</span>{{goal.until_date.month}}/{{goal.until_date.year}}
-</ng-template>
-</span>
-<p class="card-subtitle text-muted">{{goal.description}}</p>
-</div>
-<div class="card-content">
-    <div class="card-body table-responsive actions-card">
-        <table class="table text-left actions-table">
-            <thead>
-                <tr>
-                    <th>Actions list</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- <tr > -->
+            </span>
+            to:&nbsp;
+            <span *ngIf="goal.until_date" [ngClass]=" {'goal-date-ok': (goal.goalLeftDays < -2  || goal.status === 1), 'goal-date-warn': (goal.goalLeftDays < 2 &&
+                    goal.goalLeftDays > -3 && goal.status === 0), 'goal-date-over': (goal.goalLeftDays > -1 &&
+                    goal.status === 0)}">
+                    <span class="small" *ngIf='goal.until_date.day < 10'>0</span>{{goal.until_date.day}}/
+            <span class="small" *ngIf='goal.until_date.month< 10'>0</span>{{goal.until_date.month}}/{{goal.until_date.year}}
+            </span>
+            </span>
+            <p class="card-subtitle text-muted">{{goal.description}}</p>
+        </div>
+        <div class="card-content">
+            <div class="card-body table-responsive actions-card">
+                <table class="table text-left actions-table">
+                    <thead>
+                        <tr>
+                            <th>Actions list</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr > -->
 
-                <app-single-action *ngFor="let task of goal.tasks" [task]="task">
-                </app-single-action>
-                <!-- </tr> -->
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="card-footer">
-    <div class="row">
-        <div class="col-sm-12 col-lg-6"></div>
-        <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create', goal.id)">+
+                        <app-single-action *ngFor="let task of goal.tasks" [task]="task">
+                        </app-single-action>
+                        <!-- </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6"></div>
+                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create', goal.id)">+
                         New
                         Action</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </ng-template>
 <!-- </div> -->

@@ -7,5 +7,5 @@
 //apiUrl: '/' // localhost lifeontime
 export const environment = {
   production: false,
-  apiUrl: 'http://136.244.71.69/'
+  apiUrl: 'http://lotapi.cweb.bg/'
 };

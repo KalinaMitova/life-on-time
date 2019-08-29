@@ -66,6 +66,7 @@ export class ProgressDashboardComponent implements OnInit {
     this.donutChartSubscription = this.goalService.getUserLastThreeGoalsStatistic()
       .subscribe( goals => {
         for ( const key of Object.keys( goals ) ) {
+          console.log( goals[ key ] );
           const goal = {
             goal: goals[ key ].name,
             series: [

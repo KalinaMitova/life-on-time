@@ -33,5 +33,4 @@ export class ModalConfirmComponent {
     } )
     this.modal.close( 'Ok click' );
   }
-
 }

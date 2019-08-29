@@ -54,6 +54,4 @@ export class ModalCreateEditComponent implements OnInit {
     )
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }
-
-
 }

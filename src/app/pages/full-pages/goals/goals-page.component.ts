@@ -133,7 +133,6 @@ export class GoalsPageComponent implements OnInit {
       id: itemInfo.itemId,
       status: itemInfo.status === 0 ? 1 : 0
     }
-    const itemElId = itemInfo.itemType + itemInfo.itemId;
     if ( itemInfo.itemType === 'goal' ) {
       this.editGoalSubscription = this.goalService.putEditGoalById( itemInfo.itemId, item )
         .subscribe( data => {

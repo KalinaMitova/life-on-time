@@ -7,7 +7,8 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-rocket danger ',
-      value: 0
+      value: 0,
+      registrationDate: '',
     },
     {
       title: 'allTasks',
@@ -16,7 +17,8 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-clock success',
-      value: 0
+      value: 0,
+      registrationDate: '',
     },
     {
       title: 'allIdeas',
@@ -25,7 +27,8 @@ export let minStatisticData = {
       textClass: '',
       class: "",
       iconClass: 'icon-bulb warning',
-      value: 0
+      value: 0,
+      registrationDate: '',
     },
     {
       title: 'daysRemaining',

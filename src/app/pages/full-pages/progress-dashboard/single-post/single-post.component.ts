@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BlogPost } from 'app/shared/models/blogPost';
 
 @Component( {
@@ -6,13 +6,7 @@ import { BlogPost } from 'app/shared/models/blogPost';
   templateUrl: './single-post.component.html',
   styleUrls: [ './single-post.component.scss' ]
 } )
-export class SinglePostComponent implements OnInit {
-
+export class SinglePostComponent {
   @Input( 'post' ) post: BlogPost;
-
-  constructor () { }
-
-  ngOnInit() {
-  }
-
+  image = './assets/img/photos/06.jpg'
 }

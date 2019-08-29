@@ -1,4 +1,3 @@
-@import "../../../../../assets/sass/scss/gradient-variables";
 :host /deep/ .ct-grid {
     stroke-dasharray: 0px;
     stroke: rgba(0, 0, 0, 0.1);
@@ -10,50 +9,33 @@
 
 // Donut Chart  CSS Starts
 :host /deep/ .donut .ct-overdue .ct-slice-donut {
-    stroke: #0CC27E;
+    stroke: #FF586B;
     stroke-width: 24px !important;
 }
 
+//  theme-colors("danger");
 :host /deep/ .donut .ct-upcoming .ct-slice-donut {
-    stroke: #FFC107;
+    stroke: #009DA0;
     stroke-width: 16px !important;
 }
 
+//  theme-colors("primary");
 :host /deep/ .donut .ct-set .ct-slice-donut {
     stroke: #7E57C2;
     stroke-width: 8px !important;
 }
 
 :host /deep/ .donut .ct-done .ct-slice-donut {
-    stroke: #2196F3;
+    stroke: #0CC27E;
     stroke-width: 32px !important;
 }
 
-//  :host /deep/ .donut .ct-label {
-//     text-anchor: middle;
-//     alignment-baseline: middle;
-//     font-size: 20px;
-//     fill: #868e96;
-// }
-// Donut Chart  CSS Ends
-// Bar Chart CSS Starts
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+1) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient7);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+2) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient5);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+3) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient6);
-// }
-// :host /deep/ .BarChart .ct-series-a .ct-bar:nth-of-type(4n+4) {
-//     stroke: url($progress-dashboard-gradient-path +  #gradient4);
-// }
-:host /deep/ .BarChartShadow {
-    -webkit-filter: drop-shadow(0px 20px 8px rgba(0, 0, 0, 0.3));
-    filter: drop-shadow(0px 20px 8px rgba(0, 0, 0, 0.3));
-    /* Same syntax as box-shadow, except
-                                                       for the spread property */
+//theme-colors("success");
+:host /deep/ .donut .ct-label {
+    text-anchor: middle;
+    //alignment-baseline: middle;
+    font-size: 20px;
+    fill: #868e96;
 }
 
-// Bar Chart CSS Ends
+//Donut Chart  CSS Ends

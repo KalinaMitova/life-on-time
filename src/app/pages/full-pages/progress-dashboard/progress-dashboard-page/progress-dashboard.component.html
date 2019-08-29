@@ -14,7 +14,8 @@
     <!-- Minimal statistics first row-->
     <div class="row" matchHeight="card">
         <div class="col-xl-3 col-lg-6 col-12" *ngFor="let stat of minStaticsDataFirstRow">
-            <app-min-statistic-card [stat]="stat" [registrationDate]="registrationDate"></app-min-statistic-card>
+            <app-min-statistic-card [stat]="stat">
+            </app-min-statistic-card>
         </div>
     </div>
     <!-- Minimal statistics second row-->
@@ -34,7 +35,7 @@
 
 <!--Donut chart start-->
 <div class="row">
-    <div class="col-xl-4 col-lg-12" *ngFor="let chart of donutCharts">
+    <div class="col-xl-4 col-lg-12" *ngFor="let chart of donutCharts$ | async">
         <app-chart [chart]='chart'>
         </app-chart>
     </div>
@@ -44,7 +45,7 @@
 <!--Bar chart starts-->
 <div class="row text-left">
     <div class="col-sm-12">
-        <app-bar-chart [chart]='barChart | async'>
+        <app-bar-chart [chart]='barChart$ | async'>
         </app-bar-chart>
     </div>
 </div>
@@ -82,7 +83,8 @@
     </div>
     <!-- Blog`s posts start-->
     <div class="col-xl-6 col-lg-12">
-        <app-blog-posts></app-blog-posts>
+        <app-blog-posts [posts]="blogPosts$ | async">
+        </app-blog-posts>
     </div>
     <!-- Blog`s posts end-->
 </div>

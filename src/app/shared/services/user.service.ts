@@ -4,7 +4,7 @@ import { environment } from "environments/environment";
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const BASE_URL = environment.apiUrl + 'api/me/users';
+const BASE_URL = environment.apiUrl + 'api/me';
 const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
 @Injectable( {

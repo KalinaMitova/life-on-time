@@ -18,7 +18,7 @@ export class SetHeadersInterceptor implements HttpInterceptor {
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     const token = this.authService.getToken( 'token' );
 
-    if ( !req.url.includes( '/auth/' ) ) {
+    if ( !req.url.includes( '/auth/' ) && !req.url.includes( '/wp-json/wp/' ) ) {
       const request = req.clone( {
         setHeaders: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export class SetHeadersInterceptor implements HttpInterceptor {
         },
         //withCredentials: true
       } );
-      //console.log( request );
+      // console.log( request );
       return next.handle( request );
     }
 

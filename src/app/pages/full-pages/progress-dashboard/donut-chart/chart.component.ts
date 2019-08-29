@@ -11,8 +11,18 @@ export class ChartComponent {
   @Input( 'chart' ) chart: any;
 
   donutChart: Chart;
+  setValue: number;
+  doneValue: number;
+  overdueValue: number;
+  upcomingValue: number;
 
   ngOnInit() {
+
+    this.setValue = this.chart.series[ 2 ].value;
+    this.doneValue = this.chart.series[ 3 ].value;
+    this.overdueValue = this.chart.series[ 0 ].value;
+    this.upcomingValue = this.chart.series[ 1 ].value;
+
     const dataChart = { ... this.chart };
     dataChart.series = dataChart.series.filter( s => s.name !== 'Set' )
 

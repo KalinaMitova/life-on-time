@@ -9,6 +9,8 @@ import { IdeaService } from 'app/shared/services/idea.service';
 
 import { UserService } from 'app/shared/services/user.service';
 import { BarChartData } from 'app/shared/models/barChartData';
+import { BlogPost } from 'app/shared/models/blogPost';
+import { BlogService } from 'app/shared/services/blog.service';
 
 
 @Component( {
@@ -18,26 +20,28 @@ import { BarChartData } from 'app/shared/models/barChartData';
 } )
 export class ProgressDashboardComponent implements OnInit {
 
-  private registrationDate: string;
-  donutCharts = [];
-  barChart: Observable<BarChartData>;
+  registrationDate: string;
+  donutCharts$: Observable<Array<any>>;
+  barChart$: Observable<BarChartData>;
   minStaticsDataFirstRow = minStatisticData.firstRow;
   minStaticsDataSecondRow = minStatisticData.secondRow;
+  blogPosts$: Observable<Array<BlogPost>>;
   private minStatSubscription: Subscription;
-  private donutChartSubscription: Subscription;
-  private regDateSubscription: Subscription;
+  private regDateSubscripton: Subscription;
 
   constructor (
     private taskService: TaskService,
     private goalService: GoalService,
     private ideasService: IdeaService,
-    private userServise: UserService
+    private userServise: UserService,
+    private blogService: BlogService,
   ) {
 
   }
 
   ngOnInit() {
-    this.regDateSubscription = this.userServise.getUserRegistrationDate().subscribe( date => this.registrationDate = date );
+    this.userServise.getUserRegistrationDate()
+      .subscribe( date => this.registrationDate = date );
     this.minStatSubscription = forkJoin(
       //first row
       this.goalService.getUserGoals().pipe( catchError( error => of( error ) ) ),
@@ -54,8 +58,11 @@ export class ProgressDashboardComponent implements OnInit {
         completedGoals, completedTasks, ideasToGoals, rate
       ] ) => {
         this.minStaticsDataFirstRow[ 0 ].value = goals;
+        this.minStaticsDataFirstRow[ 0 ].registrationDate = this.registrationDate;
         this.minStaticsDataFirstRow[ 1 ].value = tasks;
+        this.minStaticsDataFirstRow[ 1 ].registrationDate = this.registrationDate;
         this.minStaticsDataFirstRow[ 2 ].value = ideas;
+        this.minStaticsDataFirstRow[ 2 ].registrationDate = this.registrationDate;
         this.minStaticsDataFirstRow[ 3 ].value = daysTocompleteTasks;
         this.minStaticsDataSecondRow[ 0 ].value = completedGoals;
         this.minStaticsDataSecondRow[ 1 ].value = completedTasks;
@@ -63,51 +70,18 @@ export class ProgressDashboardComponent implements OnInit {
         this.minStaticsDataSecondRow[ 3 ].value = rate + ' %';
       } );
 
-    this.donutChartSubscription = this.goalService.getUserLastThreeGoalsStatistic()
-      .subscribe( goals => {
-        for ( const key of Object.keys( goals ) ) {
-          console.log( goals[ key ] );
-          const goal = {
-            goal: goals[ key ].name,
-            series: [
-              {
-                name: "Overdue",
-                className: "ct-overdue",
-                value: goals[ key ].overdue
-              },
-              {
-                name: "Upcoming",
-                className: "ct-upcoming",
-                value: goals[ key ].upcoming
-              },
-              {
-                name: "Set",
-                className: "ct-set",
-                value: goals[ key ].set
-              },
-              {
-                name: "Done",
-                className: "ct-done",
-                value: goals[ key ].done
-              }
-            ]
-          }
-          this.donutCharts.unshift( goal )
-        }
-      } );
+    this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();
+    this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
+    this.blogPosts$ = this.blogService.getLats4Posts();
 
-    this.barChart = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
   }
 
   ngOnDestroy() {
     if ( this.minStatSubscription ) {
       this.minStatSubscription.unsubscribe();
     }
-    if ( this.donutChartSubscription ) {
-      this.donutChartSubscription.unsubscribe();
-    }
-    if ( this.regDateSubscription ) {
-      this.regDateSubscription.unsubscribe();
+    if ( this.regDateSubscripton ) {
+      this.regDateSubscripton.unsubscribe();
     }
   }
 }

@@ -32,6 +32,7 @@ import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interse
 import { ModalService } from './shared/services/modal.service';
 import { EventService } from './shared/services/event.service';
 import { UserService } from './shared/services/user.service';
+import { BlogService } from './shared/services/blog.service';
 
 
 
@@ -72,15 +73,16 @@ export function createTranslateLoader( http: HttpClient ) {
   ],
   providers: [
     AuthService,
-    ApplicationService,
-    GoalService,
-    TaskService,
-    IdeaService,
+    // ApplicationService,
+    // GoalService,
+    // TaskService,
+    // IdeaService,
     AuthGuard,
-    UserService,
-    ModalService,
-    CookieService,
-    EventService,
+    // UserService,
+    // ModalService,
+    // BlogService,
+    // CookieService,
+    // EventService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SetHeadersInterceptor,

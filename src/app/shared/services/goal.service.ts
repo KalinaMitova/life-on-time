@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, debounce } from 'rxjs/operators';
 
 import { environment } from "environments/environment";
 import { Goal } from '../models/goal';
@@ -87,7 +87,39 @@ export class GoalService {
   getUserLastThreeGoalsStatistic(): Observable<Array<any>> {
     return this.http.get<Array<any>>( BASE_URL + USER_LAST_THREE_GOALS_END )
       .pipe(
-        map( goals => Object.keys( goals ).map( key => goals[ key ] )[ 0 ] )
+        map( goals => {
+          const goalsObj = goals[ 'data' ];
+          const goalsArray = Object.keys( goalsObj ).map( key => goalsObj[ key ] );
+          return goalsArray
+            .map( g => {
+              const goal = {
+                goal: g.name,
+                series: [
+                  {
+                    name: "Overdue",
+                    className: "ct-overdue",
+                    value: g.overdue
+                  },
+                  {
+                    name: "Upcoming",
+                    className: "ct-upcoming",
+                    value: g.upcoming
+                  },
+                  {
+                    name: "Set",
+                    className: "ct-set",
+                    value: g.set
+                  },
+                  {
+                    name: "Done",
+                    className: "ct-done",
+                    value: g.done
+                  }
+                ]
+              }
+              return goal;
+            } )
+        } )
       )
   }
 

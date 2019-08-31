@@ -9,7 +9,6 @@ import { BlogPost } from 'app/shared/models/blogPost';
 
 export class BlogPostsComponent {
   @Input( 'posts' ) posts: Array<BlogPost>;
-  debugger;
   // posts: Array<BlogPost> = [
   //   {
   //     title: 'First Post',

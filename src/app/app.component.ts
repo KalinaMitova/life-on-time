@@ -2,6 +2,12 @@ import { Component, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Category } from './shared/models/category';
+declare global {
+    interface Window {
+        category: Array<Category>;
+    }
+}
 
 @Component( {
     selector: 'app-root',

@@ -3,6 +3,36 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
 import { GoalsPageComponent } from './goals/goals-page.component';
 
+const submenuGoal = [];
+// const goalCategories = window.categories;
+// console.log( goalCategories );
+// for ( const category of goalCategories ) {
+//   submenuGoal.push( {
+//     path: category.pathEnd,
+//     component: GoalsPageComponent,
+//   } )
+// }
+
+// [
+//   {
+//     path: 'health-&-wellbeing',
+//     component: GoalsPageComponent,
+//   },
+//   {
+//     path: 'personal-development',
+//     component: GoalsPageComponent,
+//   }, {
+//     path: 'relationships',
+//     component: GoalsPageComponent,
+//   }, {
+//     path: 'physical-activity',
+//     component: GoalsPageComponent,
+//   }, {
+//     path: 'financial',
+//     component: GoalsPageComponent,
+//   },
+// ]
+
 const routes: Routes = [
   {
     path: '',
@@ -17,22 +47,22 @@ const routes: Routes = [
     path: 'goals',
     children: [
       {
-        path: 'health-wellbeing',
+        path: '**',
         component: GoalsPageComponent,
       },
-      {
-        path: 'personal-development',
-        component: GoalsPageComponent,
-      }, {
-        path: 'relationships',
-        component: GoalsPageComponent,
-      }, {
-        path: 'physical-activity',
-        component: GoalsPageComponent,
-      }, {
-        path: 'financial',
-        component: GoalsPageComponent,
-      },
+      // {
+      //   path: 'personal-development',
+      //   component: GoalsPageComponent,
+      // }, {
+      //   path: 'relationships',
+      //   component: GoalsPageComponent,
+      // }, {
+      //   path: 'physical-activity',
+      //   component: GoalsPageComponent,
+      // }, {
+      //   path: 'financial',
+      //   component: GoalsPageComponent,
+      // },
     ]
   },
 ];

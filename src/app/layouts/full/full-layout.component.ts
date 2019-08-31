@@ -13,6 +13,14 @@ import { ConfigService } from "app/shared/services/config.service";
 import { DOCUMENT } from "@angular/common";
 import { LayoutService } from "app/shared/services/layout.service";
 import { Subscription } from "rxjs";
+import { Category } from 'app/shared/models/category';
+import { UserService } from 'app/shared/services/user.service';
+
+// declare global {
+//   interface Window {
+//     categories: Array<Category>;
+//   }
+// }
 
 var fireRefreshEventOnWindow = function () {
   var evt = document.createEvent( "HTMLEvents" );
@@ -29,6 +37,8 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild( "sidebarBgImage", { static: true } ) sidebarBgImage: ElementRef;
   @ViewChild( "appSidebar", { static: true } ) appSidebar: ElementRef;
   @ViewChild( "wrapper", { static: true } ) wrapper: ElementRef;
+
+  categorySubscribtion: Subscription;
 
   options = {
     direction: "ltr",
@@ -50,7 +60,8 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     private layoutService: LayoutService,
     private configService: ConfigService,
     @Inject( DOCUMENT ) private document: Document,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private userService: UserService
   ) {
     //event emitter call from customizer
     this.layoutSub = layoutService.customizerChangeEmitted$.subscribe(
@@ -187,6 +198,12 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.config = this.configService.templateConf;
     this.bgColor = this.config.layout.sidebar.backgroundColor;
+    // this.categorySubscribtion = this.userService.getUserAvailableCategories()
+    //   .subscribe( data => {
+    //     debugger;
+    //     window.categories = data;
+    //     debugger;
+    //   } )
 
     if ( !this.config.layout.sidebar.backgroundImage ) {
       this.bgImage = "";
@@ -270,6 +287,9 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     if ( this.layoutSub ) {
       this.layoutSub.unsubscribe();
     }
+    // if ( this.categorySubscribtion ) {
+    //   this.categorySubscribtion.unsubscribe();
+    // }
   }
 
   onClick( event ) {

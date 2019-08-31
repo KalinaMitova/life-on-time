@@ -78,7 +78,7 @@ export function createTranslateLoader( http: HttpClient ) {
     // TaskService,
     // IdeaService,
     AuthGuard,
-    // UserService,
+    UserService,
     // ModalService,
     // BlogService,
     // CookieService,

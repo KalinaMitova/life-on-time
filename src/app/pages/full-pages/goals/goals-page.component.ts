@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, Renderer2, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { GoalService } from 'app/shared/services/goal.service';
@@ -11,7 +11,8 @@ import { ActionInfo } from 'app/shared/models/actionInfo';
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { TaskCreate } from 'app/shared/models/taskCreate';
-import { GOALS_CATEGORIES } from "app/shared/data/goalsCategories";
+import { Category } from 'app/shared/models/category';
+import { UserService } from 'app/shared/services/user.service';
 
 
 
@@ -23,9 +24,11 @@ import { GOALS_CATEGORIES } from "app/shared/data/goalsCategories";
 export class GoalsPageComponent implements OnInit {
   @ViewChild( 'type', { static: false } ) type: any;
 
-  currentGoalPage;
+  currentGoalCategory: Category;
+  goalCategories: Array<Category>;
   private path: string;
   goals$: Observable<Array<Goal>>;
+  private goalCategoriesSubscription: Subscription;
   private deleteSubscription: Subscription;
   private createGoalSubscription: Subscription;
   private createTaskSubscription: Subscription;
@@ -41,14 +44,25 @@ export class GoalsPageComponent implements OnInit {
     private goalService: GoalService,
     private taskService: TaskService,
     private eventService: EventService,
-    private renderer: Renderer2
+    private userService: UserService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.path = this.route.snapshot.routeConfig.path;
-    this.currentGoalPage = GOALS_CATEGORIES[ this.path ];
-    this.loadPageGoals();
+    this.path = this.route.snapshot.url[ 0 ].path;
+    //this.path  = this.router.url.split( '/' )[ 2 ]; // to print only path eg:"login"
+
+    this.goalCategoriesSubscription = this.userService.getUserAvailableCategories()
+      .subscribe( data => {
+        this.goalCategories = data;
+        this.currentGoalCategory = this.goalCategories
+          .find( category => category.pathEnd === this.path );
+        if ( !this.currentGoalCategory ) {
+          this.router.navigate( [ "/error" ] )
+        }
+        this.loadPageGoals();
+      } );
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
     this.modalStatusSubscription = this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
@@ -75,7 +89,7 @@ export class GoalsPageComponent implements OnInit {
     let goal: GoalCreate = formValue;
     const date = formValue.until_date;
     goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
-    goal.category_id = this.currentGoalPage.categoryId;
+    goal.category_id = this.currentGoalCategory.id;
     this.createGoalSubscription = this.goalService.postCreateGoal( goal )
       .subscribe( data => {
         this.loadPageGoals();
@@ -147,7 +161,7 @@ export class GoalsPageComponent implements OnInit {
   }
 
   private loadPageGoals() {
-    this.goals$ = this.goalService.getGoalsByCategory( this.currentGoalPage.title );
+    this.goals$ = this.goalService.getGoalsByCategory( this.currentGoalCategory.title );
   }
 
   private getDate( dd, mm, yyyy, separator: string ) {
@@ -184,6 +198,9 @@ export class GoalsPageComponent implements OnInit {
     }
     if ( this.modalStatusSubscription ) {
       this.modalStatusSubscription.unsubscribe()
+    }
+    if ( this.goalCategoriesSubscription ) {
+      this.goalCategoriesSubscription.unsubscribe()
     }
   }
 }

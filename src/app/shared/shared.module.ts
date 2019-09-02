@@ -23,7 +23,8 @@ import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-valid
 import { CustomizerComponent } from './customizer/customizer.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-idea-create-edit.component';
 
 @NgModule( {
     exports: [
@@ -43,7 +44,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         RouterModule,
         CommonModule,
         NgbModule,
-        // FormsModule,
         ReactiveFormsModule,
         TranslateModule,
         PerfectScrollbarModule
@@ -63,9 +63,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CustomizerComponent,
         ModalConfirmComponent,
         ModalCreateEditComponent,
+        ModalIdeaCreateEditComponent,
     ],
     entryComponents: [
         ModalConfirmComponent,
-        ModalCreateEditComponent ]
+        ModalCreateEditComponent,
+        ModalIdeaCreateEditComponent, ]
 } )
 export class SharedModule { }

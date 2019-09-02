@@ -17,17 +17,31 @@ export class SetHeadersInterceptor implements HttpInterceptor {
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     const token = this.authService.getToken( 'token' );
+    const imgToken = '20011d8c7e6a5f1654514c77bfdba8cdbeb35885';
 
     if ( !req.url.includes( '/auth/' ) && !req.url.includes( '/wp-json/wp/' ) ) {
-      const request = req.clone( {
-        setHeaders: {
-          'Content-Type': 'application/json',
-          'Auth-Token': token,
-          //'Authorization': `Bearer ${authToken}`,
-        },
-        //withCredentials: true
-      } );
-      // console.log( request );
+      let request;
+      if ( req.url.includes( '/api.imgur.com/' ) ) {
+        request = req.clone( {
+          setHeaders: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${imgToken}`,
+          },
+          withCredentials: true
+        } );
+        console.log( request );
+      } else {
+        request = req.clone( {
+          setHeaders: {
+            'Content-Type': 'application/json',
+            'Auth-Token': token,
+            //'Authorization': `Bearer ${authToken}`,
+          },
+          withCredentials: true
+        } );
+        console.log( request );
+      }
+
       return next.handle( request );
     }
 

@@ -18,7 +18,34 @@ export class IdeaService {
   ) { }
 
   getUserIdeas(): Observable<Array<Idea>> {
-    return this.http.get<Array<Idea>>( USER_IDEAS_URL );
+    return this.http.get<Array<Idea>>( USER_IDEAS_URL )
+      .pipe(
+        map( data => {
+          const ideas = data[ 'data' ][ 'ideas' ];
+          if ( ideas instanceof Object ) {
+            const ideaValue = Object.keys( ideas ).map( key => ideas[ key ] );
+            return ideaValue.map( idea => {
+              const ideaCreatedDateArray =
+                ( idea[ 'created_at' ].split( ' ' )[ 0 ] ).split( '-' );
+              const dd = ideaCreatedDateArray[ 2 ];
+              const mm = ideaCreatedDateArray[ 1 ];
+              const yyyy = ideaCreatedDateArray[ 0 ];
+              idea[ 'created_at' ] = `${dd}/${mm}/${yyyy}`;
+              return idea;
+            } )
+          } else {
+            return ideas.map( idea => {
+              const ideaCreatedDateArray =
+                ( idea[ 'created_at' ].split( ' ' )[ 0 ] ).split( '-' );
+              const dd = ideaCreatedDateArray[ 2 ];
+              const mm = ideaCreatedDateArray[ 1 ];
+              const yyyy = ideaCreatedDateArray[ 0 ];
+              idea[ 'created_at' ] = `${dd}/${mm}/${yyyy}`;
+              return idea;
+            } )
+          }
+        }
+        ) );
   }
 
   getUserIdeasAsNumber(): Observable<Number> {

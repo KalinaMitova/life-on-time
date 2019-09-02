@@ -60,8 +60,9 @@ export class GoalsPageComponent implements OnInit {
           .find( category => category.pathEnd === this.path );
         if ( !this.currentGoalCategory ) {
           this.router.navigate( [ "/error" ] )
+        } else {
+          this.loadPageGoals();
         }
-        this.loadPageGoals();
       } );
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
@@ -170,8 +171,8 @@ export class GoalsPageComponent implements OnInit {
     return ( yyyy + separator + mm + separator + dd );
   };
 
-  openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: any ) {
-    this.modalService.open( name, itemType, actionTypeOrTitle, item );
+  openModal( name: string, itemType: string, actionType: string, item?: any ) {
+    this.modalService.open( name, itemType, actionType, item );
   }
 
   ngOnDestroy() {

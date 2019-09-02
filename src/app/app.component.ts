@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { Category } from './shared/models/category';
 declare global {
     interface Window {
-        category: Array<Category>;
+        categories: Array<Category>;
     }
 }
 

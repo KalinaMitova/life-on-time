@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
 import { GoalsPageComponent } from './goals/goals-page.component';
+import { IdeasPageComponent } from './ideas/ideas-page.component';
 
 const submenuGoal = [];
 // const goalCategories = window.categories;
@@ -65,6 +66,10 @@ const routes: Routes = [
       // },
     ]
   },
+  {
+    path: 'ideas',
+    component: IdeasPageComponent
+  }
 ];
 
 @NgModule( {

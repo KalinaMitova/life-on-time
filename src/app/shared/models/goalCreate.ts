@@ -4,5 +4,6 @@ export interface GoalCreate {
   title?: string,
   description?: string,
   until_date?: string,
-  status?: number
+  status?: number,
+  idea_id?: string
 }

@@ -1,0 +1,93 @@
+<div class="modal-header px-4">
+    <h4 class="modal-title" id='ideaModal'>{{actionType | titlecase}} Idea</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- <p>You've just got an idea? Let's write it down right now.</p> -->
+<form [formGroup]="modalForm" class="form form-horizontal" (ngSubmit)="onAction(actionType, itemType, item.id)">
+    <div class="modal-body px-4">
+        <div class="form-group">
+            <label for="name">Idea</label>
+            <input class="form-control" type="text" id="name" placeholder="Set your Idea" formControlName='name' required>
+        </div>
+        <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched) && name.errors?.required">
+            The field is required!
+        </div>
+
+        <div formGroupName="info">
+            <div class="form-group">
+                <label for="content">Notes</label>
+                <textarea id="content" class="form-control" placeholder=" Write down some notes for the idea. You can change this later." formControlName="content" required></textarea>
+                <div class="alert alert-danger" *ngIf="content.invalid && (content.dirty || content.touched) && content.errors?.required">
+                    The field is required!
+                </div>
+            </div>
+
+            <!--for from group name info-->
+        </div>
+
+        <!-- <div class="form-group">
+            <div class="media-list">
+                <div id="imagesCollapse" class="card-header p-0">
+                    <a data-toggle="collapse" href="#imagesModal" aria-expanded="true" aria-controls="images" class="collapsed email-app-sender list-group-item list-group-item-action border-0">
+
+                        <div class="media">
+                            <div class="media-body">
+                                <h6 class="list-group-item-heading text-bold-500">Add Images to your idea
+                                    <span class="float-right">
+                    <i class="ft-chevron-down font-medium"></i>
+                  </span>
+                                </h6>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                <div id="imagesModal" role="tabpanel" aria-labelledby="imagesCollapse" class="card-collapse collapse" aria-expanded="true">
+                    <div class="card-content">
+                        <div class="email-app-text card-body" style="position: relative;">
+
+                            <div class="dropzone dropzone-area dz-clickable" id="dpz-remove-thumb">
+                                <div class="dz-message">Drop images for upload here</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="filesCollapse" class="card-header p-0">
+                    <a data-toggle="collapse" href="#filesModal" aria-expanded="true" aria-controls="files" class="collapsed email-app-sender list-group-item list-group-item-action border-0">
+
+                        <span class="media">
+              <div class="media-body">
+                <h6 class="list-group-item-heading text-bold-500">Add files to your idea
+                  <span class="float-right">
+                    <i class="ft-chevron-down font-medium"></i>
+                  </span>
+                        </h6>
+
+                </div>
+                </span>
+
+                </a>
+            </div>
+
+            <div id="filesModal" role="tabpanel" aria-labelledby="filesCollapse" class="card-collapse collapse" aria-expanded="true">
+                <div class="card-content">
+                    <div class="card-body" style="position: relative;">
+                        <div class="dropzone dropzone-area dz-clickable" id="dpz-remove-thumb">
+                            <div class="dz-message">Drop files for upload here</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- </div> -->
+    </div>
+    <div class="modal-footer px-4">
+        <button type="button" class="btn grey btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Cancel</button>
+        <button type="submit" class="btn  btn-outline-primary">{{actionType | titlecase}} Idea</button>
+    </div>
+</form>

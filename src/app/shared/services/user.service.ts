@@ -62,11 +62,11 @@ export class UserService {
       )
   }
 
-  // //get categories from window object
-  // getCategoriesWindows() {
-  //   return window.categories;
-  // }
-  // setCategoriesWindow( categories: Array<Category> ) {
-  //   window.categories = categories;
-  // }
+  //get categories from window object
+  getCategoriesWindows() {
+    return window.categories;
+  }
+  setCategoriesWindow( categories: Array<Category> ) {
+    window.categories = categories;
+  }
 }

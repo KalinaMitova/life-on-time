@@ -26,8 +26,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   logoUrl = 'assets/img/logo.png';
   public config: any = {};
   private availableCategoriesSubscription: Subscription;
-
-
   constructor (
     private router: Router,
     private configService: ConfigService,
@@ -53,7 +51,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     // console.log( this.globals.getCategory() );
     this.availableCategoriesSubscription = this.userService.getUserAvailableCategories()
       .subscribe( data => {
-        //this.userService.setCategoriesWindow( data );
+        this.userService.setCategoriesWindow( data );
         goalsMenu[ 'submenu' ] = [];
         data.forEach( category => {
           goalsMenu[ 'submenu' ].push(

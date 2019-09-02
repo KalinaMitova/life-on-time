@@ -16,7 +16,7 @@ export const ROUTES: RouteInfo[] = [
         ]
     },
     {
-        path: '/', title: 'My ideas', icon: 'ft-clipboard', class: '', badge: '', badgeClass: '', isExternalLink: false,
+        path: '/ideas', title: 'My ideas', icon: 'ft-clipboard', class: '', badge: '', badgeClass: '', isExternalLink: false,
         submenu: []
     },
     {

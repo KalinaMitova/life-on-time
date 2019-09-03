@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ModalService } from 'app/shared/services/modal.service';
 import { EventService } from 'app/shared/services/event.service';
 import { ItemInfo } from 'app/shared/models/itemInfo';
+import { SeparatedDate } from 'app/shared/models/date';
 
 @Component( {
   selector: 'app-single-action',
@@ -9,15 +10,16 @@ import { ItemInfo } from 'app/shared/models/itemInfo';
   styleUrls: [ './single-action.component.scss' ]
 } )
 export class SingleActionComponent {
-  @Input() task: any;
+  @Input( 'task' ) task: any;
+  @Input( 'goalUntilDate' ) goalUntilDate: SeparatedDate;
 
   constructor (
     private modalService: ModalService,
     private eventService: EventService
   ) { }
 
-  openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: any ) {
-    this.modalService.open( name, itemType, actionTypeOrTitle, item );
+  openModal( name: string, itemType: string, actionType: string, item?: any, date?: SeparatedDate ) {
+    this.modalService.open( name, itemType, actionType, item, date );
   }
 
   changeStatus( itemType: string, itemId: string, status: number ) {

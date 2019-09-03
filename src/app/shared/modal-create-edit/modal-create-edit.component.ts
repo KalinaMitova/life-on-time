@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Form, Validators, FormGroup } from '@angular/forms';
 import { EventService } from '../services/event.service';
 import { ActionInfo } from '../models/actionInfo';
+import { SeparatedDate } from '../models/date';
 
 @Component( {
   selector: 'app-modal-create-edit',
@@ -15,12 +16,21 @@ export class ModalCreateEditComponent implements OnInit {
   itemType: string;
   actionType: string;
   isFromIdea: boolean = false;
+  minDate: SeparatedDate;
+  maxDate: SeparatedDate = null;
 
   constructor (
     public modal: NgbActiveModal,
     private eventService: EventService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+    const today = new Date();
+    this.minDate = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+      day: today.getDate()
+    }
+  }
 
   ngOnInit() {
     this.modalForm = this.formBuilder.group( {

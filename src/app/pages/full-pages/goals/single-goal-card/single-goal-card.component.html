@@ -38,7 +38,7 @@
                     <tbody>
                         <!-- <tr > -->
 
-                        <app-single-action *ngFor="let task of goal.tasks" [task]="task">
+                        <app-single-action *ngFor="let task of goal.tasks" [task]="task" [goalUntilDate]="goal.until_date">
                         </app-single-action>
                         <!-- </tr> -->
                     </tbody>
@@ -48,7 +48,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-sm-12 col-lg-6"></div>
-                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create', goal.id)">+
+                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create', goal.id, goal.until_date)">+
                         New
                         Action</a>
                 </div>

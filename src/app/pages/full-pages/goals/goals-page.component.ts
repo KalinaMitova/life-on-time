@@ -50,7 +50,8 @@ export class GoalsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.path = this.route.snapshot.url[ 0 ].path;
+
+    this.path = this.route.snapshot.url[ 0 ] ? this.route.snapshot.url[ 0 ].path : '';
     //this.path  = this.router.url.split( '/' )[ 2 ]; // to print only path eg:"login"
 
     this.goalCategoriesSubscription = this.userService.getUserAvailableCategories()

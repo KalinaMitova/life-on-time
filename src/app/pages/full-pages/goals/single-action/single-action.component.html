@@ -11,10 +11,10 @@
             <a class="success p-0" data-original-title="" alt="Complete Action" title="Complete Action" data-toggle="modal" data-target="#action" (click)="changeStatus('action', task.id, task.status)">
                 <i class="ft-check font-medium-3 mr-1"></i>
             </a>
-            <a class="success p-0" data-original-title="" alt="Edit Action" title="Edit Action" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task)">
+            <a class="success p-0" data-original-title="" alt="Edit Action" title="Edit Action" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'edit', task, goalUntilDate)">
                 <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
-            <a class="danger p-0" data-original-title="" alt="Delete Action" title="Delete Action" (click)="openModal('confirmModal', 'action', 'delete', task)">
+            <a class="danger p-0" data-original-title="" alt="Delete Action" title="Delete Action" (click)="openModal('confirmModal', 'action', 'delete', task, goalUntilDate)">
                 <i class="ft-x font-medium-3 mr-2"></i>
             </a>
         </td>

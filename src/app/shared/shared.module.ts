@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import {
+    DropzoneModule, DropzoneConfigInterface,
+    DROPZONE_CONFIG
+} from 'ngx-dropzone-wrapper';
 
 //COMPONENTS
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { NotificationSidebarComponent } from './notification-sidebar/notification-sidebar.component';
+import { CustomizerComponent } from './customizer/customizer.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
+import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-idea-create-edit.component';
 
 //DIRECTIVES
 import { ToggleFullscreenDirective } from "./directives/toggle-fullscreen.directive";
@@ -20,11 +28,15 @@ import { SidebarListDirective } from './directives/sidebarlist.directive';
 import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.directive';
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-validator.directive';
-import { CustomizerComponent } from './customizer/customizer.component';
-import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-idea-create-edit.component';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+    // Change this to your upload POST address:
+    url: 'http://localhost:8080',
+    acceptedFiles: 'image/*',
+    createImageThumbnails: true,
+    // headers: { "Authorization": `Client-ID ${clientID}` }
+};
+
 
 @NgModule( {
     exports: [
@@ -46,7 +58,8 @@ import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-ide
         NgbModule,
         ReactiveFormsModule,
         TranslateModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        DropzoneModule
     ],
     declarations: [
         FooterComponent,
@@ -64,6 +77,12 @@ import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-ide
         ModalConfirmComponent,
         ModalCreateEditComponent,
         ModalIdeaCreateEditComponent,
+    ],
+    providers: [
+        {
+            provide: DROPZONE_CONFIG,
+            useValue: DEFAULT_DROPZONE_CONFIG
+        }
     ],
     entryComponents: [
         ModalConfirmComponent,

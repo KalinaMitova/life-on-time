@@ -12,11 +12,11 @@ export class ModalService {
 
   constructor ( private modalService: NgbModal ) { }
 
-  open( name: string, itemType: string, actionType: string, itemInfo?: any ) {
+  open( name: string, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate ) {
     const modalRef = this.modalService.open( Modals[ name ] );
     modalRef.componentInstance.itemType = itemType;
     if ( name === 'createEditModal' ) {
-      this.setEditCreateModalProp( modalRef, itemType, actionType, itemInfo )
+      this.setEditCreateModalProp( modalRef, itemType, actionType, itemInfo, date )
     } else if ( name === 'confirmModal' ) {
       modalRef.componentInstance.title = itemInfo.title ? itemInfo.title : itemInfo.name;
       modalRef.componentInstance.itemId = itemInfo.id;
@@ -54,7 +54,8 @@ export class ModalService {
       return `with: ${reason}`;
     }
   }
-  private setEditCreateModalProp( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any ) {
+  private setEditCreateModalProp( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate
+  ) {
     if ( actionType === 'create' ) {
       let item = {
         title: '',
@@ -67,15 +68,19 @@ export class ModalService {
       }
       if ( itemType === 'action' ) {
         item[ 'goal_id' ] = itemInfo;
+        modalRef.componentInstance.maxDate = date;
       } else if ( itemType === 'goal' && itemInfo ) {
         item.title = itemInfo.name;
-        item.description = itemInfo.content ? itemInfo.content : '';
+        item.description = itemInfo.info.content ? itemInfo.info.content : '';
         modalRef.componentInstance.isFromIdea = true;
         modalRef.componentInstance.categories = window.categories;
       }
 
       modalRef.componentInstance.item = item;
     } else if ( actionType === 'edit' ) {
+      if ( itemType === 'action' ) {
+        modalRef.componentInstance.maxDate = date;
+      }
       modalRef.componentInstance.item = itemInfo;
     }
     modalRef.componentInstance.actionType = actionType;

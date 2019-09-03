@@ -3,6 +3,7 @@ import { Goal } from 'app/shared/models/goal';
 import { ModalService } from 'app/shared/services/modal.service'
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { EventService } from 'app/shared/services/event.service';
+import { SeparatedDate } from 'app/shared/models/date';
 
 @Component( {
   selector: 'app-single-goal-card',
@@ -17,8 +18,8 @@ export class SingleGoalCardComponent {
     private eventService: EventService
   ) { }
 
-  openModal( name: string, itemType: string, actionTypeOrTitle: string, item?: any ) {
-    this.modalService.open( name, itemType, actionTypeOrTitle, item );
+  openModal( name: string, itemType: string, actionType: string, itemId?: any, date?: SeparatedDate ) {
+    this.modalService.open( name, itemType, actionType, itemId, date );
   }
 
   changeStatus( itemType: string, itemId: string, status: number ) {

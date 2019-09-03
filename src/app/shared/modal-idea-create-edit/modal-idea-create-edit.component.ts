@@ -3,6 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../services/event.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActionInfo } from '../models/actionInfo';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 @Component( {
   selector: 'app-modal-idea-create-edit',
@@ -15,12 +16,26 @@ export class ModalIdeaCreateEditComponent implements OnInit {
   itemType: string;
   actionType: string;
   isFromIdea: boolean = false;
+  isIdeaImagesCollapsed: boolean = true;
+  isIdeaFilesCollapsed: boolean = true;
+  disabled: false;
+
+  public configDrop: DropzoneConfigInterface = {
+    clickable: true,
+    maxFiles: 1,
+    autoReset: null,
+    errorReset: null,
+    cancelReset: null
+  };
+
 
   constructor (
     public modal: NgbActiveModal,
     private eventService: EventService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.modalForm = this.formBuilder.group( {
@@ -59,5 +74,21 @@ export class ModalIdeaCreateEditComponent implements OnInit {
     )
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }
+
+  //------------------for image upload
+  public onUploadInit( args: any ): void {
+    console.log( args.files[ 0 ] );
+    console.log( 'onUploadInit:', args );
+  }
+
+  public onUploadError( args: any ): void {
+    console.log( 'onUploadError:', args );
+  }
+
+  public onUploadSuccess( args: any ): void {
+    console.log( 'onUploadSuccess:', args );
+  }
+
+  //------------------for image upload
 
 }

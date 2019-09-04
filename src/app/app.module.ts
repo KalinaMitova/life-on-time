@@ -53,8 +53,8 @@ export function createTranslateLoader( http: HttpClient ) {
     ContentLayoutComponent,
   ],
   imports: [
-    BrowserAnimationsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
     NgbModule.forRoot(),

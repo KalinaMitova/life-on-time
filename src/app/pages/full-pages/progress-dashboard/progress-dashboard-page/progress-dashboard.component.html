@@ -31,6 +31,16 @@
 <div class="col-sm-12 mt-3 mb1">
     <div class="content-header">Latest Goals</div>
     <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.</p>
+
+</div>
+<div class="row" *ngIf="(donutCharts$ | async)?.length == 0">
+    <div class="col-xl-4 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">You have no goals yet</h6>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Donut chart start-->

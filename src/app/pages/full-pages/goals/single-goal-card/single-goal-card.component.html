@@ -27,6 +27,15 @@
             <p class="card-subtitle text-muted">{{goal.description}}</p>
         </div>
         <div class="card-content">
+            <div class="row">
+                <div class="col-sm-12 col-lg-6"></div>
+                <div class="col-sm-12 col-lg-6 text-right text-primary">
+                    <a *ngIf="goal.idea_id != null" class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" (click)=goToIdea(goal.idea_id)>
+                        Go to idea
+                    </a>
+                </div>
+            </div>
+
             <div class="card-body table-responsive actions-card">
                 <table class="table text-left actions-table">
                     <thead>
@@ -48,7 +57,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-sm-12 col-lg-6"></div>
-                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" ngbPopover="If you want to create the task, you need to update goal due date first!" [triggers]="isGoalExpired ? 'mouseenter:mouseleave' : 'manual'"
+                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" ngbPopover="If you want to create new task, you need to update goal due date first!" [triggers]="isGoalExpired ? 'mouseenter:mouseleave' : 'manual'"
                         container="body" popoverTitle="Change goal due date first!" (click)="!isGoalExpired ?
                          openModal('createEditModal', 'action', 'create', goal.id, goal.until_date) : null">+
                         New

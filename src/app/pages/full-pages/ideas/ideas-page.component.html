@@ -45,8 +45,8 @@
    <app-idea-details [idea]="idea" [isIdeaSelected]="isIdeaSelected"></app-idea-details>
  </ng-template> -->
 
-        <div class="email-app-mail-content" #ideaContent>
-            <div class="email-app-mail-content-detail" *ngIf="idea &&isIdeaSelected">
+        <div class="email-app-mail-content" #ideaContent *ngIf="idea &&isIdeaSelected">
+            <div class="email-app-mail-content-detail">
                 <div class="email-app-options card-body">
                     <div class="row d-md-none">
                         <button class="btn btn-raised btn-primary ml-2 back-to-inbox" (click)="allIdeas()">
@@ -138,7 +138,7 @@
                         <div class="email-app-message" *ngIf="idea.info?.files &&idea.info.files.length > 0">
                             <div *ngFor="let file of idea.info.files">
                                 <i class="fa fa-file-o" style="font-size:36px"></i>
-                                <a *ngIf="file" [href]="file.path">{{file.name}}</a>
+                                <a *ngIf="file" [href]="file.path" target="_blank">{{file.name}}</a>
                             </div>
 
                         </div>

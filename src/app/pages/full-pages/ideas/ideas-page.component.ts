@@ -21,11 +21,10 @@ import { ItemInfo } from 'app/shared/models/itemInfo';
 import { EventService } from 'app/shared/services/event.service';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { GoalService } from 'app/shared/services/goal.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { environment } from 'environments/environment';
-import { stat } from 'fs';
 
 @Component(
   {
@@ -79,20 +78,33 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private configService: ConfigService,
     private eventService: EventService,
     private goalService: GoalService,
-    private router: Router ) {
+    private router: Router,
+    private route: ActivatedRoute ) {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe( ( params: Params ) => {
+        this.selectedIdeaId = params[ 'id' ];
+        this.isIdeaSelected = this.selectedIdeaId ? true : false;
+      } );
     this.innerWidth = window.innerWidth;
     this.config = this.configService.templateConf;
     this.userId = this.authService.getUserIdFromToken( 'token' );
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
+        console.log( this.selectedIdeaId );
         this.ideas = data;
         const lastIndex = this.ideas.length - 1;
-        this.isIdeaSelected = true;
-        this.idea = this.ideas[ lastIndex ];
-        this.selectedIdeaId = this.idea.id;
+        if ( this.selectedIdeaId ) {
+          this.idea = this.ideas.find( i => i.id == this.selectedIdeaId );
+        }
+        if ( !this.idea ) {
+          this.idea = this.ideas[ lastIndex ];
+          this.selectedIdeaId = this.idea.id;
+          this.isIdeaSelected = true;
+        }
+        this.selectedIdeaId = this.idea ? this.idea.id : null;
       } );
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => {
       console.log( actionInfo );
@@ -183,9 +195,11 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if ( this.innerWidth < 768 ) {
-      this
-        .renderer
-        .addClass( this.content.nativeElement, 'hide-email-content' );
+      if ( this.content ) {
+        this
+          .renderer
+          .addClass( this.content.nativeElement, 'hide-email-content' );
+      }
     }
   }
 
@@ -301,9 +315,11 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onListItemClick() {
-    this
-      .renderer
-      .removeClass( this.content.nativeElement, 'hide-email-content' );
+    if ( this.content ) {
+      this
+        .renderer
+        .removeClass( this.content.nativeElement, 'hide-email-content' );
+    }
   }
 
   allIdeas() {
@@ -358,13 +374,14 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       idea.info[ 'files' ].push( uploadInfo );
     }
-    if ( uploadInfo.path !== '' ) {
+    if ( pathEnd !== '' ) {
       this.editIdeaSub = this.ideaService.putEditIdeaById( this.selectedIdeaId, idea )
         .subscribe( data => {
           // this.ideas$ = this.ideaService.getUserIdeas();
           this.idea = data[ 'data' ];
-          this.selectedIdeaId = idea[ 'id' ];
-          this.isIdeaSelected = true;
+          console.log( idea );
+          // this.selectedIdeaId = idea[ 'id' ];
+          // this.isIdeaSelected = true;
           this.ideasSub = this.ideaService.getUserIdeas()
             .subscribe( data => {
               this.ideas = data;

@@ -4,6 +4,7 @@ import { ModalService } from 'app/shared/services/modal.service'
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { EventService } from 'app/shared/services/event.service';
 import { SeparatedDate } from 'app/shared/models/date';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-single-goal-card',
@@ -16,13 +17,14 @@ export class SingleGoalCardComponent implements OnInit {
 
   constructor (
     private modalService: ModalService,
-    private eventService: EventService
+    private eventService: EventService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     if ( this.goal.until_date ) {
       this.isGoalExpired = Math.round( ( Date.now() -
-        +( new Date( `${this.goal.until_date.year}-${this.goal.until_date.month}- ${this.goal.until_date.day}` ) ) ) / ( 60 * 60 * 24 * 1000 ) ) > 1;
+        +( new Date( `${this.goal.until_date.year}-${this.goal.until_date.month}- ${this.goal.until_date.day}` ) ) ) / ( 60 * 60 * 24 * 1000 ) ) > 0;
     }
   }
 
@@ -43,6 +45,9 @@ export class SingleGoalCardComponent implements OnInit {
       } )
   }
 
+  goToIdea( id: string ) {
+    this.router.navigate( [ '/ideas' ], { queryParams: { 'id': id } } )
+  }
   // public ngOnDestroy(): void {
   //   this.modalService.unsubscribe(); // or something similar
   // }

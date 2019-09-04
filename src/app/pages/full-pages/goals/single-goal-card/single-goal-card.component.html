@@ -38,7 +38,7 @@
                     <tbody>
                         <!-- <tr > -->
 
-                        <app-single-action *ngFor="let task of goal.tasks" [task]="task" [goalUntilDate]="goal.until_date">
+                        <app-single-action *ngFor="let task of goal.tasks" [task]="task" [goalUntilDate]="goal.until_date" [isGoalExpired]="isGoalExpired">
                         </app-single-action>
                         <!-- </tr> -->
                     </tbody>
@@ -48,7 +48,9 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-sm-12 col-lg-6"></div>
-                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" (click)="openModal('createEditModal', 'action', 'create', goal.id, goal.until_date)">+
+                <div class="col-sm-12 col-lg-6 text-right text-primary"><a class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" data-toggle="modal" data-target="#action" ngbPopover="If you want to create the task, you need to update goal due date first!" [triggers]="isGoalExpired ? 'mouseenter:mouseleave' : 'manual'"
+                        container="body" popoverTitle="Change goal due date first!" (click)="!isGoalExpired ?
+                         openModal('createEditModal', 'action', 'create', goal.id, goal.until_date) : null">+
                         New
                         Action</a>
                 </div>

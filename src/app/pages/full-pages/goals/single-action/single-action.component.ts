@@ -12,11 +12,16 @@ import { SeparatedDate } from 'app/shared/models/date';
 export class SingleActionComponent {
   @Input( 'task' ) task: any;
   @Input( 'goalUntilDate' ) goalUntilDate: SeparatedDate;
+  @Input( 'isGoalExpired' ) isGoalExpired: boolean;
+
 
   constructor (
     private modalService: ModalService,
     private eventService: EventService
-  ) { }
+  ) {
+
+  }
+
 
   openModal( name: string, itemType: string, actionType: string, item?: any, date?: SeparatedDate ) {
     this.modalService.open( name, itemType, actionType, item, date );

@@ -67,7 +67,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           )
         } );
-        console.log( goalsMenu );
       } )
 
     if ( this.config.layout.sidebar.backgroundColor === 'white' ) {

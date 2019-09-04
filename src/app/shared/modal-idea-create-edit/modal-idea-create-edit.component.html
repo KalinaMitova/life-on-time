@@ -30,7 +30,7 @@
         <!--  ---------------------------    start upload files-->
 
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <div class="media-list">
                 <div id="imagesCollapse" class="card-header p-0">
                     <a class="collapsed email-app-sender list-group-item list-group-item-action border-0" [attr.aria-expanded]="!isIdeaImagesCollapsed" aria-controls="images" (click)="isIdeaImagesCollapsed=!isIdeaImagesCollapsed" aria-controls="imagesModal">
@@ -51,7 +51,7 @@
                     <div class="card-content">
                         <div class="email-app-text card-body" style="position: relative;">
                             <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
-                                <div class="dropzone dropzone-container" [dropzone]="config" (init)="onUploadInit($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+                                <div class="dropzone dropzone-container" [dropzone]="configDrop" (init)="onUploadInit($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
                                     <div class="dz-message">Drop images for upload here</div>
                                 </div>
                             </div>
@@ -80,33 +80,18 @@
                     <div class="card-body" style="position: relative;">
                         <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
 
-                            <div class="dropzone dropzone-container" [dropzone]="config" (init)="onUploadInit($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+                            <div class="dropzone dropzone-container" [dropzone]="configDrop" (init)="onUploadInit($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)" (addedfile)="addedFile($event)">
                             </div>
 
-                            <!-- <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
-                                <dropzone class="dropzone-container" fxLayout="row" fxLayoutAlign="start strech" fxFlex="auto" [config]="configDrop" [message]="'Click or drag files for upload here'" (init)="
-                                  onUploadInit($event)" (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
-                                </dropzone>
-                            </div> -->
                         </div>
-
-
-
-
-                        <!-- <div class="dropzone dropzone-area dz-clickable" id="dpz-remove-thumb">
-                            <div class="dz-message">Drop files for upload here</div>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+ -->
 
-
-
-
-
-    <!--  ---------------------------    end upload files-->
+        <!--  ---------------------------    end upload files-->
     </div>
     <div class="modal-footer px-4">
         <button type="button" class="btn grey btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Cancel</button>

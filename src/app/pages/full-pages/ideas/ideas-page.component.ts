@@ -6,21 +6,26 @@ import {
   ViewChild,
   AfterViewInit,
   Renderer2,
-  OnDestroy
+  OnDestroy,
+  TemplateRef
 } from '@angular/core';
-//import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 
-import { ModalService } from 'app/shared/services/modal.service';
+import { ModalService, } from 'app/shared/services/modal.service';
 import { Subscription, Observable } from 'rxjs';
-import { LayoutService } from 'app/shared/services/layout.service';
+//import { LayoutService } from 'app/shared/services/layout.service';
 import { ConfigService } from 'app/shared/services/config.service';
 import { IdeaService } from 'app/shared/services/idea.service';
-import { Idea } from 'app/shared/models/idea';
+import { Idea, IdeaInfo, IdeaFile } from 'app/shared/models/idea';
 import { ItemInfo } from 'app/shared/models/itemInfo';
 import { EventService } from 'app/shared/services/event.service';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { GoalService } from 'app/shared/services/goal.service';
 import { Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { environment } from 'environments/environment';
+import { stat } from 'fs';
 
 @Component(
   {
@@ -28,42 +33,34 @@ import { Router } from '@angular/router';
     templateUrl: './ideas-page.component.html',
     styleUrls: [ './ideas-page.component.scss' ]
   } )
-export class IdeasPageComponent implements OnInit {
-
-  //--------for upload files ----------
-  //public disabled: boolean = false;
-
-  // public configDrop: DropzoneConfigInterface = {
-  //   clickable: true,
-  //   maxFiles: 1,
-  //   autoReset: null,
-  //   errorReset: null,
-  //   cancelReset: null
-  // };
-
-  //files: File[] = [];
-
-  //--------for upload files ----------
-
-  //placement = "bottom-right";
-  public innerWidth: any;
-
-  public config: any = {};
-  //layoutSub: Subscription;
-
-
-
+export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild( 'emailSidebar', { static: false } ) sidebar: ElementRef;
   @ViewChild( 'contentOverlay', { static: false } ) overlay: ElementRef;
   @ViewChild( 'ideaContent', { static: false } ) content: ElementRef;
 
-  //public ideas$: Observable<Array<Idea>>;
-  public ideas: Array<Idea>;
-  public idea: Idea;
-  public selectedIdeaId: string;
-  public isIdeaSelected = true;
-  public isIdeaImagesCollapsed = true;
-  public isIdeaFilesCollapsed = true;
+  innerWidth: any;
+  dropzone;
+  config: any = {};
+  ideas: Array<Idea>;
+  idea: Idea;
+  selectedIdeaId: string;
+  isIdeaSelected = true;
+  isIdeaImagesCollapsed = true;
+  isIdeaFilesCollapsed = true;
+  isImages = true;
+  userId: string;
+  closeResult: string;
+  configFileDrop: DropzoneConfigInterface = {
+    acceptedFiles: '.pdf, .doc, .docx, .rtf',
+    //filesizeBase: number;
+  };
+
+  configImageDrop: DropzoneConfigInterface = {
+    acceptedFiles: 'image/*'
+  };
+  uploadfiles: [];
+  uploadImages: [];
+
 
   private modalCreateSubscription: Subscription;
   private modalDeleteSubscription: Subscription;
@@ -72,22 +69,23 @@ export class IdeasPageComponent implements OnInit {
   private createIdeaSub: Subscription;
   private editIdeaSub: Subscription;
   private ideasSub: Subscription;
+  private modalRef: NgbModalRef;
 
 
-  constructor ( private elRef: ElementRef, private renderer: Renderer2, private modalService: ModalService,
+  constructor ( private elRef: ElementRef, private renderer: Renderer2, private customModalService: ModalService,
+    private modalService: NgbModal,
     private ideaService: IdeaService,
-    //private layoutService: LayoutService,
+    private authService: AuthService,
     private configService: ConfigService,
     private eventService: EventService,
     private goalService: GoalService,
     private router: Router ) {
-    //this.ideas = this.ideaService.getUserIdeas(); this.layoutSub =
   }
 
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.config = this.configService.templateConf;
-    // this.ideas$ = this.ideaService.getUserIdeas();
+    this.userId = this.authService.getUserIdFromToken( 'token' );
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
         this.ideas = data;
@@ -106,7 +104,6 @@ export class IdeasPageComponent implements OnInit {
   private mapAction( actionInfo ) {
     if ( actionInfo.actionType === 'create' ) {
       if ( actionInfo.itemType === 'goal' ) {
-        debugger;
         this.createGoal( actionInfo.formValue );
       } else if ( actionInfo.itemType === 'idea' ) {
         this.createIdea( actionInfo.formValue )
@@ -158,7 +155,6 @@ export class IdeasPageComponent implements OnInit {
         this.ideasSub = this.ideaService.getUserIdeas()
           .subscribe( data => {
             this.ideas = data;
-            this.idea = this.ideas[ this.ideas.length - 1 ]
           } );
       } );
   }
@@ -242,8 +238,34 @@ export class IdeasPageComponent implements OnInit {
 
   //compose popup start
   openModal( name: string, itemType: string, actionType: string, item?: any ) {
-    this.modalService.open( name, itemType, actionType, item )
+    this.customModalService.open( name, itemType, actionType, item )
 
+  }
+
+  // Open default modal
+  open( content, uploadedType: string ) {
+    if ( uploadedType === 'files' ) {
+      this.isImages = false;
+    } else if ( uploadedType === 'images' ) {
+      this.isImages = true;
+    }
+    this.modalRef = this.modalService.open( content, { size: 'lg', centered: true } );
+    this.modalRef.result.then( ( result ) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, ( reason ) => {
+      this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
+    } );
+  }
+
+  // This function is used in open
+  private getDismissReason( reason: any ): string {
+    if ( reason === ModalDismissReasons.ESC ) {
+      return 'by pressing ESC';
+    } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   SetItemActive( event ) {
@@ -284,6 +306,10 @@ export class IdeasPageComponent implements OnInit {
       .removeClass( this.content.nativeElement, 'hide-email-content' );
   }
 
+  allIdeas() {
+    this.renderer.addClass( this.content.nativeElement, 'hide-email-content' );
+  }
+
   onContentOverlay() {
     this
       .renderer
@@ -296,35 +322,71 @@ export class IdeasPageComponent implements OnInit {
       .addClass( this.overlay.nativeElement, 'show' );
   }
 
-  //------------------for image upload
+  //function for upload files and pictures
+  onUploadInit( args: any ): void {
+    this.dropzone = args;
+    console.log( args.files[ 0 ] );
+    console.log( 'onUploadInit:', args );
+  }
 
-  // onSelect( event ) {
-  //   console.log( event );
-  //   console.log( event.addedFiles );
-  //   this
-  //     .files
-  //     .push( ...event.addedFiles );
-  // }
+  onUploadError( args: any ): void {
+    alert( `File "${args[ 0 ].name}" - ${args[ 1 ]}` );
+    console.log( 'onUploadError:', args );
+  }
 
-  // onRemove( event ) {
-  //   console.log( event );
-  //   this
-  //     .files
-  //     .splice( this.files.indexOf( event ), 1 );
-  // }
+  onUploadSuccess( args: any, isImages: boolean ): void {
+    console.log( "onUploadSuccess", args );
+    console.log( args[ 1 ].split( ',' ) )
+    let uploadImageInfo = args[ 1 ].split( ',' );
+    const pathEnd = uploadImageInfo[ 0 ].slice( 2, -1 );
+    const name = uploadImageInfo[ 1 ].slice( 1, -1 );
+    const uploadInfo: IdeaFile = {
+      name: name,
+      path: `${environment.fileUplodeUrl}uploads/${this.userId}/${pathEnd}`
+    }
+    let idea = {
+      info: {}
+    };
+    if ( isImages ) {
+      idea.info = {
+        images: []
+      }
+      idea.info[ 'images' ].push( uploadInfo );
+    } else {
+      idea.info = {
+        files: []
+      }
+      idea.info[ 'files' ].push( uploadInfo );
+    }
+    if ( uploadInfo.path !== '' ) {
+      this.editIdeaSub = this.ideaService.putEditIdeaById( this.selectedIdeaId, idea )
+        .subscribe( data => {
+          // this.ideas$ = this.ideaService.getUserIdeas();
+          this.idea = data[ 'data' ];
+          this.selectedIdeaId = idea[ 'id' ];
+          this.isIdeaSelected = true;
+          this.ideasSub = this.ideaService.getUserIdeas()
+            .subscribe( data => {
+              this.ideas = data;
+            } );
+        } );
+    }
+    // this.configFileDrop.addRemoveLinks = false;
+    // this.configImageDrop.addRemoveLinks = false;
+    //this.modalRef.close( 'Upload Finished' );
+    console.log( 'onUploadSuccess:' );
+  }
 
-  // public onUploadInit( args: any ): void {
-  //   console.log( args.files[ 0 ] );
-  //   console.log( 'onUploadInit:', args );
-  // }
+  onSending( data ): void {
+    console.log( 'onSending', data );
+    // data [ File , xhr, formData]
+    //const file = data[ 0 ];
+    const formData = data[ 2 ];
+    formData.append( 'userId', this.userId );
+  }
 
-  // public onUploadError( args: any ): void {
-  //   console.log( 'onUploadError:', args );
-  // }
+  upload() {
+    this.dropzone.processQueue();
+  }
 
-  // public onUploadSuccess( args: any ): void {
-  //   console.log( 'onUploadSuccess:', args );
-  // }
-
-  //------------------for image upload
 }

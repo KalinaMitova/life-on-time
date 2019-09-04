@@ -8,5 +8,4 @@ import { BlogPost } from 'app/shared/models/blogPost';
 } )
 export class SinglePostComponent {
   @Input( 'post' ) post: BlogPost;
-  image = './assets/img/photos/06.jpg'
 }

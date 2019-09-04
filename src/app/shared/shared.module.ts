@@ -5,10 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import {
-    DropzoneModule, DropzoneConfigInterface,
-    DROPZONE_CONFIG
-} from 'ngx-dropzone-wrapper';
+// import {
+//     DropzoneModule, DropzoneConfigInterface,
+//     DROPZONE_CONFIG
+// } from 'ngx-dropzone-wrapper';
 
 //COMPONENTS
 import { FooterComponent } from "./footer/footer.component";
@@ -29,13 +29,13 @@ import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.d
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-validator.directive';
 
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-    // Change this to your upload POST address:
-    url: 'http://localhost:8080',
-    acceptedFiles: 'image/*',
-    createImageThumbnails: true,
-    // headers: { "Authorization": `Client-ID ${clientID}` }
-};
+// const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+//     // Change this to your upload POST address:
+//     url: 'http://localhost:8080',
+//     acceptedFiles: 'image/*',
+//     createImageThumbnails: true,
+//     // headers: { "Authorization": `Client-ID ${clientID}` }
+// };
 
 
 @NgModule( {
@@ -59,7 +59,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ReactiveFormsModule,
         TranslateModule,
         PerfectScrollbarModule,
-        DropzoneModule
+        //DropzoneModule
     ],
     declarations: [
         FooterComponent,
@@ -78,12 +78,12 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ModalCreateEditComponent,
         ModalIdeaCreateEditComponent,
     ],
-    providers: [
-        {
-            provide: DROPZONE_CONFIG,
-            useValue: DEFAULT_DROPZONE_CONFIG
-        }
-    ],
+    // providers: [
+    //     {
+    //         provide: DROPZONE_CONFIG,
+    //         useValue: DEFAULT_DROPZONE_CONFIG
+    //     }
+    // ],
     entryComponents: [
         ModalConfirmComponent,
         ModalCreateEditComponent,

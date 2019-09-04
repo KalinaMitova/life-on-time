@@ -25,9 +25,11 @@ export class ProgressDashboardComponent implements OnInit {
   barChart$: Observable<BarChartData>;
   minStaticsDataFirstRow = minStatisticData.firstRow;
   minStaticsDataSecondRow = minStatisticData.secondRow;
-  blogPosts$: Observable<Array<BlogPost>>;
+  blogPosts: Array<BlogPost>;
   private minStatSubscription: Subscription;
   private regDateSubscripton: Subscription;
+  private PostsSubscripton: Subscription;
+  singlePostSub: Subscription;
 
   constructor (
     private taskService: TaskService,
@@ -72,7 +74,15 @@ export class ProgressDashboardComponent implements OnInit {
 
     this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();
     this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
-    this.blogPosts$ = this.blogService.getLats4Posts();
+    this.PostsSubscripton = this.blogService.getLats4Posts()
+      .subscribe( posts => {
+        for ( const post of posts ) {
+          this.singlePostSub = this.blogService.getPostImage( post.mediaId ).subscribe( imageUrl => {
+            post.image = imageUrl;
+          } )
+        }
+        this.blogPosts = posts;
+      } );
 
   }
 
@@ -82,6 +92,12 @@ export class ProgressDashboardComponent implements OnInit {
     }
     if ( this.regDateSubscripton ) {
       this.regDateSubscripton.unsubscribe();
+    }
+    if ( this.PostsSubscripton ) {
+      this.PostsSubscripton.unsubscribe();
+    }
+    if ( this.singlePostSub ) {
+      this, this.singlePostSub.unsubscribe();
     }
   }
 }

@@ -38,12 +38,16 @@ export class AuthService {
     return this.http.get( BASE_URL + LOGOUT_END_URL )
   }
 
-  getTokenPayload( token ) {
+  getTokenPayload( tokenName: string ) {
+    const token = this.getToken( 'token' );
     return helper.decodeToken( token );
   }
 
-  getTokenExp( token ) {
+  getUserIdFromToken( tokenName: string ) {
+    return this.getTokenPayload( 'token' )[ 'sub' ];
+  }
 
+  getTokenExp( token ) {
     return helper.getTokenExpirationDate( token );
   }
 
@@ -51,8 +55,8 @@ export class AuthService {
   //   return helper.isTokenExpired( token );
   // }
 
-  getToken( token ) {
-    return localStorage.getItem( 'token' );
+  getToken( tokenName: string ) {
+    return localStorage.getItem( tokenName );
   }
 
   setToken( token ) {
@@ -60,7 +64,7 @@ export class AuthService {
   }
 
   deleteToken( name: string ) {
-    localStorage.removeItem( 'token' );
+    localStorage.removeItem( name );
   }
 
   isAuthenticated() {

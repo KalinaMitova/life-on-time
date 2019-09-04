@@ -10,19 +10,29 @@ import {
 import { IdeasPageComponent } from './ideas-page.component';
 //import { DropzoneComponent } from './dropzone/dropzone.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'environments/environment';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { QuillModule } from 'ngx-quill';
 import { IdeaDetailsComponent } from './idea-details/idea-details.component'
   ;
 
-// const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-//   // Change this to your upload POST address:
-//   url: 'http://localhost:8080',
-//   acceptedFiles: 'image/*',
-//   createImageThumbnails: true,
-//   // headers: { "Authorization": `Client-ID ${clientID}` }
-// };
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: environment.fileUplodeUrl,
+  //acceptedFiles: 'image/*',
+  //createImageThumbnails: true,
+  // headers: { "Authorization": `Client-ID ${clientID}` },
+  clickable: true,
+  maxFiles: 10,
+  autoReset: null,
+  errorReset: null,
+  cancelReset: null,
+  addRemoveLinks: true,
+  autoQueue: true,
+  autoProcessQueue: false,
+  maxFilesize: 500
+};
 
 @NgModule( {
   declarations: [
@@ -39,10 +49,10 @@ import { IdeaDetailsComponent } from './idea-details/idea-details.component'
     //FlexLayoutModule
   ],
   providers: [
-    // {
-    //   provide: DROPZONE_CONFIG,
-    //   useValue: DEFAULT_DROPZONE_CONFIG
-    // }
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    }
   ]
 } )
 export class IdeasPageModule { }

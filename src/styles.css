@@ -19,6 +19,7 @@
 @import url("../src/assets/css/data-table/icons.css");
 @import url("../src/assets/css/demo.css"); */
 
+@import '~dropzone/dist/min/dropzone.min.css';
 .toast-bootstrap-compatibility-fix {
     opacity: 1;
 }

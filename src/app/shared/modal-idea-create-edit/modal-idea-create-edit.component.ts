@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../services/event.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActionInfo } from '../models/actionInfo';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+// import { DropzoneConfigInterface, DropzoneRenameFileFunction } from 'ngx-dropzone-wrapper';
 
 @Component( {
   selector: 'app-modal-idea-create-edit',
@@ -16,17 +16,20 @@ export class ModalIdeaCreateEditComponent implements OnInit {
   itemType: string;
   actionType: string;
   isFromIdea: boolean = false;
-  isIdeaImagesCollapsed: boolean = true;
-  isIdeaFilesCollapsed: boolean = true;
-  disabled: false;
+  // isIdeaImagesCollapsed: boolean = true;
+  // isIdeaFilesCollapsed: boolean = true;
+  // disabled: false;
 
-  public configDrop: DropzoneConfigInterface = {
-    clickable: true,
-    maxFiles: 1,
-    autoReset: null,
-    errorReset: null,
-    cancelReset: null
-  };
+  // public configDrop: DropzoneConfigInterface = {
+  //   clickable: true,
+  //   maxFiles: 10,
+  //   autoReset: null,
+  //   errorReset: null,
+  //   cancelReset: null,
+  //   addRemoveLinks: true,
+  //   autoQueue: true,
+  //   autoProcessQueue: true
+  // };
 
 
   constructor (
@@ -76,18 +79,21 @@ export class ModalIdeaCreateEditComponent implements OnInit {
   }
 
   //------------------for image upload
-  public onUploadInit( args: any ): void {
-    console.log( args.files[ 0 ] );
-    console.log( 'onUploadInit:', args );
-  }
+  // public onUploadInit( args: any ): void {
+  //   console.log( args.files );
+  //   console.log( 'onUploadInit:', args );
+  // }
 
-  public onUploadError( args: any ): void {
-    console.log( 'onUploadError:', args );
-  }
+  // public onUploadError( args: any ): void {
+  //   console.log( 'onUploadError:', args );
+  // }
 
-  public onUploadSuccess( args: any ): void {
-    console.log( 'onUploadSuccess:', args );
-  }
+  // public onUploadSuccess( args: any ): void {
+  //   console.log( 'onUploadSuccess:', args );
+  // }
+  // public addedFile( event ) {
+  //   console.log( event );
+  // }
 
   //------------------for image upload
 

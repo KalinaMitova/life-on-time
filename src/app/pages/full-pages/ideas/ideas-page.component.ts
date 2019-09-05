@@ -25,6 +25,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { environment } from 'environments/environment';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component(
   {
@@ -33,10 +34,12 @@ import { environment } from 'environments/environment';
     styleUrls: [ './ideas-page.component.scss' ]
   } )
 export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
+  [ x: string ]: any;
   @ViewChild( 'emailSidebar', { static: false } ) sidebar: ElementRef;
   @ViewChild( 'contentOverlay', { static: false } ) overlay: ElementRef;
   @ViewChild( 'ideaContent', { static: false } ) content: ElementRef;
 
+  //imageurl: SafeUrl;
   innerWidth: any;
   dropzone;
   config: any = {};
@@ -59,19 +62,24 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   uploadfiles: [];
   uploadImages: [];
+  fileStartUrl: string;
 
 
   private modalCreateSubscription: Subscription;
   private modalDeleteSubscription: Subscription;
   private createGoalSubscription: Subscription;
   private deleteSubscription: Subscription;
+  private fileFolderDelSubs: Subscription;
   private createIdeaSub: Subscription;
   private editIdeaSub: Subscription;
   private ideasSub: Subscription;
   private modalRef: NgbModalRef;
 
 
-  constructor ( private elRef: ElementRef, private renderer: Renderer2, private customModalService: ModalService,
+  constructor (
+    private elRef: ElementRef,
+    private renderer: Renderer2,
+    private customModalService: ModalService,
     private modalService: NgbModal,
     private ideaService: IdeaService,
     private authService: AuthService,
@@ -79,7 +87,9 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private eventService: EventService,
     private goalService: GoalService,
     private router: Router,
-    private route: ActivatedRoute ) {
+    private route: ActivatedRoute,
+    public sanitizer: DomSanitizer
+  ) {
   }
 
   ngOnInit() {
@@ -91,9 +101,9 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.innerWidth = window.innerWidth;
     this.config = this.configService.templateConf;
     this.userId = this.authService.getUserIdFromToken( 'token' );
+    this.fileStartUrl = `${environment.fileUplodeUrl}files/${this.userId}`
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
-        console.log( this.selectedIdeaId );
         this.ideas = data;
         const lastIndex = this.ideas.length - 1;
         if ( this.selectedIdeaId ) {
@@ -111,6 +121,9 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
       this.mapAction( actionInfo )
     } ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteIdea( itemInfo ) ) );
+    // this.imageurl = this.domSanitizer.bypassSecurityTrustUrl( urlBase64 );
+    // this.currVerifiedLoanOfficerPhoto = 'data:image/jpg;base64,' + ( this.sanitizer.bypassSecurityTrustResourceUrl( item ) as any ).changingThisBreaksApplicationSecurity;
+
   }
 
   private mapAction( actionInfo ) {
@@ -172,6 +185,8 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private createIdea( idea: Idea ) {
+    idea.info[ 'images' ] = [];
+    idea.info[ 'files' ] = [];
     //idea[ 'type' ] = 1;
     this.createIdeaSub = this.ideaService.postCreateIdea( idea )
       .subscribe( data => {
@@ -185,6 +200,31 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
             this.idea = this.ideas[ this.ideas.length - 1 ]
           } );
       } )
+  }
+
+  deleteFile( fileName: string ) {
+
+    // userId -> Id na potrebitel
+    // operation -> delete | insert
+    // filename: -> kogato imash delete , imeto na faila
+    const fileInfo = {
+      userId: this.userId,
+      operation: 'delete',
+      filename: fileName
+    }
+    this.fileFolderDelSubs = this.ideaService.postDeleteFileFromFolder( fileInfo )
+      .subscribe( ( data ) => {
+        this.deleteSubscription =
+          this.ideaService.deleteFileFromIdea( this.selectedIdeaId, fileName )
+            .subscribe( data => {
+              console.log( data );
+            } )
+      },
+        ( error ) => {
+          console.log( error );
+          alert( error.messages );
+        }
+      )
   }
 
   private getDate( dd, mm, yyyy, separator: string ) {
@@ -224,6 +264,9 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if ( this.ideasSub ) {
       this.ideasSub.unsubscribe();
+    }
+    if ( this.fileFolderDelSubs ) {
+      this.deleteSubscription.unsubscribe();
     }
   }
 
@@ -341,7 +384,6 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   //function for upload files and pictures
   onUploadInit( args: any ): void {
     this.dropzone = args;
-    console.log( args.files[ 0 ] );
     console.log( 'onUploadInit:', args );
   }
 
@@ -358,28 +400,42 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     const name = uploadImageInfo[ 1 ].slice( 1, -1 );
     const uploadInfo: IdeaFile = {
       name: name,
-      path: `${environment.fileUplodeUrl}uploads/${this.userId}/${pathEnd}`
+      path: `${pathEnd}`
     }
-    let idea = {
-      info: {}
-    };
-    if ( isImages ) {
-      idea.info = {
-        images: []
-      }
-      idea.info[ 'images' ].push( uploadInfo );
-    } else {
-      idea.info = {
-        files: []
-      }
-      idea.info[ 'files' ].push( uploadInfo );
-    }
+    // let idea = {
+    //   info: {}
+    // };
+    // if ( isImages ) {
+    //   idea.info = {
+    //     images: []
+    //   }
+    //   idea.info[ 'images' ].push( uploadInfo );
+    // } else {
+    //   idea.info = {
+    //     files: []
+    //   }
+    //   idea.info[ 'files' ].push( uploadInfo );
+    // }
     if ( pathEnd !== '' ) {
-      this.editIdeaSub = this.ideaService.putEditIdeaById( this.selectedIdeaId, idea )
+      this.editIdeaSub = this.ideaService.putAddFileToIdea( this.selectedIdeaId, uploadInfo )
         .subscribe( data => {
-          // this.ideas$ = this.ideaService.getUserIdeas();
           this.idea = data[ 'data' ];
-          console.log( idea );
+          // if ( this.idea.info && this.idea.info[ 'images' ] ) {
+          //   this.idea.info[ 'images' ].map( i => {
+          //     // debugger;
+          //     i.path = `${environment.fileUplodeUrl}files/${this.userId}/${i.path}`;
+          //     i.path = this.sanitizer.bypassSecurityTrustUrl( i.path );
+          //     return this.idea;
+          //   } )
+          // }
+          // if ( this.idea.info && this.idea.info[ 'files' ] ) {
+          //   this.idea.info[ 'files' ].map( f => {
+          //     f.path = `${environment.fileUplodeUrl}files/${this.userId}/${f.path}`;
+          //     f.path = this.sanitizer.bypassSecurityTrustUrl( f.path );
+          //     return this.idea;
+          //   } )
+          // }
+          console.log( this.idea );
           // this.selectedIdeaId = idea[ 'id' ];
           // this.isIdeaSelected = true;
           this.ideasSub = this.ideaService.getUserIdeas()
@@ -400,6 +456,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     //const file = data[ 0 ];
     const formData = data[ 2 ];
     formData.append( 'userId', this.userId );
+    formData.append( 'operation', 'insert' );
   }
 
   upload() {

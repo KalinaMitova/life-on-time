@@ -1,6 +1,6 @@
 export interface IdeaFile {
   name: string,
-  path: string
+  path: any
 }
 export interface IdeaInfo {
   content?: string,

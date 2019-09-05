@@ -68,7 +68,7 @@
 
                 <div class="email-app-title card-body">
                     <h3 class="list-group-item-heading">{{idea.name}}</h3>
-                    <p *ngIf="idea.info.content">{{idea.info.content}}</p>
+                    <p *ngIf="idea.info?.content">{{idea.info.content}}</p>
                 </div>
 
                 <div class="media-list">
@@ -96,12 +96,16 @@
                             <div class="email-app-text card-body">
                                 <div class="email-app-message" *ngIf="idea.info?.images && idea.info.images.length>0">
                                     <figure *ngFor="let img of idea.info.images" class="col-md-4">
-                                        <a [href]="img.path" data-size="1600x1067" target="_blank">
-                                            <img alt="picture" [src]="img.path" class="img-fluid img-thumbnail">
+                                        <a [href]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+img.path)" data-size="1600x1067" target="_blank">
+                                            <img alt="picture" [src]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+img.path)" class="img-fluid img-thumbnail">
                                         </a>
+
+                                        <a class=" btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1 " (click)="deleteFile(img.path)">Delete</a>
                                     </figure>
-                                    <!-- <img *ngFor="let img of idea.info.images" [src]="img.path" alt="" class="img-thumbnail">
-                                    <img src="https://placeimg.com/160/160/any" alt="" class="img-thumbnail">
+                                    <!-- {{imageurl}}
+                                    <img [src]="imageurl" alt="" class="img-thumbnail"> -->
+
+                                    <!-- <img src="https://placeimg.com/160/160/any" alt="" class="img-thumbnail">
                                     <img src="https://placeimg.com/160/160/any" alt="" class="rounded">
                                     <img src="https://placeimg.com/160/160/any" alt="">
                                     <img src="https://placeimg.com/160/160/any" alt="">
@@ -138,7 +142,11 @@
                         <div class="email-app-message" *ngIf="idea.info?.files &&idea.info.files.length > 0">
                             <div *ngFor="let file of idea.info.files">
                                 <i class="fa fa-file-o" style="font-size:36px"></i>
-                                <a *ngIf="file" [href]="file.path" target="_blank">{{file.name}}</a>
+                                <span><a *ngIf="file"
+                                                [href]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+img.path)"
+                                                target="_blank">{{file.name}}</a></span>
+                                <span><a class=" btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1 "
+                                                (click)="deleteFile(file.path)">Delete</a></span>
                             </div>
 
                         </div>

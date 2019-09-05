@@ -5,8 +5,9 @@
 //apiUrl: ' http://136.244.71.69/'
 //apiUrl: ' http://lotapi.cweb.bg/'
 //apiUrl: '/' // localhost lifeontime
+//fileUplodeUrl: 'http://lotapp.cweb.bg/uploads/'
 export const environment = {
   production: false,
   apiUrl: 'http://lotapi.cweb.bg/',
-  fileUplodeUrl: 'http://localhost:8080/'
+  fileUplodeUrl: 'http://localhost:8080/uploads/'
 };

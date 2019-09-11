@@ -23,7 +23,7 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
             // this.toastr.success( evt.statusText, 'Success:', { positionClass: 'toast-top-center' } );
           } else if ( evt.status === 200 && evt.body.message ) {
             console.log( 'status=200', evt.body.message )
-            this.toastr.success( evt.body.message, 'Success:' );
+            //this.toastr.success( evt.body.message, 'Success:' );
           }
         }
       } ), catchError( ( err: any ) => {

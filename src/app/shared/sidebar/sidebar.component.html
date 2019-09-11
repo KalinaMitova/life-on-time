@@ -46,7 +46,7 @@
                             <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
                         </a>
                         <ng-template #externalSubLinkBlock>
-                            <a [href]="[menuSubItem.path]">
+                            <a [href]="sanitizer.bypassSecurityTrustUrl(menuSubItem.path)">
                                 <i [ngClass]="[menuSubItem.icon]"></i>
                                 <span class="menu-title">{{menuSubItem.title | translate }}</span>
                                 <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>

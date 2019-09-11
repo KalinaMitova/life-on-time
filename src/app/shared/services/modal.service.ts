@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { Modals } from "../models/modals";
 import { SeparatedDate } from "../models/date";
-import { stringify } from '@angular/compiler/src/util';
 
 @Injectable( {
   providedIn: 'root'
@@ -14,31 +13,18 @@ export class ModalService {
 
   open( name: string, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate ) {
     const modalRef = this.modalService.open( Modals[ name ] );
-    modalRef.componentInstance.itemType = itemType;
     if ( name === 'createEditModal' ) {
-      this.setEditCreateModalProp( modalRef, itemType, actionType, itemInfo, date )
+      this.setEditCreateModalProps( modalRef, itemType, actionType, itemInfo, date );
     } else if ( name === 'confirmModal' ) {
-      modalRef.componentInstance.title = itemInfo.title ? itemInfo.title : itemInfo.name;
-      modalRef.componentInstance.itemId = itemInfo.id;
+      this.setConfirmModalProps( modalRef, itemType, itemInfo );
     } else if ( name === 'createEditIdeaModal' ) {
-      if ( actionType === 'create' ) {
-        let item = {
-          name: '',
-          info: {
-            content: "",
-            files: [],
-            images: [],
-          }
-        }
-        modalRef.componentInstance.item = item;
-      } else if ( actionType === 'edit' ) {
-        modalRef.componentInstance.item = itemInfo;
-      }
-      modalRef.componentInstance.actionType = actionType;
+      this.setEditCreateIdeaModalProps( modalRef, actionType, itemType, itemInfo );
+    } else if ( name === 'uploadModal' ) {
+      modalRef.componentInstance.isImages = ( itemType == 'images' );
+      modalRef.componentInstance.userId = itemInfo;
     }
 
     modalRef.result.then( ( result ) => {
-
       this.closeResult = `Closed with: ${result}`;
     }, ( reason ) => {
       this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
@@ -54,7 +40,7 @@ export class ModalService {
       return `with: ${reason}`;
     }
   }
-  private setEditCreateModalProp( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate
+  private setEditCreateModalProps( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate
   ) {
     if ( actionType === 'create' ) {
       let item = {
@@ -83,6 +69,34 @@ export class ModalService {
       }
       modalRef.componentInstance.item = itemInfo;
     }
+    modalRef.componentInstance.actionType = actionType; modalRef.componentInstance.itemType = itemType;
+  }
+  private setEditCreateIdeaModalProps( modalRef: NgbModalRef, actionType: string, itemType: string, itemInfo?: any ) {
+    if ( actionType === 'create' ) {
+      let item = {
+        name: '',
+        info: {
+          content: "",
+          files: [],
+          images: [],
+        }
+      }
+      modalRef.componentInstance.item = item;
+    } else if ( actionType === 'edit' ) {
+      modalRef.componentInstance.item = itemInfo;
+    }
     modalRef.componentInstance.actionType = actionType;
+    modalRef.componentInstance.itemType = itemType;
+  }
+
+  private setConfirmModalProps( modalRef: NgbModalRef, itemType: string, itemInfo?: any ) {
+    modalRef.componentInstance.itemType = itemType;
+    if ( itemType === 'file' || itemType === 'image' ) {
+      modalRef.componentInstance.title = itemInfo.name;
+      modalRef.componentInstance.itemId = itemInfo.path;
+    } else {
+      modalRef.componentInstance.title = itemInfo.title ? itemInfo.title : itemInfo.name;
+      modalRef.componentInstance.itemId = itemInfo.id;
+    }
   }
 }

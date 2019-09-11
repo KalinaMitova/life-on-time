@@ -7,9 +7,9 @@ import {
   AfterViewInit,
   Renderer2,
   OnDestroy,
-  TemplateRef
+  //TemplateRef
 } from '@angular/core';
-import { DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
+//import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { ModalService, } from 'app/shared/services/modal.service';
 import { Subscription, Observable } from 'rxjs';
@@ -22,10 +22,10 @@ import { EventService } from 'app/shared/services/event.service';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { GoalService } from 'app/shared/services/goal.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'app/shared/auth/auth.service';
-import { environment } from 'environments/environment';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+//import { environment } from 'environments/environment';
+//import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component(
   {
@@ -41,28 +41,18 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //imageurl: SafeUrl;
   innerWidth: any;
-  dropzone;
+  //dropzone;
   config: any = {};
   ideas: Array<Idea>;
   idea: Idea;
   selectedIdeaId: string;
   isIdeaSelected = true;
-  isIdeaImagesCollapsed = true;
-  isIdeaFilesCollapsed = true;
-  isImages = true;
+  //isIdeaFilesCollapsed = true;
   userId: string;
-  closeResult: string;
-  configFileDrop: DropzoneConfigInterface = {
-    acceptedFiles: '.pdf, .doc, .docx, .rtf',
-    //filesizeBase: number;
-  };
 
-  configImageDrop: DropzoneConfigInterface = {
-    acceptedFiles: 'image/*'
-  };
-  uploadfiles: [];
-  uploadImages: [];
-  fileStartUrl: string;
+  // uploadfiles: [];
+  // uploadImages: [];
+  // fileStartUrl: string;
 
 
   private modalCreateSubscription: Subscription;
@@ -73,14 +63,15 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private createIdeaSub: Subscription;
   private editIdeaSub: Subscription;
   private ideasSub: Subscription;
-  private modalRef: NgbModalRef;
+  private uploadSubs: Subscription;
+  //private modalRef: NgbModalRef;
 
 
   constructor (
     private elRef: ElementRef,
     private renderer: Renderer2,
     private customModalService: ModalService,
-    private modalService: NgbModal,
+    //private modalService: NgbModal,
     private ideaService: IdeaService,
     private authService: AuthService,
     private configService: ConfigService,
@@ -88,7 +79,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private goalService: GoalService,
     private router: Router,
     private route: ActivatedRoute,
-    public sanitizer: DomSanitizer
+    //public sanitizer: DomSanitizer
   ) {
   }
 
@@ -101,7 +92,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.innerWidth = window.innerWidth;
     this.config = this.configService.templateConf;
     this.userId = this.authService.getUserIdFromToken( 'token' );
-    this.fileStartUrl = `${environment.fileUplodeUrl}files/${this.userId}`
+    //this.fileStartUrl = `${environment.fileUplodeUrl}files/${this.userId}`;
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
         this.ideas = data;
@@ -116,16 +107,41 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.selectedIdeaId = this.idea ? this.idea.id : null;
       } );
-    this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => {
-      console.log( actionInfo );
-      this.mapAction( actionInfo )
-    } ) );
-    this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteIdea( itemInfo ) ) );
-    // this.imageurl = this.domSanitizer.bypassSecurityTrustUrl( urlBase64 );
-    // this.currVerifiedLoanOfficerPhoto = 'data:image/jpg;base64,' + ( this.sanitizer.bypassSecurityTrustResourceUrl( item ) as any ).changingThisBreaksApplicationSecurity;
+    this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
+    this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.mapDelete( itemInfo ) ) );
+    this.uploadSubs = this.eventService.on( 'upload success', ( fileInfo => this.addFilesToIdea( fileInfo ) ) );
 
   }
 
+  private addFilesToIdea( fileInfo ) {
+    const uploadInfo: IdeaFile = {
+      name: fileInfo.data[ 1 ],
+      path: fileInfo.data[ 0 ]
+    }
+    //TODO upload file's queue
+    // const uploadInfo: IdeaFile = {
+    //   name: fileInfo[ 1 ],
+    //   path: fileInfo[ 0 ]
+    //}
+    this.editIdeaSub = this.ideaService.putAddFileToIdea( this.selectedIdeaId, uploadInfo )
+      .subscribe( data => {
+        // this.idea = data[ 'data' ];
+        // this.selectedIdeaId = this.idea.id;
+        // this.isIdeaSelected = true;
+        this.ideasSub = this.ideaService.getUserIdeas()
+          .subscribe( data => {
+            this.ideas = data;
+            this.idea = this.ideas.find( i => i.id == this.selectedIdeaId );
+          } );
+      } );
+  }
+  private mapDelete( itemInfo: ItemInfo ) {
+    if ( itemInfo.itemType === 'idea' ) {
+      this.deleteIdea( itemInfo.itemId );
+    } else if ( itemInfo.itemType === 'file' || itemInfo.itemType === 'image' ) {
+      this.deleteFileFromIdea( itemInfo.itemId )
+    }
+  }
   private mapAction( actionInfo ) {
     if ( actionInfo.actionType === 'create' ) {
       if ( actionInfo.itemType === 'goal' ) {
@@ -155,20 +171,32 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
         } )
   }
 
-  private deleteIdea( itemInfo: ItemInfo ) {
-    if ( itemInfo.itemType === 'idea' ) {
-      this.deleteSubscription = this.ideaService.deletIdeaById( itemInfo.itemId )
-        .subscribe( data => {
-          this.ideasSub = this.ideaService.getUserIdeas()
-            .subscribe( data => {
-              this.ideas = data;
-              const lastIndex = this.ideas.length - 1;
-              this.isIdeaSelected = true;
-              this.idea = this.ideas[ lastIndex ];
-              this.selectedIdeaId = this.idea.id;
-            } );
-        } )
-    }
+  private deleteIdea( ideaId: string ) {
+    //todo delete files from server
+    // this.idea.info.files.forEach( f => {
+    //   this.deleteSubscription =
+    //     this.deleteFileFromServer( f.path ).subscribe(
+    //       ( data ) => console.log( data )
+    //     )
+    // } )
+    // this.idea.info.images.forEach( i => {
+    //   this.deleteSubscription =
+    //     this.deleteFileFromServer( i.path ).subscribe(
+    //       ( data ) => console.log( data )
+    //     )
+    // } )
+    this.deleteSubscription = this.ideaService.deletIdeaById( ideaId )
+      .subscribe( data => {
+
+        this.ideasSub = this.ideaService.getUserIdeas()
+          .subscribe( data => {
+            this.ideas = data;
+            const lastIndex = this.ideas.length - 1;
+            this.isIdeaSelected = true;
+            this.idea = this.ideas[ lastIndex ];
+            this.selectedIdeaId = this.idea.id;
+          } );
+      } )
   }
 
   private editIdea( idea: Idea, ideaId: string ) {
@@ -190,34 +218,35 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     //idea[ 'type' ] = 1;
     this.createIdeaSub = this.ideaService.postCreateIdea( idea )
       .subscribe( data => {
-        // this.ideas$ = this.ideaService.getUserIdeas();
-        this.idea = data[ 'data' ];
-        this.selectedIdeaId = this.idea.id;
-        this.isIdeaSelected = true;
         this.ideasSub = this.ideaService.getUserIdeas()
           .subscribe( data => {
             this.ideas = data;
-            this.idea = this.ideas[ this.ideas.length - 1 ]
+            this.idea = this.ideas[ this.ideas.length - 1 ];
+            this.selectedIdeaId = this.idea.id;
+            this.isIdeaSelected = true;
           } );
       } )
   }
 
-  deleteFile( fileName: string ) {
+  private deleteFileFromServer( fileName: string ): Observable<any> {
+    const formData = new FormData();
+    formData.append( 'filename', fileName );
+    formData.append( 'operation', "delete" );
+    formData.append( 'userId', this.userId );
+    return this.ideaService.postDeleteFileFromFolder( formData )
+  }
 
-    // userId -> Id na potrebitel
-    // operation -> delete | insert
-    // filename: -> kogato imash delete , imeto na faila
-    const fileInfo = {
-      userId: this.userId,
-      operation: 'delete',
-      filename: fileName
-    }
-    this.fileFolderDelSubs = this.ideaService.postDeleteFileFromFolder( fileInfo )
+  deleteFileFromIdea( fileName: string ) {
+    this.fileFolderDelSubs = this.deleteFileFromServer( fileName )
       .subscribe( ( data ) => {
         this.deleteSubscription =
           this.ideaService.deleteFileFromIdea( this.selectedIdeaId, fileName )
             .subscribe( data => {
-              console.log( data );
+              this.ideasSub = this.ideaService.getUserIdeas()
+                .subscribe( data => {
+                  this.ideas = data;
+                  this.idea = this.ideas.find( i => i.id == this.selectedIdeaId );
+                } );
             } )
       },
         ( error ) => {
@@ -266,14 +295,14 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ideasSub.unsubscribe();
     }
     if ( this.fileFolderDelSubs ) {
-      this.deleteSubscription.unsubscribe();
+      this.fileFolderDelSubs.unsubscribe();
     }
   }
 
   //inbox user list click event function
-  DisplayIdea( event, idea: Idea ) {
-    this.selectedIdeaId = idea.id;
-    this.idea = idea;
+  DisplayIdea( eventPayload ) {
+    this.idea = eventPayload.idea;
+    this.selectedIdeaId = this.idea.id;
     this.isIdeaSelected = true;
 
     var hElement: HTMLElement = this.elRef.nativeElement;
@@ -286,6 +315,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
         item.setAttribute( 'class', 'list-group-item list-group-item-action no-border' );
       } );
     //set active class for selected item
+    const event = eventPayload.event;
     event
       .currentTarget
       .setAttribute( 'class', 'list-group-item list-group-item-action bg-blue-grey bg-lighten-5 border-right-pr' +
@@ -296,33 +326,6 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   //compose popup start
   openModal( name: string, itemType: string, actionType: string, item?: any ) {
     this.customModalService.open( name, itemType, actionType, item )
-
-  }
-
-  // Open default modal
-  open( content, uploadedType: string ) {
-    if ( uploadedType === 'files' ) {
-      this.isImages = false;
-    } else if ( uploadedType === 'images' ) {
-      this.isImages = true;
-    }
-    this.modalRef = this.modalService.open( content, { size: 'lg', centered: true } );
-    this.modalRef.result.then( ( result ) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, ( reason ) => {
-      this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
-    } );
-  }
-
-  // This function is used in open
-  private getDismissReason( reason: any ): string {
-    if ( reason === ModalDismissReasons.ESC ) {
-      return 'by pressing ESC';
-    } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   SetItemActive( event ) {
@@ -380,87 +383,4 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
       .renderer
       .addClass( this.overlay.nativeElement, 'show' );
   }
-
-  //function for upload files and pictures
-  onUploadInit( args: any ): void {
-    this.dropzone = args;
-    console.log( 'onUploadInit:', args );
-  }
-
-  onUploadError( args: any ): void {
-    alert( `File "${args[ 0 ].name}" - ${args[ 1 ]}` );
-    console.log( 'onUploadError:', args );
-  }
-
-  onUploadSuccess( args: any, isImages: boolean ): void {
-    console.log( "onUploadSuccess", args );
-    console.log( args[ 1 ].split( ',' ) )
-    let uploadImageInfo = args[ 1 ].split( ',' );
-    const pathEnd = uploadImageInfo[ 0 ].slice( 2, -1 );
-    const name = uploadImageInfo[ 1 ].slice( 1, -1 );
-    const uploadInfo: IdeaFile = {
-      name: name,
-      path: `${pathEnd}`
-    }
-    // let idea = {
-    //   info: {}
-    // };
-    // if ( isImages ) {
-    //   idea.info = {
-    //     images: []
-    //   }
-    //   idea.info[ 'images' ].push( uploadInfo );
-    // } else {
-    //   idea.info = {
-    //     files: []
-    //   }
-    //   idea.info[ 'files' ].push( uploadInfo );
-    // }
-    if ( pathEnd !== '' ) {
-      this.editIdeaSub = this.ideaService.putAddFileToIdea( this.selectedIdeaId, uploadInfo )
-        .subscribe( data => {
-          this.idea = data[ 'data' ];
-          // if ( this.idea.info && this.idea.info[ 'images' ] ) {
-          //   this.idea.info[ 'images' ].map( i => {
-          //     // debugger;
-          //     i.path = `${environment.fileUplodeUrl}files/${this.userId}/${i.path}`;
-          //     i.path = this.sanitizer.bypassSecurityTrustUrl( i.path );
-          //     return this.idea;
-          //   } )
-          // }
-          // if ( this.idea.info && this.idea.info[ 'files' ] ) {
-          //   this.idea.info[ 'files' ].map( f => {
-          //     f.path = `${environment.fileUplodeUrl}files/${this.userId}/${f.path}`;
-          //     f.path = this.sanitizer.bypassSecurityTrustUrl( f.path );
-          //     return this.idea;
-          //   } )
-          // }
-          console.log( this.idea );
-          // this.selectedIdeaId = idea[ 'id' ];
-          // this.isIdeaSelected = true;
-          this.ideasSub = this.ideaService.getUserIdeas()
-            .subscribe( data => {
-              this.ideas = data;
-            } );
-        } );
-    }
-    // this.configFileDrop.addRemoveLinks = false;
-    // this.configImageDrop.addRemoveLinks = false;
-    //this.modalRef.close( 'Upload Finished' );
-    console.log( 'onUploadSuccess:' );
-  }
-
-  onSending( data ): void {
-    console.log( 'onSending', data );
-    // data [ File , xhr, formData]
-    //const file = data[ 0 ];
-    const formData = data[ 2 ];
-    formData.append( 'userId', this.userId );
-    formData.append( 'operation', 'insert' );
-  }
-
-  upload() {
-    this.dropzone.processQueue();
-  }
-
 }

@@ -20,6 +20,7 @@ import { CustomizerComponent } from './customizer/customizer.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCreateEditComponent } from './modal-create-edit/modal-create-edit.component';
 import { ModalIdeaCreateEditComponent } from './modal-idea-create-edit/modal-idea-create-edit.component';
+import { ModalUploadComponent } from './modal-upload/modal-upload.component';
 
 //DIRECTIVES
 import { ToggleFullscreenDirective } from "./directives/toggle-fullscreen.directive";
@@ -29,8 +30,11 @@ import { SidebarListDirective } from './directives/sidebarlist.directive';
 import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.directive';
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-validator.directive';
-import { ModalUploadComponent } from './modal-upload/modal-upload.component';
+
 import { environment } from 'environments/environment';
+
+import { SafePipe } from './pipes/safe-pipe';
+
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     // Change this to your upload POST address:
@@ -62,6 +66,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         ConfirmEqualValidatorDirective,
+        SafePipe,
         SidebarDirective,
         NgbModule,
         TranslateModule,
@@ -87,6 +92,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         SidebarAnchorToggleDirective,
         SidebarToggleDirective,
         ConfirmEqualValidatorDirective,
+        SafePipe,
         CustomizerComponent,
         ModalConfirmComponent,
         ModalCreateEditComponent,

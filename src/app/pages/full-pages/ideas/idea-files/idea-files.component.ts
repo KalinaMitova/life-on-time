@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IdeaFile } from 'app/shared/models/idea';
 import { ModalService } from 'app/shared/services/modal.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component( {
   selector: 'app-idea-files',
@@ -21,7 +20,6 @@ export class IdeaFilesComponent implements OnChanges {
 
   constructor (
     private modalService: ModalService,
-    public sanitizer: DomSanitizer,
   ) {
   }
 

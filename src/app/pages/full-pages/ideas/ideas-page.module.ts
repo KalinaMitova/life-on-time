@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { SharedModule } from 'app/shared/shared.module';
+import { QuillModule } from 'ngx-quill';
 import {
   DropzoneModule, DropzoneConfigInterface,
   DROPZONE_CONFIG
 } from 'ngx-dropzone-wrapper';
 
 //import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { IdeasPageComponent } from './ideas-page.component';
-import { IdeaFilesComponent } from './idea-files/idea-files.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { QuillModule } from 'ngx-quill';
 import { IdeaDetailsComponent } from './idea-details/idea-details.component';
 import { IdeasListComponent } from './ideas-list/ideas-list.component';
+import { IdeasPageComponent } from './ideas-page.component';
+import { IdeaFilesComponent } from './idea-files/idea-files.component';
+
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -47,7 +48,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     NgbModule,
     DropzoneModule,
     QuillModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    SharedModule
     //FlexLayoutModule
   ],
   providers: [

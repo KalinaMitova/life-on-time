@@ -8,8 +8,7 @@ import { ConfigService } from '../services/config.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
 //import { Category } from '../models/category';
-import { GlobalService } from '../services/global.service';
-import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component( {
   selector: "app-sidebar",
@@ -31,7 +30,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private configService: ConfigService,
     private userService: UserService,
-    public sanitizer: DomSanitizer
     //private globals: GlobalService
     //private elementRef: ElementRef,
     //private renderer: Renderer2,

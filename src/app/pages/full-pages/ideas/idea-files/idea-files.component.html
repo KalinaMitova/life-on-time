@@ -21,10 +21,9 @@
             <div class="email-app-message" *ngIf="!isIdeaFilesCollapsed">
                 <ng-template [ngIf]="isImages" [ngIfElse]="filesTemplate">
                     <figure *ngFor="let file of files" class="col-md-4">
-                        <a [href]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+file.path)" data-size="1600x1067" target="_blank">
-                            <img alt="picture" [src]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+file.path)" class="img-fluid img-thumbnail">
+                        <a [href]="fileStartUrl+'/'+file.path | safe: 'url'" data-size="1600x1067" target="_blank">
+                            <img alt="picture" [src]="fileStartUrl+'/'+file.path  | safe: 'url'" class="img-fluid img-thumbnail">
                         </a>
-
                         <a class=" btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" (click)="openModal('confirmModal', fileType.slice(0,-1), 'delete', file)">Delete</a>
                     </figure>
                 </ng-template>
@@ -36,7 +35,7 @@
                                 file.path.endsWith('.xlsx')), 'fa-file-powerpoint-o' : (file.path.endsWith('.ppt') ||
                                 file.path.endsWith('.pptx')), 'fa-file-zip-o' : file.path.endsWith('.zip'), 'fas
                                 fa-archive': file.path.endsWith('.rar')}" style="font-size:24px"></i>
-                        <span><a *ngIf="file" [href]="sanitizer.bypassSecurityTrustUrl(fileStartUrl+'/'+file.path)"
+                        <span><a *ngIf="file" [href]="fileStartUrl+'/'+file.path  | safe: 'url'"
                                 target="_blank">{{file.name}}</a></span>
                         <span><a class=" btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1 "
                                 (click)="openModal('confirmModal', fileType.slice(0,-1), 'delete',

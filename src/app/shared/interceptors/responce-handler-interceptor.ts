@@ -38,25 +38,33 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
                 onActivateTick: true
               } );
               this.router.navigate( [ '/user/login' ] );
-            } else
-              if ( err.error.error ) {
-                console.log( "err.error.error", err.error.error )
-                this.toastr.error( err.error.error, 'Error:', {
-                  closeButton: true,
-                  timeOut: 5000,
-                  onActivateTick: true
-                } );
-              } else if ( err.error.message ) {
-                //console.log( err.error.message )
-                this.toastr.error( err.error.message, 'Error:' );
-              } else if ( err.message ) {
-                console.log( 'err.error.error', err.message )
-                this.toastr.error( err.message, 'Error:', {
-                  positionClass: "toast-top-full-width",
-                  closeButton: true,
-                  timeOut: 5000,
-                } );
-              }
+            } else if ( err.status === 401 ) {
+              console.log( err.status )
+              // this.toastr.error( err.error.error, 'Error:', {
+              //   closeButton: true,
+              //   timeOut: 5000,
+              //   onActivateTick: true
+              // } );
+              this.router.navigate( [ '/user/login' ] );
+            }
+            else if ( err.error.error ) {
+              console.log( "err.error.error", err.error.error )
+              this.toastr.error( err.error.error, 'Error:', {
+                closeButton: true,
+                timeOut: 5000,
+                onActivateTick: true
+              } );
+            } else if ( err.error.message ) {
+              //console.log( err.error.message )
+              this.toastr.error( err.error.message, 'Error:' );
+            } else if ( err.message ) {
+              console.log( 'err.error.error', err.message )
+              this.toastr.error( err.message, 'Error:', {
+                positionClass: "toast-top-full-width",
+                closeButton: true,
+                timeOut: 5000,
+              } );
+            }
           } catch ( e ) {
             console.log( e )
             // this.toastr.error( 'An error occurred', '',

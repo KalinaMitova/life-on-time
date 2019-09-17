@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NgbModal, ModalDismissReasons, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { Modals } from "../models/modals";
 import { SeparatedDate } from "../models/date";
 
@@ -7,7 +7,7 @@ import { SeparatedDate } from "../models/date";
   providedIn: 'root'
 } )
 export class ModalService {
-  private closeResult: string;
+  //private closeResult: string;
 
   constructor ( private modalService: NgbModal ) { }
 
@@ -25,21 +25,21 @@ export class ModalService {
     }
 
     modalRef.result.then( ( result ) => {
-      this.closeResult = `Closed with: ${result}`;
+      //this.closeResult = `Closed with: ${result}`;
     }, ( reason ) => {
-      this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
+      //this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
     } );
   }
 
-  private getDismissReason( reason: any ): string {
-    if ( reason === ModalDismissReasons.ESC ) {
-      return 'by pressing ESC';
-    } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  // private getDismissReason( reason: any ): string {
+  //   if ( reason === ModalDismissReasons.ESC ) {
+  //     return 'by pressing ESC';
+  //   } else if ( reason === ModalDismissReasons.BACKDROP_CLICK ) {
+  //     return 'by clicking on a backdrop';
+  //   } else {
+  //     return `with: ${reason}`;
+  //   }
+  // }
   private setEditCreateModalProps( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate
   ) {
     if ( actionType === 'create' ) {

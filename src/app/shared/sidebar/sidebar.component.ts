@@ -1,14 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 
 import { ROUTES } from './sidebar-routes.config';
-import { Router, ActivatedRoute } from "@angular/router";
-//import { TranslateService } from '@ngx-translate/core';
+import { Router } from "@angular/router";
 import { customAnimations } from "../animations/custom-animations";
 import { ConfigService } from '../services/config.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs';
-//import { Category } from '../models/category';
-
 
 @Component( {
   selector: "app-sidebar",
@@ -16,7 +13,6 @@ import { Subscription } from 'rxjs';
   animations: customAnimations
 } )
 export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
-  // @ViewChild( 'toggleIcon', { static: false } ) toggleIcon: ElementRef;
   public menuItems: any[];
   depth: number;
   activeTitle: string;
@@ -30,11 +26,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private configService: ConfigService,
     private userService: UserService,
-    //private globals: GlobalService
-    //private elementRef: ElementRef,
-    //private renderer: Renderer2,
-    //private route: ActivatedRoute,
-    //public translate: TranslateService,
   ) {
     if ( this.depth === undefined ) {
       this.depth = 0;
@@ -46,10 +37,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.config = this.configService.templateConf;
     this.menuItems = ROUTES;
     const goalsMenu = this.menuItems.find( m => m.title === 'My Goals' );
-    // const categories = this.globals.getCategory();
-    // debugger;
-    // console.log( this.globals.getCategory() );
-    this.availableCategoriesSubscription = this.userService.getUserAvailableCategories()
+    this.availableCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
       .subscribe( data => {
         this.userService.setCategoriesWindow( data );
         goalsMenu[ 'submenu' ] = [];
@@ -85,20 +73,14 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       if ( this.config.layout.sidebar.collapsed != undefined ) {
         if ( this.config.layout.sidebar.collapsed === true ) {
           this.expanded = false;
-          // this.renderer.addClass( this.toggleIcon.nativeElement, 'ft-toggle-left' );
-          // this.renderer.removeClass( this.toggleIcon.nativeElement, 'ft-toggle-right' );
           this.nav_collapsed_open = true;
         }
         else if ( this.config.layout.sidebar.collapsed === false ) {
           this.expanded = true;
-          // this.renderer.removeClass( this.toggleIcon.nativeElement, 'ft-toggle-left' );
-          // this.renderer.addClass( this.toggleIcon.nativeElement, 'ft-toggle-right' );
           this.nav_collapsed_open = false;
         }
       }
     }, 0 );
-
-
   }
 
   toggleSlideInOut() {

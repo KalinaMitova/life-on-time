@@ -19,7 +19,7 @@ export class GlobalService {
 
   getCategory() {
     let userCategories;
-    this.userService.getUserAvailableCategories()
+    this.userService.getUserAvailableCategoriesAndUserAppType()
       .subscribe( data => {
         userCategories = data
       }

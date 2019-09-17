@@ -4,6 +4,7 @@ import { environment } from "environments/environment";
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Category } from "../models/category";
+import { UserAppInfo } from '../models/userAppInfo';
 
 const BASE_URL = environment.apiUrl + 'api/me';
 const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
@@ -17,6 +18,34 @@ export class UserService {
     private http: HttpClient
   ) { }
 
+  getUserAppInfo(): Observable<UserAppInfo> {
+    debugger;
+    return this.http.get<UserAppInfo>( BASE_URL )
+      .pipe(
+        map( data => {
+          console.log( data );
+          debugger;
+          const categoriesData = data[ 'data' ][ 'categories' ];
+          const categories = [];
+          Object.entries<string>( categoriesData ).forEach( ( [ id, title ] ) => {
+            const category = {
+              id,
+              title,
+              pathEnd: `${title.toLowerCase().split( ' ' ).join( '-' )}`
+            }
+            categories.push( category );
+          } )
+          const userInfo: UserAppInfo = {
+            categories: categories,
+            appType: data[ 'data' ][ 'applicationType' ][ 'name' ],
+            maxGoals: data[ 'data' ][ 'maxGoals' ],
+            maxTasks: data[ 'data' ][ 'maxTasks' ]
+          }
+          return userInfo;
+        } )
+      )
+  }
+
   getUserRegistrationDate(): Observable<string> {
     return this.http.get( BASE_URL )
       .pipe(
@@ -29,7 +58,7 @@ export class UserService {
         } ) )
   }
 
-  getUserAvailableCategories(): Observable<Array<Category>> {
+  getUserAvailableCategoriesAndUserAppType(): Observable<Array<Category>> {
     return this.http.get<Array<Category>>( BASE_URL )
       .pipe(
         map( data => {
@@ -62,6 +91,13 @@ export class UserService {
       )
   }
 
+  getUserAppType(): Observable<string> {
+    return this.http.get<string>( BASE_URL )
+      .pipe(
+        map( data => data[ 'data' ][ 'applicationType' ][ 'name' ] )
+      )
+  }
+
   //get categories from window object
   getCategoriesWindows() {
     return window.categories;
@@ -69,4 +105,10 @@ export class UserService {
   setCategoriesWindow( categories: Array<Category> ) {
     window.categories = categories;
   }
+  // setAppTypeToWindow( appType: string ) {
+  //   window.appType = appType;
+  // }
+  // getAppTypeFromWindow() {
+  //   return window.appType;
+  // }
 }

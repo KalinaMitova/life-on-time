@@ -2,12 +2,12 @@
 <ng-template [ngIf]='post'>
     <div class="card">
         <div class="card-content">
-            <img *ngIf='post.image' class="card-img-top img-fluid" [src]="post.image? post.image :   './assets/img/photos/06.jpg'" alt="image">
+            <img class="card-img-top img-fluid" [src]="post.imageUrl? post.imageUrl :   './assets/img/photos/06.jpg'" alt="image">
             <div class="card-body">
                 <h4 class="card-title" *ngIf="post.title">{{post.title}}</h4>
                 <h6 class="card-text">{{post.date}}</h6>
                 <p></p>
-                <p class="card-text" [innerHtml]="post.text" *ngIf="post.text">
+                <p class="card-text" [innerHtml]="post.content" *ngIf="post.content">
                 </p>
                 <a [href]="post.link? post.link : ''" class="btn btn-raised btn-warning" target="_blank">View more</a>
             </div>

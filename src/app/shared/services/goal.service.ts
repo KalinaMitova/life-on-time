@@ -148,15 +148,10 @@ export class GoalService {
     return this.http.get<BarChartData>( BASE_URL + USER_GOALS_TASKS_END )
       .pipe(
         map( data => {
+
           const barData = data[ 'dataValue' ]
           const barChart = {
-            labels: [
-              "Health & Wellbeing",
-              "Personal Development",
-              "Relationships",
-              "Physical Activity",
-              "Financial"
-            ],
+            labels: window.categories.map( c => c.title ),
             series: [ {
               "name": "Goals",
               "value": []

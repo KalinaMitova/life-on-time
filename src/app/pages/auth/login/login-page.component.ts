@@ -29,13 +29,14 @@ export class LoginPageComponent implements OnDestroy {
         //token in headers
         // const token = res.headers.get( 'token' );
         this.authService.setToken( data[ 'data' ].token );
+
         //-----------logic with token saved in cookie starts-----------
         // const tokenExp = this.authService.getTokenExp( token );
         // this.authService.setCookie( 'token', token, tokenExp, '/' );
         //-----------logic with token saved in cookie ends-----------
+        //
         if ( this.loginForm.valid ) {
           this.loginForm.reset();
-          //localStorage.setItem( 'isAuthenticated', 'true' )
           this.router.navigate( [ '/progress-dashboard' ] )
         }
       } )

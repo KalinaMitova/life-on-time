@@ -21,9 +21,9 @@ export const ROUTES: RouteInfo[] = [
     },
     {
         path: '/', title: 'My Wellbeing', icon: 'ft-headphones', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, submenu: [
-            { path: 'javascript:;', title: 'Relax me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
-            { path: 'javascript:;', title: 'Inspire me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
-            { path: 'javascript:;', title: 'Teach me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
+            { path: '/wellbeing/relax-me', title: 'Relax me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/wellbeing/inspire-me', title: 'Inspire me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+            { path: '/wellbeing/teach-me', title: 'Teach me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
     },
     { path: '', title: 'Calendar', icon: 'ft-calendar', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },

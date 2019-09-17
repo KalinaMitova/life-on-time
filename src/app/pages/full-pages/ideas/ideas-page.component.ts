@@ -99,12 +99,18 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
         const lastIndex = this.ideas.length - 1;
         if ( this.selectedIdeaId ) {
           this.idea = this.ideas.find( i => i.id == this.selectedIdeaId );
+          //if idea was removed redirect to error page
+          if ( !this.idea ) {
+            this.router.navigate( [ '/error' ] );
+          }
         }
+        //if there is not param query idea id, then selected idea is the last added idea
         if ( !this.idea ) {
           this.idea = this.ideas[ lastIndex ];
           this.selectedIdeaId = this.idea.id;
           this.isIdeaSelected = true;
         }
+        //if ther is not added ideas yet
         this.selectedIdeaId = this.idea ? this.idea.id : null;
       } );
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );

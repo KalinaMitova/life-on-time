@@ -10,7 +10,7 @@ import { IdeaService } from 'app/shared/services/idea.service';
 import { UserService } from 'app/shared/services/user.service';
 import { BarChartData } from 'app/shared/models/barChartData';
 import { BlogPost } from 'app/shared/models/blogPost';
-import { BlogService } from 'app/shared/services/blog.service';
+import { PostService } from 'app/shared/services/post.service';
 
 
 @Component( {
@@ -36,7 +36,7 @@ export class ProgressDashboardComponent implements OnInit {
     private goalService: GoalService,
     private ideasService: IdeaService,
     private userServise: UserService,
-    private blogService: BlogService,
+    private postService: PostService,
   ) {
 
   }
@@ -74,14 +74,15 @@ export class ProgressDashboardComponent implements OnInit {
 
     this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();
     this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
-    this.PostsSubscripton = this.blogService.getLats4Posts()
+    this.PostsSubscripton = this.postService.getLats4Posts()
       .subscribe( posts => {
         for ( const post of posts ) {
-          this.singlePostSub = this.blogService.getPostImage( post.mediaId ).subscribe( imageUrl => {
-            post.image = imageUrl;
-          } )
+          this.blogPosts = posts;
+          this.singlePostSub = this.postService.getPostMedia( post.mediaId )
+            .subscribe( imageUrl => {
+              post.imageUrl = imageUrl;
+            } )
         }
-        this.blogPosts = posts;
       } );
 
   }

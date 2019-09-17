@@ -32,7 +32,7 @@ import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interse
 import { ModalService } from './shared/services/modal.service';
 import { EventService } from './shared/services/event.service';
 import { UserService } from './shared/services/user.service';
-import { BlogService } from './shared/services/blog.service';
+import { PostService } from './shared/services/post.service';
 
 
 

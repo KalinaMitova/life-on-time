@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProgressDashboardComponent } from './progress-dashboard/progress-dashboard-page/progress-dashboard.component';
 import { GoalsPageComponent } from './goals/goals-page.component';
 import { IdeasPageComponent } from './ideas/ideas-page.component';
+import { WellbeingPagesComponent } from './wellbeing/wellbeing-pages/wellbeing-pages.component';
 
 const submenuGoal = [];
 // const goalCategories = window.categories;
@@ -69,6 +70,23 @@ const routes: Routes = [
   {
     path: 'ideas',
     component: IdeasPageComponent
+  },
+  {
+    path: 'wellbeing',
+    children: [
+      {
+        path: 'relax-me',
+        component: WellbeingPagesComponent
+      },
+      {
+        path: 'inspire-me',
+        component: WellbeingPagesComponent
+      },
+      {
+        path: 'teach-me',
+        component: WellbeingPagesComponent
+      }
+    ]
   }
 ];
 

@@ -1,0 +1,23 @@
+// @media (width: 512px) {
+//     .modal-dialog {
+//         width: 800px;
+//         //height: 600px;
+//     }
+//     // .modal-content {
+//     //     width: 800px;
+//     //     //height: 600px;
+//     // }
+// }
+.modal-lg {
+    width: 800px;
+    height: 600px;
+}
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 480px;
+    overflow-y: auto;
+}

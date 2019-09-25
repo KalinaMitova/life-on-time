@@ -2,13 +2,8 @@
 <div class="card">
     <div class="card-content">
         <div class="card-body">
-            <h4 class="card-title" *ngIf="post.title">{{post.title}}</h4>
+            <h4 class="card-title" *ngIf="post.title" [innerHtml]="post.title | safe: 'html'"></h4>
             <p class="card-text" *ngIf="post.content" [innerHtml]="post.content | safe: 'html'"></p>
-            <!-- <audio controls>
-        <source [src]="post.audioUrl" type="audio/ogg">
-        <source [src]="post.audioUrl" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio> -->
         </div>
     </div>
 </div>

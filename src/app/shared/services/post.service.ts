@@ -9,8 +9,9 @@ import { WellbeingInfo } from '../../shared/models/wellbeingInfo';
 const BASE_URL = 'https://lotweb.cweb.bg/wp-json/wp/v2/'
 
 const LAST_4_POSTS_END_URL = 'posts?per_page=4';
-const MEDIA_END_URL = 'media/'
-const WELLBEING_END_URL = 'wellbeing'
+const MEDIA_END_URL = 'media/';
+const WELLBEING_END_URL = 'wellbeing';
+const HELP_END_URL = 'app_help';
 
 @Injectable( {
   providedIn: 'root'
@@ -26,18 +27,19 @@ export class PostService {
       .pipe(
         map( posts => {
           return posts.map( post => {
-            const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
-            const blogPost: BlogPost = {
-              id: post[ 'id' ],
-              date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
-              title: post[ 'title' ][ 'rendered' ],
-              imageUrl: '',
-              mediaType: MediaType.image,
-              mediaId: post[ 'featured_media' ],
-              content: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
-              link: post[ 'link' ],
-            };
-            return blogPost;
+            // const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
+            // const blogPost: BlogPost = {
+            //   id: post[ 'id' ],
+            //   date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
+            //   title: post[ 'title' ][ 'rendered' ],
+            //   imageUrl: '',
+            //   mediaType: MediaType.image,
+            //   mediaId: post[ 'featured_media' ],
+            //   content: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
+            //   link: post[ 'link' ],
+            // };
+            // return blogPost;
+            return this.GetImagePostsDataFromAPI( post );
           } )
         } )
       );
@@ -46,6 +48,17 @@ export class PostService {
     return this.http.get( BASE_URL + MEDIA_END_URL + mediaId )
       .pipe(
         map( media => media[ 'guid' ][ 'rendered' ] )
+      )
+  }
+
+  getHelpPosts(): Observable<Array<BlogPost>> {
+    return this.http.get<Array<BlogPost>>( BASE_URL + HELP_END_URL )
+      .pipe(
+        map( posts => {
+          return posts.map( post => {
+            return this.GetImagePostsDataFromAPI( post );
+          } );
+        } )
       )
   }
 
@@ -61,28 +74,47 @@ export class PostService {
       .pipe(
         map( posts => {
           return posts.map( post => {
-            const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
-            //contentTypeId: {
-            // video: 14,
-            //   publication: 19,
-            //     audio: 20,
-            //}
-            const mediaType = this.setMediaType( post[ 'wellbeing_type' ][ 0 ] );
-            const blogPost: BlogPost = {
-              id: post[ 'id' ],
-              date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
-              mediaType: mediaType,
-              title: post[ 'title' ][ 'rendered' ],
-              content: post[ 'content' ][ 'rendered' ],
-              link: post[ 'link' ],
-            };
-            if ( mediaType === MediaType.image ) {
-              blogPost.mediaId = post[ 'featured_media' ];
-            }
-            return blogPost;
+            return this.getAllKindsPostDataFromAPI( post );
           } )
         } )
       )
+  }
+
+  private GetImagePostsDataFromAPI( post ): BlogPost {
+    const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
+    const blogPost: BlogPost = {
+      id: post[ 'id' ],
+      date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
+      title: post[ 'title' ][ 'rendered' ],
+      imageUrl: '',
+      mediaType: MediaType.image,
+      mediaId: post[ 'featured_media' ],
+      content: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
+      link: post[ 'link' ],
+    };
+    return blogPost;
+  }
+
+  private getAllKindsPostDataFromAPI( post ): BlogPost {
+    const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
+    //contentTypeId: {
+    // video: 14,
+    //   publication: 19,
+    //     audio: 20,
+    //}
+    const mediaType = this.setMediaType( post[ 'wellbeing_type' ][ 0 ] );
+    const blogPost: BlogPost = {
+      id: post[ 'id' ],
+      date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
+      mediaType: mediaType,
+      title: post[ 'title' ][ 'rendered' ],
+      content: post[ 'content' ][ 'rendered' ],
+      link: post[ 'link' ],
+    };
+    if ( mediaType === MediaType.image ) {
+      blogPost.mediaId = post[ 'featured_media' ];
+    }
+    return blogPost;
   }
 
   private setMediaType( mediaTypeId: number ): MediaType {

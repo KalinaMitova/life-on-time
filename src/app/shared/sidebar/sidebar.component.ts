@@ -35,8 +35,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.config = this.configService.templateConf;
-    this.menuItems = ROUTES;
-    const goalsMenu = this.menuItems.find( m => m.title === 'My Goals' );
+
+    const goalsMenu = ROUTES.find( m => m.title === 'My Goals' );
     this.availableCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
       .subscribe( data => {
         this.userService.setCategoriesWindow( data );
@@ -50,11 +50,12 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
               class: '',
               badge: '',
               badgeClass: '',
-              isExternalLink: true,
+              isExternalLink: false,
               submenu: []
             }
           )
         } );
+        this.menuItems = ROUTES;
       } )
 
     if ( this.config.layout.sidebar.backgroundColor === 'white' ) {

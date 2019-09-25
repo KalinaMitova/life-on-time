@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, Renderer2, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
@@ -21,7 +21,7 @@ import { UserService } from 'app/shared/services/user.service';
   templateUrl: './goals-page.component.html',
   styleUrls: [ './goals-page.component.scss' ]
 } )
-export class GoalsPageComponent implements OnInit {
+export class GoalsPageComponent implements OnInit, OnDestroy {
   @ViewChild( 'type', { static: false } ) type: any;
 
   currentGoalCategory: Category;
@@ -37,6 +37,7 @@ export class GoalsPageComponent implements OnInit {
   private modalCreateSubscription: Subscription;
   private modalDeleteSubscription: Subscription;
   private modalStatusSubscription: Subscription;
+  private pathSubs: Subscription;
 
   constructor (
     private modalService: ModalService,
@@ -50,21 +51,20 @@ export class GoalsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.path = this.route.snapshot.url[ 0 ] ? this.route.snapshot.url[ 0 ].path : '';
-    //this.path  = this.router.url.split( '/' )[ 2 ]; // to print only path eg:"login"
-
-    this.goalCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
-      .subscribe( data => {
-        this.goalCategories = data;
-        this.currentGoalCategory = this.goalCategories
-          .find( category => category.pathEnd === this.path );
-        if ( !this.currentGoalCategory ) {
-          this.router.navigate( [ "/error" ] )
-        } else {
-          this.loadPageGoals();
-        }
-      } );
+    this.pathSubs = this.route.url.subscribe( data => {
+      this.path = data[ 0 ].path;
+      this.goalCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
+        .subscribe( data => {
+          this.goalCategories = data;
+          this.currentGoalCategory = this.goalCategories
+            .find( category => category.pathEnd === this.path );
+          if ( !this.currentGoalCategory ) {
+            this.router.navigate( [ "/error" ] )
+          } else {
+            this.loadPageGoals();
+          }
+        } );
+    } )
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
     this.modalStatusSubscription = this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
@@ -177,6 +177,9 @@ export class GoalsPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    if ( this.pathSubs ) {
+      this.pathSubs.unsubscribe();
+    }
     if ( this.deleteSubscription ) {
       this.deleteSubscription.unsubscribe();
     }

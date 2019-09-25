@@ -6,6 +6,8 @@ import { ProgressDashboardModule } from './progress-dashboard/progress-dashboard
 import { GoalsPagesModule } from './goals/goals-pages.module';
 import { IdeasPageModule } from './ideas/ideas-page.module';
 import { WellbeingPagesModule } from './wellbeing/wellbeing-pages.module';
+import { HelpPageModule } from './help-page/help-page.module';
+import { CalendarPageModule } from './calendar/calendar-page.module';
 
 @NgModule( {
   declarations: [],
@@ -16,6 +18,8 @@ import { WellbeingPagesModule } from './wellbeing/wellbeing-pages.module';
     GoalsPagesModule,
     IdeasPageModule,
     WellbeingPagesModule,
+    HelpPageModule,
+    CalendarPageModule,
   ]
 } )
 export class FullPagesModule { }

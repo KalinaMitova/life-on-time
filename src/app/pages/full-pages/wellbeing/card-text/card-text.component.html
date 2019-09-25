@@ -3,20 +3,20 @@
     <div class="card-content">
         <img class="card-img-top img-fluid" [src]="post.imageUrl? post.imageUrl :   './assets/img/photos/06.jpg'" alt="Card image cap">
         <div class="card-body">
-            <h4 class="card-title" *ngIf="post.title">{{post.title}}</h4>
+            <h4 class="card-title" *ngIf="post.title" [innerHtml]="post.title | safe: 'html'"></h4>
             <p class="card-text" *ngIf="post.content" [innerHtml]="(post.content | slice:0:200)"></p>
             <a class="btn btn-outline-warning" data-toggle="modal" data-target="#articleContent" (click)=" open(articleContent)">Read
-        full article</a>
+                full article</a>
         </div>
     </div>
 </div>
 
 <ng-template #articleContent let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="contentModal">{{post.title}}</h4>
+        <h4 class="modal-title" id="contentModal" [innerHtml]="post.title | safe: 'html'"></h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <img class="card-img-top img-fluid" [src]="post.imageUrl? post.imageUrl :   './assets/img/photos/06.jpg'" alt="Card image cap">

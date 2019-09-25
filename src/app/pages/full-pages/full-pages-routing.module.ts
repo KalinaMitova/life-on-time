@@ -4,6 +4,8 @@ import { ProgressDashboardComponent } from './progress-dashboard/progress-dashbo
 import { GoalsPageComponent } from './goals/goals-page.component';
 import { IdeasPageComponent } from './ideas/ideas-page.component';
 import { WellbeingPagesComponent } from './wellbeing/wellbeing-pages/wellbeing-pages.component';
+import { HelpPageComponent } from './help-page/help-page/help-page.component';
+import { CalendarPageComponent } from './calendar/calendar-page/calendar-page.component';
 
 const submenuGoal = [];
 // const goalCategories = window.categories;
@@ -87,7 +89,15 @@ const routes: Routes = [
         component: WellbeingPagesComponent
       }
     ]
-  }
+  },
+  {
+    path: 'help',
+    component: HelpPageComponent
+  },
+  {
+    path: 'calendar',
+    component: CalendarPageComponent
+  },
 ];
 
 @NgModule( {

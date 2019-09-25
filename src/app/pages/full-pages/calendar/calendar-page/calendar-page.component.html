@@ -1,0 +1,14 @@
+<section id="columns">
+    <div class="row">
+        <div class="col-12 mt-3 mb-1">
+            <div class="content-header">CALENDAR</div>
+            <p class="content-sub-header">Here you can see your goals and tasks due date</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <!-- weekNumberCalculation='ISO' -->
+            <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="events"></full-calendar>
+        </div>
+    </div>
+</section>

@@ -13,6 +13,9 @@ import { SharedModule } from 'app/shared/shared.module';
     CardAudioComponent,
     WellbeingPagesComponent,
   ],
+  exports: [
+    CardTextComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule

@@ -184,5 +184,4 @@ export class GoalService {
   deleteGoalById( id: string ) {
     return this.http.delete( BASE_CRUD_URL + `/${id}` );
   }
-
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, SimpleChange } from '@angular/core';
 import { forkJoin, Subscription, of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { minStatisticData } from '../../../../shared/data/minStatisticFirstRowData';
 import { GoalService } from "../../../../shared/services/goal.service";
@@ -19,6 +20,7 @@ import { PostService } from 'app/shared/services/post.service';
   styleUrls: [ './progress-dashboard.component.scss' ]
 } )
 export class ProgressDashboardComponent implements OnInit {
+  calendarPlugins = [ dayGridPlugin ]; // important!
 
   registrationDate: string;
   donutCharts$: Observable<Array<any>>;
@@ -26,10 +28,12 @@ export class ProgressDashboardComponent implements OnInit {
   minStaticsDataFirstRow = minStatisticData.firstRow;
   minStaticsDataSecondRow = minStatisticData.secondRow;
   blogPosts: Array<BlogPost>;
+  calendarEvents: any;
   private minStatSubscription: Subscription;
   private regDateSubscripton: Subscription;
   private PostsSubscripton: Subscription;
-  singlePostSub: Subscription;
+  private singlePostSub: Subscription;
+  private calendarSubs: Subscription;
 
   constructor (
     private taskService: TaskService,
@@ -78,12 +82,20 @@ export class ProgressDashboardComponent implements OnInit {
       .subscribe( posts => {
         for ( const post of posts ) {
           this.blogPosts = posts;
-          this.singlePostSub = this.postService.getPostMedia( post.mediaId )
-            .subscribe( imageUrl => {
-              post.imageUrl = imageUrl;
-            } )
+          if ( post.mediaId > '0' ) {
+            this.singlePostSub = this.postService.getPostMedia( post.mediaId )
+              .subscribe( imageUrl => {
+                post.imageUrl = imageUrl;
+              } )
+          }
         }
       } );
+
+    this.calendarSubs =
+      this.userServise.getIdeasAndGoalsDueDate()
+        .subscribe( data => {
+          this.calendarEvents = data;
+        } )
 
   }
 
@@ -99,6 +111,9 @@ export class ProgressDashboardComponent implements OnInit {
     }
     if ( this.singlePostSub ) {
       this, this.singlePostSub.unsubscribe();
+    }
+    if ( this.calendarSubs ) {
+      this, this.calendarSubs.unsubscribe();
     }
   }
 }

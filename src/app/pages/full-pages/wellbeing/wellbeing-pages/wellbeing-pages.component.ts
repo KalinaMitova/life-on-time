@@ -40,6 +40,7 @@ export class WellbeingPagesComponent implements OnInit, OnDestroy {
               .getWellbeingPostByCAtegoryAndAppType( this.appType, this.path )
               .subscribe( posts => {
                 posts.map( post => {
+                  console.log( post );
                   if ( MediaType[ post.mediaType ] === 'image'
                     && post.mediaId != '0' ) {
                     this.postMediaSubs =

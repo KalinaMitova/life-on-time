@@ -27,18 +27,6 @@ export class PostService {
       .pipe(
         map( posts => {
           return posts.map( post => {
-            // const postDate = ( post[ 'date' ].split( 'T' ) )[ 0 ].split( '-' );
-            // const blogPost: BlogPost = {
-            //   id: post[ 'id' ],
-            //   date: `${postDate[ 2 ]}/${postDate[ 1 ]}/${postDate[ 0 ]}`,
-            //   title: post[ 'title' ][ 'rendered' ],
-            //   imageUrl: '',
-            //   mediaType: MediaType.image,
-            //   mediaId: post[ 'featured_media' ],
-            //   content: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
-            //   link: post[ 'link' ],
-            // };
-            // return blogPost;
             return this.GetImagePostsDataFromAPI( post );
           } )
         } )
@@ -111,8 +99,10 @@ export class PostService {
       content: post[ 'content' ][ 'rendered' ],
       link: post[ 'link' ],
     };
+    debugger;
     if ( mediaType === MediaType.image ) {
       blogPost.mediaId = post[ 'featured_media' ];
+      blogPost.shortContent = post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`
     }
     return blogPost;
   }

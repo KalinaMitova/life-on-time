@@ -5,15 +5,35 @@
             <p class="content-sub-header">You will find really good and helpful resources in this section</p>
         </div>
     </div>
-    <ng-template ngFor [ngForOf]="posts" let-post let-i="index " let-l=count>
-        <div class="row" *ngIf="(i)%3===0 || i === 0">
-            <div class="col-sm-12 col-md-4" *ngIf="i+0 < l">
+
+    <div class="row">
+        <div class="col-md-12 mt-1">
+            <div class="card-columns">
+                <ng-template ngFor [ngForOf]="posts" let-post>
+                    <app-card-text *ngIf="post.mediaType === 0" [post]="post">
+                    </app-card-text>
+                    <app-card-video *ngIf="post.mediaType !== 0" [post]="post">
+                    </app-card-video>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+
+<!-- <ng-template ngFor [ngForOf]="posts" let-post let-i="index " let-l=count>
+    <div class="row" *ngIf="(i)%3===0 || i === 0">
+        <div class="col-sm-12 col-md-4" *ngIf="i+0 < l">
+            <div class="card-columns">
                 <app-card-text *ngIf="post.hasOwnProperty('imageUrl')" [post]="posts[i+0]">
                 </app-card-text>
                 <app-card-video *ngIf="!post.hasOwnProperty('imageUrl')" [post]="posts[i+0]">
                 </app-card-video>
-                <!-- <app-card-audio *ngIf="post.hasOwnProperty('audioUrl')" [post]="posts[i+0]">
-                </app-card-audio> -->
+                <app-card-audio *ngIf="post.hasOwnProperty('audioUrl')" [post]="posts[i+0]">
+                </app-card-audio>
             </div>
             <div class="col-sm-12 col-md-4" *ngIf="i+1< l">
                 <app-card-text *ngIf="post.hasOwnProperty('imageUrl')" [post]="posts[i+1]">
@@ -24,8 +44,8 @@
                 <app-card-text *ngIf="post.hasOwnProperty('imageUrl')" [post]="posts[i+2]">
                 </app-card-text>
                 <app-card-video *ngIf="!post.hasOwnProperty('imageUrl')" [post]="posts[i+2]"></app-card-video>
-                <!-- <app-card-audio *ngIf="post.hasOwnProperty('audioUrl')" [post]="posts[i+2]"></app-card-audio> -->
+                <app-card-audio *ngIf="post.hasOwnProperty('audioUrl')" [post]="posts[i+2]"></app-card-audio>
             </div>
         </div>
-    </ng-template>
-</section>
+    </div>
+</ng-template> -->

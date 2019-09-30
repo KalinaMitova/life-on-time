@@ -10,6 +10,7 @@ export interface BlogPost {
   title: string;
   imageUrl?: string;
   content: string;
+  shortContent?: string;
   link: string;
   mediaType: MediaType;
   mediaId?: string;

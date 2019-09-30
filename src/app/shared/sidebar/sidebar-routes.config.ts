@@ -2,23 +2,12 @@ import { RouteInfo } from './sidebar.metadata';
 
 export const ROUTES: RouteInfo[] = [
 
-    {
-        path: '/progress-dashboard', title: 'Progress', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
-    },
+
     {
         path: '', title: 'My Goals', icon: 'ft-target', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
-        submenu: [
-            // { path: '/goals/health-wellbeing', title: 'Health and Wellbeing', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            // { path: '/goals/personal-development', title: 'Personal Development', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            // { path: '/goals/relationships', title: 'Relationships', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            // { path: '/goals/physical-activity', title: 'Physical Activity', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            // { path: '/goals/financial', title: 'Financial', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-        ]
-    },
-    {
-        path: '/ideas', title: 'My ideas', icon: 'ft-clipboard', class: '', badge: '', badgeClass: '', isExternalLink: false,
         submenu: []
     },
+
     {
         path: '/', title: 'My Wellbeing', icon: 'ft-headphones', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, submenu: [
             { path: '/wellbeing/relax-me', title: 'Relax me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
@@ -26,7 +15,14 @@ export const ROUTES: RouteInfo[] = [
             { path: '/wellbeing/teach-me', title: 'Teach me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
         ]
     },
+    {
+        path: '/ideas', title: 'My ideas', icon: 'ft-clipboard', class: '', badge: '', badgeClass: '', isExternalLink: false,
+        submenu: []
+    },
     { path: '/calendar', title: 'Calendar', icon: 'ft-calendar', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    {
+        path: '/progress-dashboard', title: 'Progress', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+    },
     { path: '/help', title: 'Help', icon: 'ft-life-buoy', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
 
 ];

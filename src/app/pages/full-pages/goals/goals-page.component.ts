@@ -2,17 +2,20 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
-import { GoalService } from 'app/shared/services/goal.service';
 import { Goal } from 'app/shared/models/goal';
-import { ModalService } from "app/shared/services/modal.service";
-import { EventService } from 'app/shared/services/event.service';
-import { TaskService } from 'app/shared/services/task.service';
-import { ActionInfo } from 'app/shared/models/actionInfo';
-import { ItemInfo } from 'app/shared/models/itemInfo';
 import { GoalCreate } from 'app/shared/models/goalCreate';
 import { TaskCreate } from 'app/shared/models/taskCreate';
+import { ActionInfo } from 'app/shared/models/actionInfo';
+import { ItemInfo } from 'app/shared/models/itemInfo';
 import { Category } from 'app/shared/models/category';
+
+import { GoalService } from 'app/shared/services/goal.service';
+import { TaskService } from 'app/shared/services/task.service';
 import { UserService } from 'app/shared/services/user.service';
+import { ModalService } from "app/shared/services/modal.service";
+import { EventService } from 'app/shared/services/event.service';
+
+import { convertDateToString } from "app/shared/utilities";
 
 
 
@@ -90,7 +93,7 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
   private createGoal( formValue ) {
     let goal: GoalCreate = formValue;
     const date = formValue.until_date;
-    goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
+    goal.until_date = convertDateToString( date.day, date.month, date.year, '-' );
     goal.category_id = this.currentGoalCategory.id;
     this.createGoalSubscription = this.goalService.postCreateGoal( goal )
       .subscribe( data => {
@@ -102,7 +105,7 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
     let task: TaskCreate = formValue;
     task.goal_id = goalId;
     const date = formValue.until_date;
-    task.until_date = this.getDate( date.day, date.month, date.year, '-' );
+    task.until_date = convertDateToString( date.day, date.month, date.year, '-' );
 
     this.createTaskSubscription = this.taskService.postCreateTask( task )
       .subscribe( data => {
@@ -113,7 +116,7 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
   private editGoal( formValue, goalId: string ) {
     const goal: GoalCreate = formValue;
     const date = formValue.until_date;
-    goal.until_date = this.getDate( date.day, date.month, date.year, '-' )
+    goal.until_date = convertDateToString( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.goalService.putEditGoalById( goalId, goal )
       .subscribe( data => {
         this.loadPageGoals();
@@ -123,7 +126,7 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
   private editTask( formValue, taskId: string ) {
     let task: TaskCreate = formValue;
     const date = formValue.until_date;
-    task.until_date = this.getDate( date.day, date.month, date.year, '-' )
+    task.until_date = convertDateToString( date.day, date.month, date.year, '-' )
     this.editTaskSubscription = this.taskService.putEditTaskById( taskId, task )
       .subscribe( data => {
         this.loadPageGoals();
@@ -165,12 +168,6 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
   private loadPageGoals() {
     this.goals$ = this.goalService.getGoalsByCategory( this.currentGoalCategory.title );
   }
-
-  private getDate( dd, mm, yyyy, separator: string ) {
-    if ( dd < 10 ) dd = '0' + dd;
-    if ( mm < 10 ) mm = '0' + mm;
-    return ( yyyy + separator + mm + separator + dd );
-  };
 
   openModal( name: string, itemType: string, actionType: string, item?: any ) {
     this.modalService.open( name, itemType, actionType, item );

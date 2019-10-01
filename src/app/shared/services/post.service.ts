@@ -99,7 +99,7 @@ export class PostService {
       content: post[ 'content' ][ 'rendered' ],
       link: post[ 'link' ],
     };
-    debugger;
+
     if ( mediaType === MediaType.image ) {
       blogPost.mediaId = post[ 'featured_media' ];
       blogPost.shortContent = post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`

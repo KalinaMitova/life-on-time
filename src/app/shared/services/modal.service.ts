@@ -24,11 +24,11 @@ export class ModalService {
       modalRef.componentInstance.userId = itemInfo;
     }
 
-    modalRef.result.then( ( result ) => {
-      //this.closeResult = `Closed with: ${result}`;
-    }, ( reason ) => {
-      //this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
-    } );
+    // modalRef.result.then( ( result ) => {
+    //   //this.closeResult = `Closed with: ${result}`;
+    // }, ( reason ) => {
+    //   //this.closeResult = `Dismissed ${this.getDismissReason( reason )}`;
+    // } );
   }
 
   // private getDismissReason( reason: any ): string {
@@ -56,9 +56,10 @@ export class ModalService {
         item[ 'goal_id' ] = itemInfo;
         modalRef.componentInstance.maxDate = date;
       } else if ( itemType === 'goal' && itemInfo ) {
-        item.title = itemInfo.name;
-        item.description = itemInfo.info.content ? itemInfo.info.content : '';
-        modalRef.componentInstance.isFromIdea = true;
+        item.title = itemInfo.name ? itemInfo.name : '';
+        item.description = ( itemInfo.info && itemInfo.info.content ) ? itemInfo.info.content : '';
+        item.until_date = itemInfo.until_date ? itemInfo.until_date : item.until_date;
+        modalRef.componentInstance.isAllowChooseCategory = true;
         modalRef.componentInstance.categories = window.categories;
       }
 

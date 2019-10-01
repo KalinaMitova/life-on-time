@@ -15,7 +15,7 @@ export class ModalCreateEditComponent implements OnInit {
   modalForm: FormGroup;
   itemType: string;
   actionType: string;
-  isFromIdea: boolean = false;
+  isAllowChooseCategory: boolean = false;
   minDate: SeparatedDate;
   maxDate: SeparatedDate = null;
 

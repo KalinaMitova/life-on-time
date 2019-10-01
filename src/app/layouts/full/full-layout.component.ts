@@ -198,12 +198,6 @@ export class FullLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.config = this.configService.templateConf;
     this.bgColor = this.config.layout.sidebar.backgroundColor;
-    // this.categorySubscribtion = this.userService.getUserAvailableCategories()
-    //   .subscribe( data => {
-    //     debugger;
-    //     window.categories = data;
-    //     debugger;
-    //   } )
 
     if ( !this.config.layout.sidebar.backgroundImage ) {
       this.bgImage = "";

@@ -7,25 +7,21 @@ import {
   AfterViewInit,
   Renderer2,
   OnDestroy,
-  //TemplateRef
 } from '@angular/core';
-//import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-
-import { ModalService, } from 'app/shared/services/modal.service';
 import { Subscription, Observable } from 'rxjs';
-//import { LayoutService } from 'app/shared/services/layout.service';
-import { ConfigService } from 'app/shared/services/config.service';
-import { IdeaService } from 'app/shared/services/idea.service';
-import { Idea, IdeaInfo, IdeaFile } from 'app/shared/models/idea';
+import { Router, ActivatedRoute, Params } from '@angular/router'; '@ng-bootstrap/ng-bootstrap';
+
+import { Idea, IdeaFile } from 'app/shared/models/idea';
 import { ItemInfo } from 'app/shared/models/itemInfo';
-import { EventService } from 'app/shared/services/event.service';
 import { GoalCreate } from 'app/shared/models/goalCreate';
-import { GoalService } from 'app/shared/services/goal.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-// import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { convertDateToString } from "app/shared/utilities";
+
 import { AuthService } from 'app/shared/auth/auth.service';
-//import { environment } from 'environments/environment';
-//import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ConfigService } from 'app/shared/services/config.service';
+import { EventService } from 'app/shared/services/event.service';
+import { GoalService } from 'app/shared/services/goal.service';
+import { IdeaService } from 'app/shared/services/idea.service';
+import { ModalService, } from 'app/shared/services/modal.service';
 
 @Component(
   {
@@ -39,21 +35,17 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild( 'contentOverlay', { static: false } ) overlay: ElementRef;
   @ViewChild( 'ideaContent', { static: false } ) content: ElementRef;
 
-  //imageurl: SafeUrl;
   innerWidth: any;
-  //dropzone;
   config: any = {};
   ideas: Array<Idea>;
   idea: Idea;
   selectedIdeaId: string;
   isIdeaSelected = true;
-  //isIdeaFilesCollapsed = true;
   userId: string;
 
   // uploadfiles: [];
   // uploadImages: [];
   // fileStartUrl: string;
-
 
   private modalCreateSubscription: Subscription;
   private modalDeleteSubscription: Subscription;
@@ -64,14 +56,12 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private editIdeaSub: Subscription;
   private ideasSub: Subscription;
   private uploadSubs: Subscription;
-  //private modalRef: NgbModalRef;
 
 
   constructor (
     private elRef: ElementRef,
     private renderer: Renderer2,
     private customModalService: ModalService,
-    //private modalService: NgbModal,
     private ideaService: IdeaService,
     private authService: AuthService,
     private configService: ConfigService,
@@ -79,7 +69,6 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private goalService: GoalService,
     private router: Router,
     private route: ActivatedRoute,
-    //public sanitizer: DomSanitizer
   ) {
   }
 
@@ -91,8 +80,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
       } );
     this.innerWidth = window.innerWidth;
     this.config = this.configService.templateConf;
-    this.userId = this.authService.getUserIdFromToken( 'token' );
-    //this.fileStartUrl = `${environment.fileUplodeUrl}files/${this.userId}`;
+    this.userId = this.authService.getUserIdFromToken( 'token' );;
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
         this.ideas = data;
@@ -166,7 +154,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   private createGoal( formValue ) {
     let goal: GoalCreate = formValue;
     const date = formValue.until_date;
-    goal.until_date = this.getDate( date.day, date.month, date.year, '-' );
+    goal.until_date = convertDateToString( date.day, date.month, date.year, '-' );
     goal.category_id = goal[ 'goalCategoryId' ];
     goal[ 'idea_id' ] = this.selectedIdeaId;
     this.createGoalSubscription =

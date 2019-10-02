@@ -7,12 +7,6 @@
             </div>
             <span class="text align-middle">Life On Time</span>
         </a>
-        <!-- <a class="nav-toggle d-none d-sm-none d-md-none d-lg-block" id="sidebarToggle" href="javascript:;">
-            <i #toggleIcon appSidebarToggle class="ft-toggle-right toggle-icon" data-toggle="expanded"></i>
-        </a> -->
-        <!-- <a class="nav-close d-block d-md-block d-lg-none d-xl-none" id="sidebarClose" href="javascript:;">
-            <i class="ft-x"></i>
-        </a> -->
     </div>
 </div>
 <!-- Sidebar Header Ends-->
@@ -23,8 +17,8 @@
         <ul class="navigation" appSidebarList>
             <!-- First level menu -->
             <li appSidebarlink level="{{depth + 1}}" (toggleEmit)="handleToggle($event)" (click)="toggleSlideInOut()" [routePath]="menuItem.path" [classes]="menuItem.class" [title]="menuItem.title" [parent]="" *ngFor="let menuItem of menuItems" [ngClass]="{'has-sub': menuItem.class === 'has-sub' ? true: false, 'open': activeTitles.includes(menuItem.title) && !nav_collapsed_open ? true : false, 'nav-collapsed-open': nav_collapsed_open && activeTitles.includes(menuItem.title)}"
-                [routerLinkActive]="menuItem.submenu.length != 0 ? '' : 'active'" [routerLinkActiveOptions]="{exact: true}">
-                <a appSidebarAnchorToggle [routerLink]="menuItem.class === '' ? [menuItem.path] : null" *ngIf="!menuItem.isExternalLink; else externalLinkBlock">
+                [routerLinkActive]="(menuItem.submenu.length != 0)? '' : 'active'" [routerLinkActiveOptions]="{exact: true}">
+                <a appSidebarAnchorToggle [routerLink]="(menuItem.class === '' || menuItem.title === 'My Goals') ? [menuItem.path] : null" *ngIf="!menuItem.isExternalLink; else externalLinkBlock">
                     <i [ngClass]="[menuItem.icon]"></i>
                     <span class="menu-title">{{menuItem.title | translate }}</span>
                     <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>

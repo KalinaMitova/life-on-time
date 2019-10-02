@@ -50,7 +50,7 @@ export class ProgressDashboardComponent implements OnInit {
       .subscribe( date => this.registrationDate = date );
     this.minStatSubscription = forkJoin(
       //first row
-      this.goalService.getUserGoals().pipe( catchError( error => of( error ) ) ),
+      this.goalService.getUserGoalsNumber().pipe( catchError( error => of( error ) ) ),
       this.taskService.getUserAllTasksAsNumber().pipe( catchError( error => of( error ) ) ),
       this.ideasService.getUserIdeasAsNumber().pipe( catchError( error => of( error ) ) ),
       this.taskService.getDaysToCompleteTasks().pipe( catchError( error => of( error ) ) ),

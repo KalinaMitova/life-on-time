@@ -4,7 +4,7 @@ export const ROUTES: RouteInfo[] = [
 
 
     {
-        path: '', title: 'My Goals', icon: 'ft-target', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+        path: '/goals/all', title: 'My Goals', icon: 'ft-target', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
         submenu: []
     },
 

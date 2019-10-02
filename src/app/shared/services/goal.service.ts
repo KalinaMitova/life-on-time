@@ -10,8 +10,6 @@ import { BarChartData } from '../models/barChartData';
 
 
 const BASE_URL = environment.apiUrl + "api/me/goals";
-//const BASE_URL_FOR_ENDPOINTS = environment.apiUrl + "api/me/goals/";
-//const BASE_CRUD_URL = "/api/goals/";
 const BASE_CRUD_URL = environment.apiUrl + "api/goals";
 const USER_COMPLETED_GOALS_END = "/completed";
 const USER_RATE_END = "/rate";
@@ -30,11 +28,50 @@ export class GoalService {
   ) {
   }
 
-  getUserGoals(): Observable<Number> {
+  getUserGoalsNumber(): Observable<Number> {
     return this.http.get<Array<Goal>>( BASE_URL )
       .pipe(
         map( goals => goals[ 'dataValue' ].goalsNumber )
       );
+  }
+
+  getAllUserGoals(): Observable<any> {
+    return this.http.get<Array<any>>( BASE_URL )
+      .pipe(
+        map( goals => {
+          return goals[ 'dataValue' ].goals.map( goal => {
+            if ( goal.until_date ) {
+              const goalLeftDays = Math.round( ( Date.now() - +( new Date( goal.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
+
+              goal.goalLeftDays = goalLeftDays;
+
+              const goalDueDateAsString = goal.until_date.split( '-' );
+              goal.until_date = {
+                day: Number( goalDueDateAsString[ 2 ] ),
+                month: Number( goalDueDateAsString[ 1 ] ),
+                year: Number( goalDueDateAsString[ 0 ] )
+              };
+            }
+
+            if ( goal.created_at ) {
+              const goalCreatedDateAsString = ( goal.created_at.split( ' ' ) )[ 0 ].split( '-' );
+              goal.created_at = {
+                day: Number( goalCreatedDateAsString[ 2 ] ),
+                month: Number( goalCreatedDateAsString[ 1 ] ),
+                year: Number( goalCreatedDateAsString[ 0 ] )
+              };
+            }
+            return {
+              title: goal.title,
+              until_date: goal.until_date,
+              created_at: goal.created_at,
+              category: goal.category,
+              goalLeftDays: goal.goalLeftDays,
+              status: goal.status
+            }
+          } )
+        } )
+      )
   }
 
   getGoalsByCategory( category: string ): Observable<Array<Goal>> {

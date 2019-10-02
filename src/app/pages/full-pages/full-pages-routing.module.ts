@@ -6,6 +6,7 @@ import { IdeasPageComponent } from './ideas/ideas-page.component';
 import { WellbeingPagesComponent } from './wellbeing/wellbeing-pages/wellbeing-pages.component';
 import { HelpPageComponent } from './help-page/help-page/help-page.component';
 import { CalendarPageComponent } from './calendar/calendar-page/calendar-page.component';
+import { AllGoalsPageComponent } from './goals/allGoalsPage/all-goals-page/all-goals-page.component';
 
 const submenuGoal = [];
 // const goalCategories = window.categories;
@@ -50,6 +51,11 @@ const routes: Routes = [
   {
     path: 'goals',
     children: [
+      {
+        path: 'all',
+        pathMatch: 'full',
+        component: AllGoalsPageComponent,
+      },
       {
         path: '**',
         component: GoalsPageComponent,

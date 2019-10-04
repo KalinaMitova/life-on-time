@@ -28,7 +28,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { ResponceHandlerInterceptor } from './shared/interceptors/responce-handler-interceptor';
 import { ToastrModule } from 'ngx-toastr';
-import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interseptor';
+import { SetHeadersInterceptor } from './shared/interceptors/set-headers-interceptor';
 import { ModalService } from './shared/services/modal.service';
 import { EventService } from './shared/services/event.service';
 import { UserService } from './shared/services/user.service';

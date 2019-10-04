@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Chart } from "../../../../shared/models/chart";
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Chart } from "app/shared/models/chart";
 import * as Chartist from 'chartist';
 
 @Component( {
@@ -8,11 +8,12 @@ import * as Chartist from 'chartist';
   styleUrls: [ './bar-chart.component.scss' ]
 } )
 //, OnChanges
-export class BarChartComponent implements OnInit {
-  @Input() chart: Chartist.IChartistData;
+export class BarChartComponent implements OnInit, OnChanges {
+  @Input( 'chart' ) chart: Chartist.IChartistData;
+  @Input( 'isCollapsed' ) isCollapsed: boolean;
   barChart: Chart = {
     type: 'Bar',
-    data: null,
+    data: this.chart,
     options: {
       seriesBarDistance: 21,
       axisX: {
@@ -25,5 +26,17 @@ export class BarChartComponent implements OnInit {
   }
   ngOnInit() {
     this.barChart.data = this.chart;
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes[ 'chart' ] ) {
+      this.barChart.data = changes[ 'chart' ].currentValue
+    }
+    if ( changes[ 'isCollapsed' ] && changes[ 'isCollapsed' ].currentValue == false ) {
+      this.barChart.data = {
+        labels: this.chart.labels,
+        series: this.chart.series
+      };
+    }
   }
 }

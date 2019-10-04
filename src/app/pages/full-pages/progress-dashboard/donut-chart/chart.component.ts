@@ -1,20 +1,44 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Chart } from '../../../../shared/models/chart';
-// import * as Chartist from 'chartist';
 
 @Component( {
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: [ './chart.component.scss' ]
 } )
-export class ChartComponent {
+export class ChartComponent implements OnInit {
   @Input( 'chart' ) chart: any;
+  @Input( 'isCollapsed' ) isCollapsed: boolean;
 
-  donutChart: Chart;
   setValue: number;
   doneValue: number;
   overdueValue: number;
   upcomingValue: number;
+  donutChart: Chart = {
+    type: "Pie",
+    data: {
+      series: [],
+    },
+    options: {
+      donut: true,
+      startAngle: 0,
+    },
+    events: {
+      draw( data: any ): void {
+        if ( data.type === 'label' ) {
+          if ( data.index === 0 ) {
+            data.element.attr( {
+              dx: data.element.root().width() / 2,
+              dy: data.element.root().height() / 2
+            } );
+          } else {
+            data.element.remove();
+          }
+        }
+      }
+    }
+  };
+
 
   ngOnInit() {
 
@@ -24,36 +48,49 @@ export class ChartComponent {
     this.upcomingValue = this.chart.series[ 1 ].value;
 
     const dataChart = { ... this.chart };
-    dataChart.series = dataChart.series.filter( s => s.name !== 'Set' )
+    dataChart.series = dataChart.series.filter( s => s.name !== 'Set' );
+    this.donutChart.data = {
+      series: dataChart.series.filter( s => s.name !== 'Set' ),
+      labels: []
+    }
 
-    this.donutChart = {
-      type: "Pie",
-      data: dataChart,
-      options: {
-        donut: true,
-        startAngle: 0,
-        labelInterpolationFnc: function ( value ) {
-          var total = dataChart.series.reduce( function ( prev, series ) {
-            return prev + series.value;
-          }, 0 );
-          return total;
-        }
-      },
-      // total: dataChart.series.value.sum(),
-      events: {
-        draw( data: any ): void {
-          if ( data.type === 'label' ) {
-            if ( data.index === 0 ) {
-              data.element.attr( {
-                dx: data.element.root().width() / 2,
-                dy: data.element.root().height() / 2
-              } );
-            } else {
-              data.element.remove();
-            }
-          }
-        }
+
+    this.donutChart.options = {
+      donut: true,
+      startAngle: 0,
+      labelInterpolationFnc: ( value ) => {
+        var total = dataChart.series.reduce( function ( prev, series ) {
+          return prev + series.value;
+        }, 0 );
+        return total;
       }
     }
   }
+
+
+  // ngOnChanges( changes: SimpleChanges ) {
+  //   console.log( 'OnChange' );
+  //   console.log( changes );
+  //   if ( changes[ 'isCollapsed' ] && changes[ 'isCollapsed' ].currentValue == false ) {
+  //     console.log( 'yes' );
+  //     const dataChart = { ... this.chart };
+  //     dataChart.series = dataChart.series.filter( s => s.name !== 'Set' );
+  //     this.donutChart.data = {
+  //       series: dataChart.series.filter( s => s.name !== 'Set' ),
+  //       labels: []
+  //     }
+
+
+  //     this.donutChart.options = {
+  //       donut: true,
+  //       startAngle: 0,
+  //       labelInterpolationFnc: ( value ) => {
+  //         var total = dataChart.series.reduce( function ( prev, series ) {
+  //           return prev + series.value;
+  //         }, 0 );
+  //         return total;
+  //       }
+  //     }
+  //   }
+  // }
 }

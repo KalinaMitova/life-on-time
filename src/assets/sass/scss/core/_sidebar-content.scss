@@ -376,6 +376,9 @@
     &[data-background-color="purple-love"] {
         @include set-gradient-background-color(#cc2b5e, #753a88);
     }
+    &[data-background-color="primary-cyan"] {
+        @include set-gradient-background-color(#95dedd, #009598);
+    }
     // Menu anchor colors
     &[data-background-color="white"] {
         @include set-anchor-color($black);

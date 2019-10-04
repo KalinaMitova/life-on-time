@@ -3,10 +3,10 @@ export let minStatisticData = {
     {
       title: 'allGoals',
       text: 'Goals created since ',
-      valueClass: 'mb-1 danger darken-1',
+      valueClass: 'mb-1 danger lighten',
       textClass: '',
       class: "",
-      iconClass: 'icon-rocket danger darken-1',
+      iconClass: 'icon-rocket danger lighten',
       value: 0,
       registrationDate: '',
     },

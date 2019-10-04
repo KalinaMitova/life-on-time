@@ -25,42 +25,62 @@
         </div>
     </div>
 </section>
-<!-- Min statistics end-->
 
+<section id="collapsible">
+    <div class="row">
+        <div class="col-12">
+            <div class="card ">
+                <div id="headingCollapse14" class="card-header pb-3">
+                    <a class="card-title lead collapsed text-primary" [attr.aria-expanded]="!isChartsCollapsed" aria-controls="charts" (click)="changeIsChartsCollapsed()">
+                        Click to expand and see charts
+                        <span class="float-right">
+                            <i *ngIf='isChartsCollapsed' class="fa fa-plus font-medium"></i>
+                            <i *ngIf='!isChartsCollapsed' class="fa fa-minus font-medium"></i>
+                        </span>
+                    </a>
+                </div>
+                <div class="card-content" id="charts" [ngbCollapse]="isChartsCollapsed">
+                    <div class="col-sm-12 mt-3 mb1">
+                        <div class="content-header">Latest Goals</div>
+                        <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" *ngIf="(donutCharts$ | async)?.length == 0">
+                            <div class="col-xl-4 col-lg-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="card-title">You have no goals yet</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<div class="col-sm-12 mt-3 mb1">
-    <div class="content-header">Latest Goals</div>
-    <p class="content-sub-header">The last 3 goals added in application or those with nearest deadline.</p>
+                        <!--Donut chart start-->
+                        <div class="row">
+                            <div class="col-xl-4 col-lg-12" *ngFor="let chart of donutCharts$ | async">
+                                <app-chart [chart]='chart'>
+                                </app-chart>
+                            </div>
+                        </div>
+                        <!--Donut chart end-->
 
-</div>
-<div class="row" *ngIf="(donutCharts$ | async)?.length == 0">
-    <div class="col-xl-4 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="card-title">You have no goals yet</h6>
+                        <!--Bar chart starts-->
+                        <div class="row text-left">
+                            <div class="col-sm-12">
+                                <app-bar-chart [chart]='barChart$ | async' [isCollapsed]="isChartsCollapsed">
+                                </app-bar-chart>
+                            </div>
+                        </div>
+                        <!--Bar chart ends-->
+                    </div>
+                </div>
+                <!-- </div> -->
+
             </div>
         </div>
     </div>
-</div>
-
-<!--Donut chart start-->
-<div class="row">
-    <div class="col-xl-4 col-lg-12" *ngFor="let chart of donutCharts$ | async">
-        <app-chart [chart]='chart'>
-        </app-chart>
-    </div>
-</div>
-<!--Donut chart end-->
-
-<!--Bar chart starts-->
-<div class="row text-left">
-    <div class="col-sm-12">
-        <app-bar-chart [chart]='barChart$ | async'>
-        </app-bar-chart>
-    </div>
-</div>
-<!--Bar chart ends-->
-
+</section>
 
 <div class="row match-height">
     <div class="col-xl-6 col-lg-12">

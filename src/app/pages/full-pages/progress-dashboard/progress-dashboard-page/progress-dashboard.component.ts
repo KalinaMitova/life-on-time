@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, SimpleChange } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { forkJoin, Subscription, of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -19,7 +19,7 @@ import { PostService } from 'app/shared/services/post.service';
   templateUrl: './progress-dashboard.component.html',
   styleUrls: [ './progress-dashboard.component.scss' ]
 } )
-export class ProgressDashboardComponent implements OnInit {
+export class ProgressDashboardComponent implements OnInit, OnDestroy {
   calendarPlugins = [ dayGridPlugin ]; // important!
 
   registrationDate: string;
@@ -29,6 +29,7 @@ export class ProgressDashboardComponent implements OnInit {
   minStaticsDataSecondRow = minStatisticData.secondRow;
   blogPosts: Array<BlogPost>;
   calendarEvents: any;
+  isChartsCollapsed: boolean = true;
   private minStatSubscription: Subscription;
   private regDateSubscripton: Subscription;
   private PostsSubscripton: Subscription;
@@ -76,7 +77,7 @@ export class ProgressDashboardComponent implements OnInit {
         this.minStaticsDataSecondRow[ 3 ].value = rate + ' %';
       } );
 
-    this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();
+    //this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();
     this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber();
     this.PostsSubscripton = this.postService.getLats4Posts()
       .subscribe( posts => {
@@ -97,6 +98,14 @@ export class ProgressDashboardComponent implements OnInit {
           this.calendarEvents = data;
         } )
 
+  }
+
+  changeIsChartsCollapsed() {
+    this.isChartsCollapsed = !this.isChartsCollapsed;
+    if ( !this.isChartsCollapsed ) {
+      //this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
+      this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();;
+    }
   }
 
   ngOnDestroy() {

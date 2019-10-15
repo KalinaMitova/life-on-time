@@ -1,11 +1,11 @@
 <!-- Sidebar Header starts  FROM TEMPLATE-->
 <div class="sidebar-header">
     <div class="logo clearfix">
-        <a [routerLink]="['/']" class="logo-text float-left">
+        <a [routerLink]="['/']" class="logo-text text-center">
             <div class="logo-img">
                 <img [src]="logoUrl" />
             </div>
-            <span class="text align-middle">Life On Time</span>
+            <!-- <span class="text align-middle">Life On Time</span> -->
         </a>
     </div>
 </div>
@@ -20,7 +20,7 @@
                 [routerLinkActive]="(menuItem.submenu.length != 0)? '' : 'active'" [routerLinkActiveOptions]="{exact: true}">
                 <a appSidebarAnchorToggle [routerLink]="(menuItem.class === '' || menuItem.title === 'My Goals') ? [menuItem.path] : null" *ngIf="!menuItem.isExternalLink; else externalLinkBlock">
                     <i [ngClass]="[menuItem.icon]"></i>
-                    <span class="menu-title">{{menuItem.title | translate }}</span>
+                    <span class="menu-title main-lvl">{{menuItem.title | translate }}</span>
                     <span *ngIf="menuItem.badge != '' " [ngClass]="[menuItem.badgeClass]">{{menuItem.badge}}</span>
                 </a>
                 <ng-template #externalLinkBlock>
@@ -36,7 +36,7 @@
                         [ngClass]="{'has-sub': menuSubItem.class === 'has-sub' ? true: false, 'open': activeTitles.includes(menuSubItem.title) && !nav_collapsed_open ? true : false, 'nav-collapsed-open': nav_collapsed_open && activeTitles.includes(menuSubItem.title)}">
                         <a appSidebarAnchorToggle [routerLink]="menuSubItem.submenu.length > 0 ? null : [menuSubItem.path]" *ngIf="!menuSubItem.isExternalLink; else externalSubLinkBlock">
                             <i [ngClass]="[menuSubItem.icon]"></i>
-                            <span class="menu-title">{{menuSubItem.title | translate }}</span>
+                            <span class="menu-title sub-lvl">{{menuSubItem.title | translate }}</span>
                             <span *ngIf="menuSubItem.badge != '' " [ngClass]="[menuSubItem.badgeClass]">{{menuSubItem.badge}}</span>
                         </a>
                         <ng-template #externalSubLinkBlock>

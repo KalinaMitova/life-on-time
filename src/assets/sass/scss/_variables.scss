@@ -6,17 +6,9 @@ $spacers: (0: 0, 1: ($spacer * .25), 2: ($spacer * .50), 3: $spacer, 4: ($spacer
 // Body
 $body-bg: #f5f7fa;
 // Fonts
-$font-family-sans-serif: "Montserrat",
-"Segoe UI",
-Roboto,
-"Helvetica Neue",
-Arial,
+$font-family-sans-serif: "hindbold",
 sans-serif;
-$font-family-content: "Rubik",
-"Segoe UI",
-Roboto,
-"Helvetica Neue",
-Arial,
+$font-family-content: "hindregular",
 sans-serif;
 $card-spacer-y: 1.5rem;
 $card-spacer-x: 1.5rem;

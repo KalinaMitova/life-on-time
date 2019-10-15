@@ -3,9 +3,9 @@
         <div class="card-header">
             <div class="buttons">
                 <button type="button" class="btn btn-raised btn-outline-success mr-1" data-toggle="modal" data-target="#goal" alt="Comlete Goal" title="Complete Goal" (click)="changeStatus('goal', goal.id, goal.status)"><i class="ft-check font-medium-3"></i></button>
-                <button type="button" class="btn btn-raised btn-outline-primary mr-1" data-toggle="modal" data-target="#goal" alt="Edit Goal" title="Edit Goal" (click)="openModal('createEditModal', 'goal', 'edit', goal)"><i
+                <button type="button" class="btn btn-raised btn-outline-goal-edit mr-1" data-toggle="modal" data-target="#goal" alt="Edit Goal" title="Edit Goal" (click)="openModal('createEditModal', 'goal', 'edit', goal)"><i
                         class="ft-edit-2 font-medium-3"></i></button>
-                <button type="button" class="btn btn-raised btn-outline-danger mr-1" alt="Delete Goal" title="Delete Goal" (click)="openModal('confirmModal', 'goal', 'delete', goal)"><i
+                <button type="button" class="btn btn-raised btn-outline-goal-delete mr-1" alt="Delete Goal" title="Delete Goal" (click)="openModal('confirmModal', 'goal', 'delete', goal)"><i
                         class="ft-x font-medium-3"></i></button>
             </div>
             <h4 class="card-title" id="goal{{goal.id}}" [ngClass]=" {'goal-done': goal.status === 1}">{{goal.title}}
@@ -22,13 +22,13 @@
             <p class="card-subtitle text-muted">{{goal.description}}</p>
         </div>
         <div class="card-content">
-            <div class="row">
-                <div class="col-sm-12 col-lg-6"></div>
-                <div class="col-sm-12 col-lg-6 text-right text-primary">
+            
+                
+                <div class="col-sm-12 text-right text-primary">
                     <a *ngIf="goal.idea_id != null" class="btn btn-sm btn-raised btn-outline-primary round btn-min-width ml-1 mb-1" (click)=goToIdea(goal.idea_id)>
                         Go to idea
                     </a>
-                </div>
+                
             </div>
 
             <div class="card-body table-responsive actions-card">

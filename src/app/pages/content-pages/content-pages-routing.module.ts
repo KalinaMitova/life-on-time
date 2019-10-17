@@ -11,9 +11,8 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'choose_plan',
+        path: 'choose-plan',
         component: ChoosePlanPageComponent,
-        canActivate: [ AuthGuard ]
       },
       {
         path: 'error',

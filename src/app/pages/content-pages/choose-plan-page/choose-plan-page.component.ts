@@ -28,14 +28,14 @@ export class ChoosePlanPageComponent implements OnInit, OnDestroy {
       } );
   }
 
-  logout() {
-    this.logoutSubscription =
-      this.authService.logout()
-        .subscribe( data => {
-          this.authService.deleteToken( 'token' );
-          this.router.navigate( [ "/user/login" ] );
-        } )
-  }
+  // logout() {
+  //   this.logoutSubscription =
+  //     this.authService.logout()
+  //       .subscribe( data => {
+  //         this.authService.deleteToken( 'token' );
+  //         this.router.navigate( [ "/user/login" ] );
+  //       } )
+  // }
 
   ngOnDestroy() {
     if ( this.logoutSubscription ) {

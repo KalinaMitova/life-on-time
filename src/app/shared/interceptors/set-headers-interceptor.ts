@@ -21,10 +21,9 @@ export class SetHeadersInterceptor implements HttpInterceptor {
       const request = req.clone( {
         setHeaders: {
           'Content-Type': 'application/json',
-          'Auth-Token': token,
-          //'Authorization': `Bearer ${authToken}`,
+          'Auth-Token': token ? token : '',
         },
-        withCredentials: true
+        // withCredentials: true
       } );
       //console.log( request );
       return next.handle( request );

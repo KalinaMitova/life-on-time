@@ -112,7 +112,7 @@ export class UserService {
             items.push( {
               title: task[ 'title' ],
               date: task[ 'until_date' ],
-              url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
+              url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#a-${task.id}`,
               backgroundColor: "#009DA0",
               borderColor: "#009DA0",
               //textColor: "#FF8D60",
@@ -122,7 +122,7 @@ export class UserService {
             items.push( {
               title: goal[ 'title' ],
               date: goal[ 'until_date' ],
-              url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
+              url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#g-${goal.id}`,
               backgroundColor: "#FF8D60",
               borderColor: "#FF8D60",
               //textColor: "#009DA0",

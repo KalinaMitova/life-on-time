@@ -28708,8 +28708,7 @@ h1, h2, h3, h4, h5, h6,
   border-bottom-right-radius: 6px; }
 
 a {
-  color: #009DA0;
-  }
+  color: #009DA0; }
   a:hover, a:focus {
     color: #008487;
     text-decoration: none; }
@@ -30010,7 +30009,7 @@ ngb-accordion .card {
     -ms-transition: all 0.5s ease-in-out; }
   .email-application .email-app-mail-content-detail {
     position: relative;
-    padding: 30px;
+    /*padding: 30px;*/
     max-height: calc(100vh - 212px);
     overflow-y: auto; }
   .email-application .hide-email-content {
@@ -30102,7 +30101,7 @@ ngb-accordion .card {
 
 @media (min-width: 1200px) {
   .email-app-content {
-    margin-left: 250px; } }
+    margin-left: 0px; } }
 
 @media (max-width: 767.98px) {
   .email-app-mail-content {
@@ -40849,3 +40848,15 @@ input[type="radio"].switch {
     color: #fff; }
   .main-content .color-palette span.dark {
     color: rgba(0, 0, 0, 0.87); }
+
+#registration{background-image: url(../img/login_background.png); background-size: cover; background-repeat: no-repeat;}
+.register-form{background-color: rgba(0,0,0, .4); width: 800px; padding:0; color:#fff; text-align: center;}
+.register-form .btn{display:block; background:#FF6B64; color:#fff; padding:10px;}
+.register-logo{width: 280px;}
+.register-title{font-size: 16px; font-weight: 700; text-transform: uppercase;}
+.app-type-register{position: relative; padding:15px; color:#000;}
+.app-type-register img{height: 100px;}
+.app-type-register:hover .app-descr{display: block; height: 200%;}
+.app-type-register.disabled{opacity: 0.2;}
+.app-type-register.disabled:hover .app-descr{display:none;}
+.app-descr{position: absolute;background-color: #fff;top: 0;z-index: 1;margin-left: -15px;padding: 15px;display: none;transition: all 0.3s ease-out;}

@@ -32,7 +32,7 @@ export class ModalUploadComponent {
 
   onUploadInit( args: any ): void {
     this.dropzone = args;
-    console.log( 'onUploadInit:', args );
+    //console.log( 'onUploadInit:', args );
   }
 
   onUploadError( args: any ): void {

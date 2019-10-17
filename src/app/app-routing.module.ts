@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules, ExtraOptions } from '@angular/router';
 
 import { FullLayoutComponent } from "./layouts/full/full-layout.component";
 import { ContentLayoutComponent } from "./layouts/content/content-layout.component";
@@ -8,6 +8,13 @@ import { Full_ROUTES } from "./shared/routes/full-layout.routes";
 import { CONTENT_ROUTES } from "./shared/routes/content-layout.routes";
 
 import { AuthGuard } from './shared/auth/auth-guard.service';
+
+const routerOptions: ExtraOptions = {
+  useHash: false,
+  anchorScrolling: 'enabled',
+  scrollPositionRestoration: 'enabled',
+  // ...any other options you'd like to use
+};
 
 const appRoutes: Routes = [
   {
@@ -24,7 +31,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule( {
-  imports: [ RouterModule.forRoot( appRoutes ) ],
+  imports: [ RouterModule.forRoot( appRoutes, routerOptions ) ],
   exports: [ RouterModule ]
 } )
 

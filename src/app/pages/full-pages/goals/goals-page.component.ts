@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { Goal } from 'app/shared/models/goal';
@@ -24,7 +24,7 @@ import { convertDateToString } from "app/shared/utilities";
   templateUrl: './goals-page.component.html',
   styleUrls: [ './goals-page.component.scss' ]
 } )
-export class GoalsPageComponent implements OnInit, OnDestroy {
+export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild( 'type', { static: false } ) type: any;
 
   currentGoalCategory: Category;
@@ -51,6 +51,15 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private router: Router
   ) {
+    router.events.subscribe( s => {
+      if ( s instanceof NavigationEnd ) {
+        const tree = router.parseUrl( router.url );
+        if ( tree.fragment ) {
+          const element = document.querySelector( "#" + tree.fragment );
+          if ( element ) { element.scrollIntoView( true ); }
+        }
+      }
+    } );
   }
 
   ngOnInit(): void {
@@ -71,6 +80,20 @@ export class GoalsPageComponent implements OnInit, OnDestroy {
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.deleteItem( itemInfo ) ) );
     this.modalStatusSubscription = this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
+  }
+  ngAfterViewInit(): void {
+    this.router.events.subscribe( s => {
+
+      if ( s instanceof NavigationEnd ) {
+        const tree = this.router.parseUrl( this.router.url );
+        console.log( tree );
+        if ( tree.fragment ) {
+          const element = document.querySelector( "#" + tree.fragment );
+          console.log( tree.fragment );
+          if ( element ) { element.scrollIntoView( true ); }
+        }
+      }
+    } );
   }
 
   private mapAction( actionInfo: ActionInfo ) {

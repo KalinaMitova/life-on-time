@@ -1,11 +1,13 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
-
-import { ROUTES } from './sidebar-routes.config';
 import { Router } from "@angular/router";
 import { customAnimations } from "../animations/custom-animations";
+import { Subscription } from 'rxjs';
+
+import { ROUTES } from './sidebar-routes.config';
 import { ConfigService } from '../services/config.service';
 import { UserService } from '../services/user.service';
-import { Subscription } from 'rxjs';
+import { GlobalService } from '../services/global.service'
+
 
 @Component( {
   selector: "app-sidebar",
@@ -26,6 +28,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private configService: ConfigService,
     private userService: UserService,
+    private globalService: GlobalService,
   ) {
     if ( this.depth === undefined ) {
       this.depth = 0;
@@ -38,11 +41,12 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const goalsMenu = ROUTES.find( m => m.title === 'My Goals' );
 
-    this.availableCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
-      .subscribe( data => {
-        this.userService.setCategoriesWindow( data );
+    this.availableCategoriesSubscription = this.userService.getUserAvailableCategories()
+      .subscribe( categories => {
+        //this.userService.setCategoriesWindow( data );
+        this.globalService.setAppCategories( categories );
         goalsMenu[ 'submenu' ] = [];
-        data.forEach( category => {
+        categories.forEach( category => {
           goalsMenu[ 'submenu' ].push(
             {
               path: `/goals/${category.pathEnd}`,

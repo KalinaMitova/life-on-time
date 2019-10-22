@@ -8,36 +8,6 @@ import { HelpPageComponent } from './help-page/help-page/help-page.component';
 import { CalendarPageComponent } from './calendar/calendar-page/calendar-page.component';
 import { AllGoalsPageComponent } from './goals/allGoalsPage/all-goals-page/all-goals-page.component';
 
-const submenuGoal = [];
-// const goalCategories = window.categories;
-// console.log( goalCategories );
-// for ( const category of goalCategories ) {
-//   submenuGoal.push( {
-//     path: category.pathEnd,
-//     component: GoalsPageComponent,
-//   } )
-// }
-
-// [
-//   {
-//     path: 'health-&-wellbeing',
-//     component: GoalsPageComponent,
-//   },
-//   {
-//     path: 'personal-development',
-//     component: GoalsPageComponent,
-//   }, {
-//     path: 'relationships',
-//     component: GoalsPageComponent,
-//   }, {
-//     path: 'physical-activity',
-//     component: GoalsPageComponent,
-//   }, {
-//     path: 'financial',
-//     component: GoalsPageComponent,
-//   },
-// ]
-
 const routes: Routes = [
   {
     path: '',
@@ -60,19 +30,6 @@ const routes: Routes = [
         path: '**',
         component: GoalsPageComponent,
       },
-      // {
-      //   path: 'personal-development',
-      //   component: GoalsPageComponent,
-      // }, {
-      //   path: 'relationships',
-      //   component: GoalsPageComponent,
-      // }, {
-      //   path: 'physical-activity',
-      //   component: GoalsPageComponent,
-      // }, {
-      //   path: 'financial',
-      //   component: GoalsPageComponent,
-      // },
     ]
   },
   {

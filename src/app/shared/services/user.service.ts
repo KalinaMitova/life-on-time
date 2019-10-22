@@ -63,7 +63,7 @@ export class UserService {
         } ) )
   }
 
-  getUserAvailableCategoriesAndUserAppType(): Observable<Array<Category>> {
+  getUserAvailableCategories(): Observable<Array<Category>> {
     return this.http.get<Array<Category>>( BASE_URL )
       .pipe(
         map( data => {
@@ -180,19 +180,4 @@ export class UserService {
         } )
       )
   }
-
-
-  //get categories from window object
-  getCategoriesWindows() {
-    return window.categories;
-  }
-  setCategoriesWindow( categories: Array<Category> ) {
-    window.categories = categories;
-  }
-  // setAppTypeToWindow( appType: string ) {
-  //   window.appType = appType;
-  // }
-  // getAppTypeFromWindow() {
-  //   return window.appType;
-  // }
 }

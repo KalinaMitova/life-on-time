@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd, Scroll } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 
 import { Goal } from 'app/shared/models/goal';
@@ -16,6 +16,11 @@ import { ModalService } from "app/shared/services/modal.service";
 import { EventService } from 'app/shared/services/event.service';
 
 import { convertDateToString } from "app/shared/utilities";
+import { ViewportScroller } from '@angular/common';
+
+import { DOCUMENT } from '@angular/common';
+import { filter } from 'rxjs/operators';
+import { GlobalService } from 'app/shared/services/global.service';
 
 
 
@@ -49,25 +54,25 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private taskService: TaskService,
     private eventService: EventService,
     private userService: UserService,
-    private router: Router
+    private globalService: GlobalService,
+    private router: Router,
+    private vps: ViewportScroller,
+    @Inject( DOCUMENT ) private document: Document
   ) {
-    router.events.subscribe( s => {
-      if ( s instanceof NavigationEnd ) {
-        const tree = router.parseUrl( router.url );
-        if ( tree.fragment ) {
-          const element = document.querySelector( "#" + tree.fragment );
-          if ( element ) { element.scrollIntoView( true ); }
-        }
-      }
-    } );
+
   }
 
   ngOnInit(): void {
+    // console.log( this.router[ 'rawUrlTree' ].fragment );
+    // this.vps.scrollToAnchor( 'me' );
+    //this.router.events.subscribe( e => console.log( e ) );
     this.pathSubs = this.route.url.subscribe( data => {
       this.path = data[ 0 ].path;
-      this.goalCategoriesSubscription = this.userService.getUserAvailableCategoriesAndUserAppType()
-        .subscribe( data => {
-          this.goalCategories = data;
+
+      this.goalCategoriesSubscription = this.userService.getUserAvailableCategories()
+        .subscribe( categories => {
+          this.globalService.setAppCategories( categories );
+          this.goalCategories = categories;
           this.currentGoalCategory = this.goalCategories
             .find( category => category.pathEnd === this.path );
           if ( !this.currentGoalCategory ) {
@@ -82,18 +87,20 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalStatusSubscription = this.eventService.on( 'change status', ( itemInfo => this.changeStatus( itemInfo ) ) )
   }
   ngAfterViewInit(): void {
-    this.router.events.subscribe( s => {
+    // const tree = this.router.parseUrl( this.router.url );
+    // console.log( tree.fragment );
+    // this.vps.scrollToAnchor( tree.fragment );
+    // const element = this.document.querySelector( '#' + tree.fragment );
+    // console.log( element );
+    // console.log( tree );
+    // element.scrollIntoView( true );
 
-      if ( s instanceof NavigationEnd ) {
-        const tree = this.router.parseUrl( this.router.url );
-        console.log( tree );
-        if ( tree.fragment ) {
-          const element = document.querySelector( "#" + tree.fragment );
-          console.log( tree.fragment );
-          if ( element ) { element.scrollIntoView( true ); }
-        }
-      }
-    } );
+    // this.router.events
+    //   .pipe(
+    //     filter( e => e instanceof Scroll ) )
+    //   .subscribe( ( e: any ) => { this.vps.scrollToAnchor( e.anchor ); }
+    //   );
+    // this.router.events.subscribe( e => console.log( e ) );
   }
 
   private mapAction( actionInfo: ActionInfo ) {
@@ -190,6 +197,11 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadPageGoals() {
     this.goals$ = this.goalService.getGoalsByCategory( this.currentGoalCategory.title );
+    // const tree = this.router.parseUrl( this.router.url );
+    // const element = document.querySelector( "#" + tree.fragment );
+    // console.log( tree ); {
+    //   element.scrollIntoView( true )
+    // }
   }
 
   openModal( name: string, itemType: string, actionType: string, item?: any ) {

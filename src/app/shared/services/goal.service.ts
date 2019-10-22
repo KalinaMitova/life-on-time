@@ -7,7 +7,7 @@ import { environment } from "environments/environment";
 import { Goal } from '../models/goal';
 import { GoalCreate } from '../models/goalCreate';
 import { BarChartData } from '../models/barChartData';
-
+import { GlobalService } from "./global.service";
 
 const BASE_URL = environment.apiUrl + "api/me/goals";
 const BASE_CRUD_URL = environment.apiUrl + "api/goals";
@@ -24,7 +24,8 @@ const USER_GOALS_TASKS_END = "/bycategory";
 export class GoalService {
 
   constructor (
-    private http: HttpClient
+    private http: HttpClient,
+    private globalService: GlobalService,
   ) {
   }
 
@@ -188,7 +189,7 @@ export class GoalService {
 
           const barData = data[ 'dataValue' ]
           const barChart = {
-            labels: window.categories.map( c => c.title ),
+            labels: this.globalService.getAppCategories().map( c => c.title ),
             series: [ {
               "name": "Goals",
               "value": []

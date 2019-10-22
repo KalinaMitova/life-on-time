@@ -45,10 +45,6 @@ export class LoginPageComponent implements OnDestroy {
   onForgotPassword() {
     this.router.navigate( [ 'forgotpassword' ], { relativeTo: this.route.parent } );
   }
-  // On registration link click
-  onRegister() {
-    this.router.navigate( [ 'register' ], { relativeTo: this.route.parent } );
-  }
 
   ngOnDestroy(): void {
     if ( this.loginSubscription ) {

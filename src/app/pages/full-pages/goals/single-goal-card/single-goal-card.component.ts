@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class SingleGoalCardComponent implements OnInit {
   @Input() goal: Goal;
   isGoalExpired;
+  isAllGoalTasksCompleted: boolean;
 
   constructor (
     private modalService: ModalService,
@@ -26,6 +27,9 @@ export class SingleGoalCardComponent implements OnInit {
       this.isGoalExpired = Math.round( ( Date.now() -
         +( new Date( `${this.goal.until_date.year}-${this.goal.until_date.month}- ${this.goal.until_date.day}` ) ) ) / ( 60 * 60 * 24 * 1000 ) ) > 0;
     }
+
+
+    this.isAllGoalTasksCompleted = this.goal.tasks.find( t => t.status == '0' ) === undefined;
   }
 
   openModal( name: string, itemType: string, actionType: string, itemId?: any, date?: SeparatedDate ) {

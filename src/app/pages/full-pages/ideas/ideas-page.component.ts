@@ -22,6 +22,7 @@ import { EventService } from 'app/shared/services/event.service';
 import { GoalService } from 'app/shared/services/goal.service';
 import { IdeaService } from 'app/shared/services/idea.service';
 import { ModalService, } from 'app/shared/services/modal.service';
+import { GlobalService, } from 'app/shared/services/global.service';
 
 @Component(
   {
@@ -40,7 +41,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
   ideas: Array<Idea>;
   idea: Idea;
   selectedIdeaId: string;
-  isIdeaSelected = true;
+  isIdeaSelected: boolean;
   userId: string;
 
   // uploadfiles: [];
@@ -67,6 +68,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     private configService: ConfigService,
     private eventService: EventService,
     private goalService: GoalService,
+    private globalService: GlobalService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -84,27 +86,28 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ideasSub = this.ideaService.getUserIdeas()
       .subscribe( data => {
         this.ideas = data;
-        const lastIndex = this.ideas.length - 1;
-        if ( this.selectedIdeaId ) {
+        if ( !this.isIdeaSelected && this.ideas.length < 1 ) {
+          return;
+        }
+        if ( this.isIdeaSelected && this.ideas.length < 1 ) {
+          this.router.navigate( [ '/error' ] );
+        }
+        if ( this.isIdeaSelected ) {
           this.idea = this.ideas.find( i => i.id == this.selectedIdeaId );
-          //if idea was removed redirect to error page
           if ( !this.idea ) {
             this.router.navigate( [ '/error' ] );
           }
         }
-        //if there is not param query idea id, then selected idea is the last added idea
-        if ( !this.idea ) {
+        else {
+          const lastIndex = this.ideas.length - 1;
           this.idea = this.ideas[ lastIndex ];
           this.selectedIdeaId = this.idea.id;
           this.isIdeaSelected = true;
         }
-        //if ther is not added ideas yet
-        this.selectedIdeaId = this.idea ? this.idea.id : null;
       } );
     this.modalCreateSubscription = this.eventService.on( 'confirm create/edit', ( actionInfo => this.mapAction( actionInfo ) ) );
     this.modalDeleteSubscription = this.eventService.on( 'confirm delete', ( itemInfo => this.mapDelete( itemInfo ) ) );
     this.uploadSubs = this.eventService.on( 'upload success', ( fileInfo => this.addFilesToIdea( fileInfo ) ) );
-
   }
 
   private addFilesToIdea( fileInfo ) {
@@ -160,7 +163,7 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.createGoalSubscription =
       this.goalService.postCreateGoal( goal )
         .subscribe( data => {
-          const navigatePath = window.categories.find( c => c.id === goal.category_id ).pathEnd;
+          const navigatePath = this.globalService.getAppCategories().find( c => c.id === goal.category_id ).pathEnd;
           this.router.navigate( [ '/goals', navigatePath ] )
         } )
   }

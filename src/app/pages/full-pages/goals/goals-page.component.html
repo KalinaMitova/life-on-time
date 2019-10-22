@@ -11,6 +11,7 @@
         </div>
     </div>
 
+
     <ng-template ngFor [ngForOf]="goals$ | async" let-goals="ngForOf" let-i="index " let-l=count>
         <div class="row match-height " *ngIf="(i)%3===0 || i === 0">
             <div class="col-sm-12 col-md-4" *ngIf="i+0 < l">
@@ -25,4 +26,5 @@
             </div>
         </div>
     </ng-template>
+    <div id="me"></div>
 </ng-template>

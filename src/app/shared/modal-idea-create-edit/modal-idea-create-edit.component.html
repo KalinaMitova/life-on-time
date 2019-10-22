@@ -1,8 +1,8 @@
 <div class="modal-header px-4">
     <h4 class="modal-title" id='ideaModal'>{{actionType | titlecase}} Idea</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-    <span aria-hidden="true">&times;</span>
-  </button>
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <!-- <p>You've just got an idea? Let's write it down right now.</p> -->
 <form [formGroup]="modalForm" class="form form-horizontal" (ngSubmit)="onAction(actionType, itemType, item.id)">
@@ -10,6 +10,7 @@
         <div class="form-group">
             <label for="name">Idea</label>
             <input class="form-control" type="text" id="name" placeholder="Set your Idea" formControlName='name' required>
+            <a (click)="StartButton(event)"><i class="fa fa-microphone primary"></i></a>
         </div>
         <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched) && name.errors?.required">
             The field is required!
@@ -96,6 +97,6 @@
     <div class="modal-footer px-4">
         <button type="button" class="btn grey btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Cancel</button>
         <button type="submit" class="btn  btn-outline-primary" [disabled]="modalForm.invalid">{{actionType | titlecase}}
-      Idea</button>
+            Idea</button>
     </div>
 </form>

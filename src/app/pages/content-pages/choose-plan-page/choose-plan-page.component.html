@@ -10,57 +10,15 @@
                                     <img class="register-logo" src="assets/img/logos/lot-generic-logo-w.png" alt="">
                                     <h4 class="card-title mb-5 register-title">desktop application</h4>
                                     <div class="row">
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white">
-                                                <img src="assets/img/logos/lot-generic-logo.png" alt="">
+                                        <div class="col-6 mb-2" *ngFor="let type of applicationTypes$ | async">
+                                            <div class="col-12 app-type-register bg-white" [class.disabled]="type.is_active == 0">
+                                                <img [src]="type.logo" alt="">
                                                 <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white">
-                                                <img src="assets/img/logos/lot-business-logo.png" alt="">
-                                                <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white">
-                                                <img src="assets/img/logos/lot-sport-logo.png" alt="">
-                                                <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white disabled">
-                                                <img src="assets/img/logos/lot-kids-logo.png" alt="">
-                                                <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white disabled">
-                                                <img src="assets/img/logos/lot-student-logo.png" alt="">
-                                                <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 mb-2">
-                                            <div class="col-12 app-type-register bg-white disabled">
-                                                <img src="assets/img/logos/lot-generic-logo.png" alt="">
-                                                <div class="app-descr">
-                                                    <p>This content will come from REST API and will describe benefits to of application type to user.</p>
-                                                    <a class="btn" href="">Register</a>
+                                                    <p>{{type.name}}</p>
+                                                    <p>{{type.description}}</p>
+                                                    <p>Duration: {{type.duration}} days</p>
+                                                    <p>Price: {{type.price}} $</p>
+                                                    <a class="btn" (click)="onRegister($event,type)">Register</a>
                                                 </div>
                                             </div>
                                         </div>

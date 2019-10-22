@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { Modals } from "../models/modals";
 import { SeparatedDate } from "../models/date";
+import { GlobalService } from './global.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { SeparatedDate } from "../models/date";
 export class ModalService {
   //private closeResult: string;
 
-  constructor ( private modalService: NgbModal ) { }
+  constructor (
+    private modalService: NgbModal,
+    private globalService: GlobalService,
+  ) { }
 
   open( name: string, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate ) {
     const modalRef = this.modalService.open( Modals[ name ] );
@@ -60,7 +64,7 @@ export class ModalService {
         item.description = ( itemInfo.info && itemInfo.info.content ) ? itemInfo.info.content : '';
         item.until_date = itemInfo.until_date ? itemInfo.until_date : item.until_date;
         modalRef.componentInstance.isAllowChooseCategory = true;
-        modalRef.componentInstance.categories = window.categories;
+        modalRef.componentInstance.categories = this.globalService.getAppCategories();
       }
 
       modalRef.componentInstance.item = item;

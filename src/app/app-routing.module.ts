@@ -13,6 +13,7 @@ const routerOptions: ExtraOptions = {
   useHash: false,
   anchorScrolling: 'enabled',
   scrollPositionRestoration: 'enabled',
+  //enableTracing: true,
   // ...any other options you'd like to use
 };
 

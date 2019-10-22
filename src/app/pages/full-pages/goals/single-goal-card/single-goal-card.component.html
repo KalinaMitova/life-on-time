@@ -1,8 +1,11 @@
 <ng-template [ngIf]="goal">
     <div class="card" [id]="'g-'+ goal.id">
         <div class="card-header">
+            {{isGoalTasksCompleted}}
             <div class="buttons">
-                <button type="button" class="btn btn-raised btn-outline-success mr-1" data-toggle="modal" data-target="#goal" alt="Comlete Goal" title="Complete Goal" (click)="changeStatus('goal', goal.id, goal.status)"><i class="ft-check font-medium-3"></i></button>
+                <button type="button" class="btn btn-raised btn-outline-success mr-1" data-toggle="modal" data-target="#goal" [attr.title]="isAllGoalTasksCompleted ? 'Complete Goal' : null" ngbPopover="If you want to complete the goal, you need to complete all goal's tasks first!"
+                    [triggers]="!isAllGoalTasksCompleted ? 'mouseenter:mouseleave' : 'manual'" container="body" popoverTitle="Complete goal's tasks firts!" (click)="isAllGoalTasksCompleted ?
+                    changeStatus('goal', goal.id, goal.status):null"><i class="ft-check font-medium-3"></i></button>
                 <button type="button" class="btn btn-raised btn-outline-goal-edit mr-1" data-toggle="modal" data-target="#goal" alt="Edit Goal" title="Edit Goal" (click)="openModal('createEditModal', 'goal', 'edit', goal)"><i
                         class="ft-edit-2 font-medium-3"></i></button>
                 <button type="button" class="btn btn-raised btn-outline-goal-delete mr-1" alt="Delete Goal" title="Delete Goal" (click)="openModal('confirmModal', 'goal', 'delete', goal)"><i

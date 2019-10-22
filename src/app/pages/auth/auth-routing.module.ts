@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './login/login-page.component';
 import { RegisterPageComponent } from './register/register-page.component';
 import { ForgotPasswordPageComponent } from './forgot-password/forgot-password-page.component';
+import { ChoosePlanGuard } from 'app/shared/guards/choose-plan-guard.service';
 
 const childRoutes: Routes = [
   {
@@ -19,6 +20,7 @@ const childRoutes: Routes = [
       {
         path: 'register',
         component: RegisterPageComponent,
+        canActivate: [ ChoosePlanGuard ]
       },
       {
         path: 'forgotpassword',

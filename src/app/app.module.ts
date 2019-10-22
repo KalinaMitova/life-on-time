@@ -20,7 +20,7 @@ import { FullLayoutComponent } from "./layouts/full/full-layout.component";
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
-import { ApplicationService } from './shared/applications/application.service';
+import { ApplicationService } from './shared/services/application.service';
 import { GoalService } from './shared/services/goal.service';
 import { TaskService } from './shared/services/task.service';
 import { IdeaService } from './shared/services/idea.service';
@@ -33,6 +33,7 @@ import { ModalService } from './shared/services/modal.service';
 import { EventService } from './shared/services/event.service';
 import { UserService } from './shared/services/user.service';
 import { PostService } from './shared/services/post.service';
+import { GlobalService } from './shared/services/global.service';
 
 
 
@@ -82,6 +83,7 @@ export function createTranslateLoader( http: HttpClient ) {
     ModalService,
     PostService,
     CookieService,
+    GlobalService,
     EventService,
     {
       provide: HTTP_INTERCEPTORS,

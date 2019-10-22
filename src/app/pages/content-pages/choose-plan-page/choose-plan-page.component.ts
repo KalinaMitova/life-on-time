@@ -1,46 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'app/shared/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { ApplicationService } from 'app/shared/applications/application.service';
+import { Observable } from 'rxjs';
+import { ApplicationService } from 'app/shared/services/application.service';
+import { AppType } from 'app/shared/models/appType';
+import { GlobalService } from 'app/shared/services/global.service';
 
 @Component( {
   selector: 'app-choose-plan-page',
   templateUrl: './choose-plan-page.component.html',
   styleUrls: [ './choose-plan-page.component.scss' ]
 } )
-export class ChoosePlanPageComponent implements OnInit, OnDestroy {
+export class ChoosePlanPageComponent implements OnInit {
 
-  public applicationTypes: any[];
-  private logoutSubscription: Subscription;
+  public applicationTypes$: Observable<Array<AppType>>;
 
   constructor (
-    private authService: AuthService,
     private applicationService: ApplicationService,
+    private globalService: GlobalService,
     private router: Router ) { }
 
   ngOnInit() {
-    this.applicationService.getAplicationTypes()
-      .subscribe( data => {
-        console.log( data );
-        this.applicationTypes = data[ 'data' ];
-        console.log( this.applicationTypes );
-      } );
+    this.applicationTypes$ = this.applicationService.getAplicationTypes();
   }
 
-  // logout() {
-  //   this.logoutSubscription =
-  //     this.authService.logout()
-  //       .subscribe( data => {
-  //         this.authService.deleteToken( 'token' );
-  //         this.router.navigate( [ "/user/login" ] );
-  //       } )
-  // }
-
-  ngOnDestroy() {
-    if ( this.logoutSubscription ) {
-      this.logoutSubscription.unsubscribe();
-    }
+  onRegister( event, appInfo: AppType ) {
+    this.globalService.setChoosenAppTypeInfo( appInfo );
+    this.router.navigateByUrl( 'user/register' );
   }
-
 }

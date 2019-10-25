@@ -70,28 +70,23 @@ export class ModalIdeaCreateEditComponent implements OnInit {
 
   StartListening( formControlName: string ) {
     let final_transcript = '';
+    const recognition = new webkitSpeechRecognition();
     if ( formControlName === 'name' ) {
       this.isListeningName = !this.isListeningName;
+      if ( !this.isListeningName ) {
+        recognition.stop();
+        return;
+      }
     } else if ( formControlName === 'content' ) {
       this.isListeningContent = !this.isListeningContent;
+      if ( !this.isListeningContent ) {
+        recognition.stop();
+        return;
+      }
     }
-
-    if ( !this.isListeningContent && !this.isListeningName ) {
-      return;
-    }
-    // const recognition = '';
-    // if ( window[ 'SpeechRecognition' ] ) {
-    //   recognition = new SpeechRecognition();
-    // } else if ( window[ 'webkitSpeechRecognition' ] ) {
-    //   recognition = new webkitSpeechRecognition();
-    // } else if ( window[ 'msSpeechRecognition' ] ) {
-    //   recognition= new msSpeechRecognition();
-    // } else {
-    //   this._supportRecognition = false;
-    // }
 
     if ( 'webkitSpeechRecognition' in window ) {
-      const recognition = new webkitSpeechRecognition();
+
       recognition.continuous = true;
       recognition.interimResults = true;
       recognition.lang = 'en-US';
@@ -99,7 +94,6 @@ export class ModalIdeaCreateEditComponent implements OnInit {
       recognition.start();
 
       recognition.onresult = ( event ) => {
-        //console.log( event );
         let interim_transcript = '';
 
         for ( let i = event.resultIndex; i < event.results.length; ++i ) {
@@ -112,7 +106,7 @@ export class ModalIdeaCreateEditComponent implements OnInit {
 
         if ( formControlName === 'name' ) {
           if ( interim_transcript !== '' ) {
-            this.modalForm.patchValue( { name: interim_transcript } );
+            this.modalForm.patchValue( { name: final_transcript + interim_transcript } );
           } else if ( final_transcript !== '' ) {
             this.modalForm.patchValue( { name: final_transcript } );
           }
@@ -121,7 +115,7 @@ export class ModalIdeaCreateEditComponent implements OnInit {
             this.modalForm.patchValue(
               {
                 info: {
-                  content: interim_transcript
+                  content: final_transcript + interim_transcript
                 }
               } );
           } else if ( final_transcript !== '' ) {

@@ -111,17 +111,27 @@ export class ModalIdeaCreateEditComponent implements OnInit {
         }
 
         if ( formControlName === 'name' ) {
-          const titleInputEl = this.ideaTitle.nativeElement;
-          //titleInputEl.value = final_transcript;
-          this.modalForm.patchValue( { name: final_transcript } );
+          if ( interim_transcript !== '' ) {
+            this.modalForm.patchValue( { name: interim_transcript } );
+          } else if ( final_transcript !== '' ) {
+            this.modalForm.patchValue( { name: final_transcript } );
+          }
         } else if ( formControlName === 'content' ) {
-          this.modalForm.patchValue(
-            {
-              info: {
-                content: final_transcript
-              }
-            }
-          )
+          if ( interim_transcript !== '' ) {
+            this.modalForm.patchValue(
+              {
+                info: {
+                  content: interim_transcript
+                }
+              } );
+          } else if ( final_transcript !== '' ) {
+            this.modalForm.patchValue(
+              {
+                info: {
+                  content: final_transcript
+                }
+              } );
+          }
         }
       }
 
@@ -130,6 +140,11 @@ export class ModalIdeaCreateEditComponent implements OnInit {
         this.isListeningName = false;
         this.isListeningContent = false;
         //console.log( error );
+      }
+
+      recognition.onspeechend = function () {
+        this.isListeningName = false;
+        this.isListeningContent = false;
       }
     } else {
       alert( 'Your browser dont support speech recognition' );

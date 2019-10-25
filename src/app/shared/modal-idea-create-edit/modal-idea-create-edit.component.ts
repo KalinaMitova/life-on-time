@@ -1,9 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../services/event.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActionInfo } from '../models/actionInfo';
-// import { DropzoneConfigInterface, DropzoneRenameFileFunction } from 'ngx-dropzone-wrapper';
+//import { SpeechRecognitionService } from '../services/speech-recognition.service';
+
+declare let webkitSpeechRecognition: any;
 
 @Component( {
   selector: 'app-modal-idea-create-edit',
@@ -12,32 +19,20 @@ import { ActionInfo } from '../models/actionInfo';
 } )
 export class ModalIdeaCreateEditComponent implements OnInit {
   @Input() item: any;
+  @ViewChild( 'nameInput', { static: false } ) ideaTitle;
+  @ViewChild( 'contentInput', { static: false } ) ideaDescription;
   modalForm: FormGroup;
   itemType: string;
   actionType: string;
   isFromIdea: boolean = false;
-  // isIdeaImagesCollapsed: boolean = true;
-  // isIdeaFilesCollapsed: boolean = true;
-  // disabled: false;
-
-  // public configDrop: DropzoneConfigInterface = {
-  //   clickable: true,
-  //   maxFiles: 10,
-  //   autoReset: null,
-  //   errorReset: null,
-  //   cancelReset: null,
-  //   addRemoveLinks: true,
-  //   autoQueue: true,
-  //   autoProcessQueue: true
-  // };
-
+  isListeningName: boolean = false;
+  isListeningContent: boolean = false;
 
   constructor (
     public modal: NgbActiveModal,
     private eventService: EventService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
-
   }
 
   ngOnInit() {
@@ -45,17 +40,12 @@ export class ModalIdeaCreateEditComponent implements OnInit {
       name: [ this.item.name, [ Validators.required ] ],
       info: this.formBuilder.group( {
         content: [ this.item.info.content, ],
-        // file: [ this.item.info.files, ],
-        // image: [ this.item.info.images ]
       } )
     } );
   }
 
   get name() { return this.modalForm.get( 'name' ) };
   get content() { return this.modalForm.get( 'info.content' ) };
-  //get info() { return this.modalForm.get( 'info' ) };
-  // get file() { return this.modalForm.get( 'file' ) };
-  // get image() { return this.modalForm.get( 'image' ) };
 
   close() {
     this.modalForm.reset();
@@ -78,23 +68,73 @@ export class ModalIdeaCreateEditComponent implements OnInit {
     this.modal.dismiss( 'Action Choosed, Modal Form Closed' );
   }
 
-  //------------------for image upload
-  // public onUploadInit( args: any ): void {
-  //   console.log( args.files );
-  //   console.log( 'onUploadInit:', args );
-  // }
+  StartListening( formControlName: string ) {
+    let final_transcript = '';
+    if ( formControlName === 'name' ) {
+      this.isListeningName = !this.isListeningName;
+    } else if ( formControlName === 'content' ) {
+      this.isListeningContent = !this.isListeningContent;
+    }
 
-  // public onUploadError( args: any ): void {
-  //   console.log( 'onUploadError:', args );
-  // }
+    if ( !this.isListeningContent && !this.isListeningName ) {
+      return;
+    }
+    // const recognition = '';
+    // if ( window[ 'SpeechRecognition' ] ) {
+    //   recognition = new SpeechRecognition();
+    // } else if ( window[ 'webkitSpeechRecognition' ] ) {
+    //   recognition = new webkitSpeechRecognition();
+    // } else if ( window[ 'msSpeechRecognition' ] ) {
+    //   recognition= new msSpeechRecognition();
+    // } else {
+    //   this._supportRecognition = false;
+    // }
 
-  // public onUploadSuccess( args: any ): void {
-  //   console.log( 'onUploadSuccess:', args );
-  // }
-  // public addedFile( event ) {
-  //   console.log( event );
-  // }
+    if ( 'webkitSpeechRecognition' in window ) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      recognition.maxAlternatives = 1;
+      recognition.start();
 
-  //------------------for image upload
+      recognition.onresult = ( event ) => {
+        //console.log( event );
+        let interim_transcript = '';
 
+        for ( let i = event.resultIndex; i < event.results.length; ++i ) {
+          if ( event.results[ i ].isFinal ) {
+            final_transcript += event.results[ i ][ 0 ].transcript;
+          } else {
+            interim_transcript += event.results[ i ][ 0 ].transcript;
+          }
+        }
+
+        if ( formControlName === 'name' ) {
+          const titleInputEl = this.ideaTitle.nativeElement;
+          //titleInputEl.value = final_transcript;
+          this.modalForm.patchValue( { name: final_transcript } );
+        } else if ( formControlName === 'content' ) {
+          this.modalForm.patchValue(
+            {
+              info: {
+                content: final_transcript
+              }
+            }
+          )
+        }
+      }
+
+      recognition.onerror = function ( error ) {
+        recognition.stop();
+        this.isListeningName = false;
+        this.isListeningContent = false;
+        //console.log( error );
+      }
+    } else {
+      alert( 'Your browser dont support speech recognition' );
+      this.isListeningName = false;
+      this.isListeningContent = false;
+    }
+  }
 }

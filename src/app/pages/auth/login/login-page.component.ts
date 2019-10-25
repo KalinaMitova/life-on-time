@@ -37,13 +37,17 @@ export class LoginPageComponent implements OnDestroy {
         //
         if ( this.loginForm.valid ) {
           this.loginForm.reset();
-          this.router.navigate( [ '/progress-dashboard' ] )
+          this.router.navigate( [ '/progress-dashboard' ] );
         }
       } )
   }
   // On Forgot password link click
   onForgotPassword() {
     this.router.navigate( [ 'forgotpassword' ], { relativeTo: this.route.parent } );
+  }
+
+  NavigateToRegister() {
+    this.router.navigate( [ '/choose-plan' ] );
   }
 
   ngOnDestroy(): void {

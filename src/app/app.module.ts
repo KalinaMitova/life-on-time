@@ -34,8 +34,7 @@ import { EventService } from './shared/services/event.service';
 import { UserService } from './shared/services/user.service';
 import { PostService } from './shared/services/post.service';
 import { GlobalService } from './shared/services/global.service';
-
-
+import { SpeechRecognitionService } from './shared/services/speech-recognition.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -69,7 +68,8 @@ export function createTranslateLoader( http: HttpClient ) {
     PerfectScrollbarModule,
     ToastrModule.forRoot( {
       toastClass: 'toast toast-bootstrap-compatibility-fix'
-    } )
+    } ),
+
 
   ],
   providers: [
@@ -85,6 +85,7 @@ export function createTranslateLoader( http: HttpClient ) {
     CookieService,
     GlobalService,
     EventService,
+    SpeechRecognitionService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SetHeadersInterceptor,

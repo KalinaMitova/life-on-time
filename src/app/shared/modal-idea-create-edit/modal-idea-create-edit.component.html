@@ -9,8 +9,9 @@
     <div class="modal-body px-4">
         <div class="form-group">
             <label for="name">Idea</label>
-            <input class="form-control" type="text" id="name" placeholder="Set your Idea" formControlName='name' required>
-            <a (click)="StartButton(event)"><i class="fa fa-microphone primary"></i></a>
+            <input #nameInput class="form-control" type="text" id="name" placeholder="Set your Idea" formControlName='name' required>
+            <a (click)="StartListening('name')"><i class="fa fa-microphone"
+                    [ngClass]="isListeningName ? 'danger' : 'primary'"></i></a>
         </div>
         <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched) && name.errors?.required">
             The field is required!
@@ -19,7 +20,9 @@
         <div formGroupName="info">
             <div class="form-group">
                 <label for="content">Notes</label>
-                <textarea id="content" class="form-control" placeholder=" Write down some notes for the idea. You can change this later." formControlName="content" required></textarea>
+                <textarea #contentInput id="content" class="form-control" placeholder=" Write down some notes for the idea. You can change this later." formControlName="content" required></textarea>
+                <a (click)="StartListening('content')"><i class="fa fa-microphone"
+                        [ngClass]="isListeningContent ? 'danger' : 'primary'"></i></a>
                 <div class="alert alert-danger" *ngIf="content.invalid && (content.dirty || content.touched) && content.errors?.required">
                     The field is required!
                 </div>

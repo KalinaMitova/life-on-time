@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import {
     DropzoneModule,
     DropzoneConfigInterface,
@@ -34,7 +35,6 @@ import { ConfirmEqualValidatorDirective } from './directives/confirm-equal-valid
 import { environment } from 'environments/environment';
 
 import { SafePipe } from './pipes/safe-pipe';
-
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     // Change this to your upload POST address:
@@ -78,7 +78,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
         ReactiveFormsModule,
         TranslateModule,
         PerfectScrollbarModule,
-        DropzoneModule
+        DropzoneModule,
+        BrowserTransferStateModule
     ],
     declarations: [
         FooterComponent,

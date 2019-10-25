@@ -63,21 +63,35 @@ export class UserService {
         } ) )
   }
 
-  getUserAvailableCategories(): Observable<Array<Category>> {
+  // getUserAvailableCategories(): Observable<Array<Category>> {
+  //   return this.http.get<Array<Category>>( BASE_URL )
+  //     .pipe(
+  //       map( data => {
+  //         const categoriesData = data[ 'data' ][ 'categories' ];
+  //         const categories = [];
+  //         Object.entries<string>( categoriesData ).forEach( ( [ id, title ] ) => {
+  //           const category = {
+  //             id,
+  //             title,
+  //             pathEnd: `${title.toLowerCase().split( ' ' ).join( '-' )}`
+  //           }
+  //           categories.push( category );
+  //         } )
+  //         return categories
+  //       } )
+  //     );
+  // }
+
+  getUserAvailableCategoriesObj(): Observable<Array<Category>> {
     return this.http.get<Array<Category>>( BASE_URL )
       .pipe(
         map( data => {
-          const categoriesData = data[ 'data' ][ 'categories' ];
-          const categories = [];
-          Object.entries<string>( categoriesData ).forEach( ( [ id, title ] ) => {
-            const category = {
-              id,
-              title,
-              pathEnd: `${title.toLowerCase().split( ' ' ).join( '-' )}`
-            }
-            categories.push( category );
-          } )
-          return categories
+          return data[ 'data' ][ 'categories_objects' ]
+            .map( category => {
+              category.title = category.name,
+                category.pathEnd = `${category.name.toLowerCase().split( ' ' ).join( '-' )}`
+              return category
+            } );
         } )
       );
   }

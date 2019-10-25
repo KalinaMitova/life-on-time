@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const goalsMenu = ROUTES.find( m => m.title === 'My Goals' );
 
-    this.availableCategoriesSubscription = this.userService.getUserAvailableCategories()
+    this.availableCategoriesSubscription = this.userService.getUserAvailableCategoriesObj()
       .subscribe( categories => {
         //this.userService.setCategoriesWindow( data );
         this.globalService.setAppCategories( categories );

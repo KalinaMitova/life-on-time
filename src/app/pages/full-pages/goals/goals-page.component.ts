@@ -69,7 +69,7 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.pathSubs = this.route.url.subscribe( data => {
       this.path = data[ 0 ].path;
 
-      this.goalCategoriesSubscription = this.userService.getUserAvailableCategories()
+      this.goalCategoriesSubscription = this.userService.getUserAvailableCategoriesObj()
         .subscribe( categories => {
           this.globalService.setAppCategories( categories );
           this.goalCategories = categories;

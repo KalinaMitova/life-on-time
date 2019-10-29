@@ -1,5 +1,9 @@
+//apiUrl: 'http://lotapi.cweb.bg/', https://lifeontime.co.uk/api
+// fileUplodeUrl: ' http://lotapp.cweb.bg/uploads/'
+
 export const environment = {
   production: true,
-  apiUrl: 'http://lotapi.cweb.bg/',
-  fileUplodeUrl: ' http://lotapp.cweb.bg/uploads/'
+  apiUrl: 'https://lifeontime.co.uk/api/',
+  fileUplodeUrl: 'https://lifeontime.co.uk/app/uploads/',
+  wp_url: 'https://lifeontime.co.uk/'
 };

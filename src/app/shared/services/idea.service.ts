@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 
-const BASE_URL = environment.apiUrl + 'api/ideas';
-const USER_IDEAS_URL = environment.apiUrl + 'api/me/ideas';
+const BASE_URL = environment.apiUrl + 'ideas';
+const USER_IDEAS_URL = environment.apiUrl + 'me/ideas';
 const USER_IDEAS_FILES_END = '/file/';
 const UPLOAD_FILE_URL = environment.fileUplodeUrl;
 

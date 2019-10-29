@@ -43,7 +43,7 @@ export class LoginPageComponent implements OnDestroy {
   }
   // On Forgot password link click
   onForgotPassword() {
-    this.router.navigate( [ 'forgotpassword' ], { relativeTo: this.route.parent } );
+    this.router.navigate( [ '/forgotpassword' ], { relativeTo: this.route.parent } );
   }
 
   NavigateToRegister() {

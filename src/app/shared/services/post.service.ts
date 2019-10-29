@@ -3,10 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BlogPost, MediaType } from '../models/blogPost';
 import { map } from 'rxjs/operators';
+import { environment } from "environments/environment";
 
 import { WellbeingInfo } from '../../shared/models/wellbeingInfo';
 
-const BASE_URL = 'https://lotweb.cweb.bg/wp-json/wp/v2/'
+//'https://lotweb.cweb.bg/wp-json/wp/v2/'
+const BASE_URL = environment.wp_url;
+const WP_API_URL = BASE_URL + 'wp-json/wp/v2/';
 
 const LAST_4_POSTS_END_URL = 'posts?per_page=4';
 const MEDIA_END_URL = 'media/';
@@ -23,7 +26,7 @@ export class PostService {
   ) { }
 
   getLats4Posts(): Observable<Array<BlogPost>> {
-    return this.http.get<Array<BlogPost>>( BASE_URL + LAST_4_POSTS_END_URL )
+    return this.http.get<Array<BlogPost>>( WP_API_URL + LAST_4_POSTS_END_URL )
       .pipe(
         map( posts => {
           return posts.map( post => {
@@ -33,14 +36,14 @@ export class PostService {
       );
   }
   getPostMedia( mediaId: string ): Observable<string> {
-    return this.http.get( BASE_URL + MEDIA_END_URL + mediaId )
+    return this.http.get( WP_API_URL + MEDIA_END_URL + mediaId )
       .pipe(
         map( media => media[ 'guid' ][ 'rendered' ] )
       )
   }
 
   getHelpPosts(): Observable<Array<BlogPost>> {
-    return this.http.get<Array<BlogPost>>( BASE_URL + HELP_END_URL )
+    return this.http.get<Array<BlogPost>>( WP_API_URL + HELP_END_URL )
       .pipe(
         map( posts => {
           return posts.map( post => {
@@ -58,7 +61,7 @@ export class PostService {
       }
     }
     return this.http
-      .get<Array<BlogPost>>( BASE_URL + WELLBEING_END_URL, options )
+      .get<Array<BlogPost>>( WP_API_URL + WELLBEING_END_URL, options )
       .pipe(
         map( posts => {
           return posts.map( post => {

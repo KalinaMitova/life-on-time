@@ -9,8 +9,8 @@ import { GoalCreate } from '../models/goalCreate';
 import { BarChartData } from '../models/barChartData';
 import { GlobalService } from "./global.service";
 
-const BASE_URL = environment.apiUrl + "api/me/goals";
-const BASE_CRUD_URL = environment.apiUrl + "api/goals";
+const BASE_URL = environment.apiUrl + "me/goals";
+const BASE_CRUD_URL = environment.apiUrl + "goals";
 const USER_COMPLETED_GOALS_END = "/completed";
 const USER_RATE_END = "/rate";
 const USER_GOALS_FROM_IDEAS_END = "/fromideas";
@@ -189,7 +189,7 @@ export class GoalService {
 
           const barData = data[ 'dataValue' ]
           const barChart = {
-            labels: this.globalService.getAppCategories().map( c => c.title ),
+            labels: this.globalService.getAppCategories() ? this.globalService.getAppCategories().map( c => c.title ) : [],
             series: [ {
               "name": "Goals",
               "value": []

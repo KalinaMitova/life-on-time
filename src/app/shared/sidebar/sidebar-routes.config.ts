@@ -9,7 +9,7 @@ export const ROUTES: RouteInfo[] = [
     },
 
     {
-        path: '/', title: 'My Wellbeing', icon: 'ft-headphones', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, submenu: [
+        path: '/wellbeing', title: 'My Wellbeing', icon: 'ft-headphones', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false, submenu: [
             { path: '/wellbeing/relax-me', title: 'Relax me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/wellbeing/inspire-me', title: 'Inspire me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/wellbeing/teach-me', title: 'Teach me', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },

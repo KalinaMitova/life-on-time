@@ -25,6 +25,6 @@ export class ChoosePlanPageComponent implements OnInit {
 
   onRegister( event, appInfo: AppType ) {
     this.globalService.setChoosenAppTypeInfo( appInfo );
-    this.router.navigateByUrl( 'user/register' );
+    this.router.navigateByUrl( '/user/register' );
   }
 }

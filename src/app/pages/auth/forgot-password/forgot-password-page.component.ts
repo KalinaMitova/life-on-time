@@ -21,11 +21,11 @@ export class ForgotPasswordPageComponent {
 
   // On login link click
   onLogin() {
-    this.router.navigate( [ 'login' ], { relativeTo: this.route.parent } );
+    this.router.navigate( [ 'user/login' ], { relativeTo: this.route.parent } );
   }
 
   // On registration link click
   onRegister() {
-    this.router.navigate( [ 'register' ], { relativeTo: this.route.parent } );
+    this.router.navigate( [ 'user/register' ], { relativeTo: this.route.parent } );
   }
 }

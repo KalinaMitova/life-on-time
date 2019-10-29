@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Category } from "../models/category";
 import { UserAppInfo } from '../models/userAppInfo';
 
-const BASE_URL = environment.apiUrl + 'api/me';
+const BASE_URL = environment.apiUrl + 'me';
 const CALENDAR_END = '/calendar';
 const FULL_CALENDAR_END = '/fullcalendar';
 // api / me / calendar -> Връща само масив от таскове и цели

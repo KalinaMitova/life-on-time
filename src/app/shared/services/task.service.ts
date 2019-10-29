@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaskCreate } from '../models/taskCreate';
 
-const BASE_URL = environment.apiUrl + 'api/me/tasks';
+const BASE_URL = environment.apiUrl + 'me/tasks';
 //const BASE_CRUD_URL = '/api/tasks';
 //in environment
-const BASE_CRUD_URL = environment.apiUrl + 'api/tasks';
+const BASE_CRUD_URL = environment.apiUrl + 'tasks';
 const USER_COMPLETED_TASKS_END = '/completed';
 const USER_DAYS_LAST_TASKS_FINISH_END = '/dayscompletelastaction';
 

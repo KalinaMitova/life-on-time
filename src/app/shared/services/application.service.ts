@@ -5,7 +5,7 @@ import { environment } from 'environments/environment'
 import { map } from 'rxjs/operators';
 import { AppType } from '../models/appType';
 
-const BASE_URL = environment.apiUrl + 'api/applicationtypes';
+const BASE_URL = environment.apiUrl + 'applicationtypes';
 
 @Injectable( {
   providedIn: 'root'

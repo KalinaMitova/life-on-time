@@ -53,10 +53,10 @@ export class PostService {
       )
   }
 
-  getWellbeingPostByCAtegoryAndAppType( appType: string, wellbeingCategory: string ): Observable<Array<BlogPost>> {
+  getWellbeingPostByCAtegoryAndAppType( appWPId: string, wellbeingCategory: string ): Observable<Array<BlogPost>> {
     const options = {
       params: {
-        wellbeing_apps: WellbeingInfo.appId[ appType ],
+        wellbeing_apps: appWPId,
         wellbeing_categories: WellbeingInfo.categoryId[ wellbeingCategory ],
       }
     }

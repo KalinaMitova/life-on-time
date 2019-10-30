@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from 'app/shared/services/user.service';
 import { BlogPost, MediaType } from 'app/shared/models/blogPost';
 import { PostService } from 'app/shared/services/post.service';
+import { ApplicationService } from 'app/shared/services/application.service';
 
 @Component( {
   selector: 'app-wellbeing-pages',
@@ -20,11 +21,13 @@ export class WellbeingPagesComponent implements OnInit, OnDestroy {
   private appTypeSubs: Subscription;
   private postSubs: Subscription;
   private postMediaSubs: Subscription;
+  private appSubs: Subscription;
 
   constructor (
     private route: ActivatedRoute,
     private userService: UserService,
-    private postService: PostService
+    private postService: PostService,
+    private appService: ApplicationService
   ) { }
 
   ngOnInit() {
@@ -32,26 +35,31 @@ export class WellbeingPagesComponent implements OnInit, OnDestroy {
     this.title = this.path.split( '-' )[ 0 ];
     this.appTypeSubs =
       this.userService
-        .getUserAppType()
-        .subscribe( ( data ) => {
-          this.appType = data;
-          this.postSubs =
-            this.postService
-              .getWellbeingPostByCAtegoryAndAppType( this.appType, this.path )
-              .subscribe( posts => {
-                posts.map( post => {
-                  if ( MediaType[ post.mediaType ] === 'image'
-                    && post.mediaId != '0' ) {
-                    this.postMediaSubs =
-                      this.postService
-                        .getPostMedia( post.mediaId )
-                        .subscribe( media => {
-                          post.imageUrl = media;
-                        } )
-                  }
-                } )
-                this.posts = posts;
-              } )
+        .getUserAppTypeId()
+        .subscribe( ( userAppTypeId ) => {
+          this.appSubs = this.appService
+            .getAplicationTypes()
+            .subscribe( appTypes => {
+              const userAppTypeWPId = appTypes.find( at => at.id == Number( userAppTypeId ) ).wpCategoryId;
+              this.postSubs =
+                this.postService
+                  .getWellbeingPostByCAtegoryAndAppType( String( userAppTypeWPId ), this.path )
+                  .subscribe( posts => {
+                    posts.map( post => {
+                      if ( MediaType[ post.mediaType ] === 'image'
+                        && post.mediaId != '0' ) {
+                        this.postMediaSubs =
+                          this.postService
+                            .getPostMedia( post.mediaId )
+                            .subscribe( media => {
+                              post.imageUrl = media;
+                            } )
+                      }
+                    } )
+                    this.posts = posts;
+                  } )
+            } )
+
         } )
   }
 
@@ -64,6 +72,9 @@ export class WellbeingPagesComponent implements OnInit, OnDestroy {
     }
     if ( this.postMediaSubs ) {
       this.postMediaSubs.unsubscribe();
+    }
+    if ( this.appSubs ) {
+      this.appSubs.unsubscribe();
     }
   }
 

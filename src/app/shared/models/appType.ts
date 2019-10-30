@@ -5,5 +5,6 @@ export interface AppType {
   price: number,
   duration: number,
   logo: string,
-  is_active: number
+  is_active: number,
+  wpCategoryId: string
 }

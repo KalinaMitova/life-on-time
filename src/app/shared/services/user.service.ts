@@ -110,10 +110,10 @@ export class UserService {
       )
   }
 
-  getUserAppType(): Observable<string> {
-    return this.http.get<string>( BASE_URL )
+  getUserAppTypeId(): Observable<string> {
+    return this.http.get<number>( BASE_URL )
       .pipe(
-        map( data => data[ 'data' ][ 'applicationType' ][ 'name' ] )
+        map( data => data[ 'data' ][ 'applicationType' ][ 'id' ] )
       )
   }
 

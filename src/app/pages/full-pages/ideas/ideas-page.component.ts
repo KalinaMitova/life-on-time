@@ -252,7 +252,6 @@ export class IdeasPageComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       )
   }
-
   ngAfterViewInit() {
     if ( this.innerWidth < 768 ) {
       if ( this.content ) {

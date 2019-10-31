@@ -56,4 +56,15 @@
         pointer-events: none;
         opacity: 0.2;
     }
+    @media screen and (max-width: 600px) {
+        .register-logo {
+            width: 180px;
+        }
+        .register-form{
+            width: 440px;
+        }
+        .app-type-register img{
+            height: 120px;
+        }
+      }
 }

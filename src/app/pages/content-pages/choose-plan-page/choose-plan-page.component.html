@@ -9,20 +9,22 @@
                                 <div class="col-md-12 px-4 pt-3 pb-5 register-form">
                                     <img class="register-logo" src="assets/img/logos/lot-generic-logo-w.png" alt="">
                                     <h4 class="card-title mb-5 register-title">desktop application</h4>
+                                    <div class="container">
                                     <div class="row">
-                                        <div class="col-6 mb-2" *ngFor="let type of applicationTypes$ | async">
+                                        <div class="col-12 col-sm-6 mb-2" *ngFor="let type of applicationTypes$ | async">
                                             <div class="col-12 app-type-register bg-white" [class.disabled]="type.is_active == 0">
-                                                <img [src]="type.logo" alt="">
+                                                <img class="img-fluid" [src]="type.logo" alt="">
                                                 <div class="app-descr">
-                                                    <p>{{type.name}}</p>
+                                                    <p><strong>"{{type.name}}" Application</strong></p>
                                                     <p>{{type.description}}</p>
                                                     <p>Duration: {{type.duration}} days</p>
-                                                    <p>Price: {{type.price}} $</p>
+                                                    <p>Price: £{{type.price}}</p>
                                                     <a class="btn" (click)="onRegister($event,type)">Register</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

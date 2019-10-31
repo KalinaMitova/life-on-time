@@ -10,18 +10,16 @@
                                     <img class="register-logo" src="assets/img/logos/lot-generic-logo-w.png" alt="">
                                     <h4 class="card-title mb-5 register-title">desktop application</h4>
                                     <p class="card-text mb-3">
-                                        Your choice is {{appTypeInfo.name}} application type.
+                                        You are creating account for Life on Time {{appTypeInfo.name}} application.
+                                        This application comes with: {{appTypeInfo.description}}
                                     </p>
-                                    <span class="card-text mb-3">
-                                        Description: {{appTypeInfo.description}}
-                                    </span>
-                                    <span class="card-text mb-3">
-                                        Duration: {{appTypeInfo.duration}} days
-                                    </span>
                                     <p class="card-text mb-3">
-                                        Price: {{appTypeInfo.price}} $
+                                        You'll be able to use the application for: {{appTypeInfo.duration}} days
                                     </p>
-
+                                    <p class="card-text mb-3">
+                                        Price: £{{appTypeInfo.price}}
+                                    </p>
+                                    <div class="register-form-fields">
                                     <form #registerForm="ngForm" (ngSubmit)="register()">
                                         <input type="text" class="form-control mb-3" placeholder="Name" name="name" #name="ngModel" ngModel pattern="[A-Za-z ]{3,15}" required />
                                         <div class="alert alert-danger" *ngIf="name.invalid && name.touched">
@@ -76,6 +74,7 @@
                                             Register
                                         </button>
                                     </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

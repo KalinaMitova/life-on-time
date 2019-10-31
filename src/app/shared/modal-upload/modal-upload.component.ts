@@ -37,7 +37,7 @@ export class ModalUploadComponent {
 
   onUploadError( args: any ): void {
     alert( `File "${args[ 0 ].name}" - ${args[ 1 ]}` );
-    console.log( 'onUploadError:', args );
+    //console.log( 'onUploadError:', args );
   }
 
   onUploadSuccess( args: any ): void {
@@ -48,14 +48,14 @@ export class ModalUploadComponent {
       }
 
     )
-    console.log( "onUploadSuccess", args );
+    //console.log( "onUploadSuccess", args );
   }
   onUploadQueueComplete( event ) {
-    console.log( event );
+    //console.log( event );
   }
 
   onSending( data, userId: string ): void {
-    console.log( 'onSending', data );
+    //console.log( 'onSending', data );
     // data [ File , xhr, formData]
     //const file = data[ 0 ];
     const formData = data[ 2 ];

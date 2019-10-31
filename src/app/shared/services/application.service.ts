@@ -29,7 +29,8 @@ export class ApplicationService {
               duration: type.duration,
               logo: `assets/img/logos/${type.logo}`,
               is_active: type.is_active,
-              wpCategoryId: type.wp_cat_id
+              wpCategoryId: type.wp_cat_id,
+              price: type.price
             }
           } )
         } )

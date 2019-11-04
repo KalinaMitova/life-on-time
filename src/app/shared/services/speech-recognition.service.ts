@@ -37,17 +37,17 @@ export class SpeechRecognitionService {
 
         for ( let i = event.resultIndex; i < event.results.length; ++i ) {
           if ( event.results[ i ].isFinal ) {
-            final_transcript += event.results[ i ][ 0 ].transcript;
+            final_transcript = event.results[ i ][ 0 ].transcript;
           } else {
             interim_transcript += event.results[ i ][ 0 ].transcript;
           }
         }
         //this.item.name = final_transcript;
-        console.log( final_transcript );
+        //console.log( final_transcript );
         // };
-        this.zone.run( () => {
-          observer.next( final_transcript );
-        } );
+        // this.zone.run( () => {
+        //   observer.next( final_transcript );
+        // } );
 
         this.speechRecognition.onerror = ( error ) => {
           observer.error( error );

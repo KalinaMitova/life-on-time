@@ -7,7 +7,7 @@
                 <h4 class="card-title" *ngIf="post.title" [innerHtml]="post.title | safe: 'html'"></h4>
                 <h6 class="card-text">{{post.date}}</h6>
                 <p></p>
-                <p class="card-text" [innerHtml]="post.content | safe: 'html'" *ngIf="post.content">
+                <p class="card-text" [innerHtml]="post.shortContent | safe: 'html'" *ngIf="post.shortContent">
                 </p>
                 <a [href]="post.link? post.link : ''" class="btn btn-raised btn-warning" target="_blank">View more</a>
             </div>

@@ -80,7 +80,8 @@ export class PostService {
       imageUrl: '',
       mediaType: MediaType.image,
       mediaId: post[ 'featured_media' ],
-      content: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
+      shortContent: post[ 'content' ][ 'rendered' ].length > 200 ? `${post[ 'content' ][ 'rendered' ].substring( 0, 200 )} ...` : `${post[ 'content' ][ 'rendered' ]}`,
+      content: post[ 'content' ][ 'rendered' ],
       link: post[ 'link' ],
     };
     return blogPost;

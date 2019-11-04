@@ -25,7 +25,6 @@ export class HelpPageComponent implements OnInit, OnDestroy {
       this.postService.getHelpPosts()
         .subscribe( posts => {
           for ( const post of posts ) {
-            this.posts = posts;
             if ( post.mediaId > '0' ) {
               this.postMediaSubs = this.postService.getPostMedia( post.mediaId )
                 .subscribe( imageUrl => {
@@ -33,7 +32,8 @@ export class HelpPageComponent implements OnInit, OnDestroy {
                 } )
             }
           }
-        } )
+          this.posts = posts;
+        } );
   }
 
   ngOnDestroy(): void {

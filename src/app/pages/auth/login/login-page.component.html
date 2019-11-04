@@ -7,43 +7,45 @@
                         <div class="card-body p-0">
                             <div class="row m-0">
                                 <div class="col-md-12 px-4 pt-3 pb-5 login-form">
-                                    <img class="register-logo" src="assets/img/logos/lot-generic-logo-w.png" alt="">
-                                    <h4 class="card-title mb-5 register-title">Login</h4>
+                                    <img class="login-logo" src="assets/img/logos/lot-generic-logo-w.png" alt="">
+                                    <h4 class="card-title mb-5 login-title">Login</h4>
                                     <p class="card-text mb-3">
                                         Welcome back, please login to your account.
                                     </p>
-                                    <form #loginForm="ngForm" (ngSubmit)="login()">
-                                        <input type="text" class="form-control mb-3" placeholder="Email" name="email" #email="ngModel" ngModel email required />
-                                        <div class="alert alert-danger" *ngIf="email.invalid && email.touched">
-                                            <div *ngIf="email.errors.required">
-                                                Email is required!
+                                    <div class="login-form-fields">
+                                        <form #loginForm="ngForm" (ngSubmit)="login()">
+                                            <input type="text" class="form-control mb-3" placeholder="Email" name="email" #email="ngModel" ngModel email required />
+                                            <div class="alert alert-danger" *ngIf="email.invalid && email.touched">
+                                                <div *ngIf="email.errors.required">
+                                                    Email is required!
+                                                </div>
+                                                <div *ngIf="email.errors.email">
+                                                    Insert valid email. example@example.exp
+                                                </div>
                                             </div>
-                                            <div *ngIf="email.errors.email">
-                                                Insert valid email. example@example.exp
+                                            <input type="password" class="form-control mb-3" placeholder="Password" name="password" #password="ngModel" minlength="2" maxlength="15" required ngModel />
+                                            <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
+                                                <div *ngIf="password.errors.required">
+                                                    Please insert password!
+                                                </div>
+                                                <div *ngIf="password.errors.minlength || password.errors.maxlength">
+                                                    Password must be between 2 and 15 symbols long!
+                                                </div>
                                             </div>
-                                        </div>
-                                        <input type="password" class="form-control mb-3" placeholder="Password" name="password" #password="ngModel" minlength="2" maxlength="15" required ngModel />
-                                        <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
-                                            <div *ngIf="password.errors.required">
-                                                Please insert password!
+                                            <div class="d-flex justify-content-between mt-2">
                                             </div>
-                                            <div *ngIf="password.errors.minlength || password.errors.maxlength">
-                                                Password must be between 2 and 15 symbols long!
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between mt-2">
-                                        </div>
-                                        <button class="btn" type="submit" [disabled]="loginForm.invalid">
-                                            Login
-                                        </button>
-                                        <div class="fg-actions d-flex justify-content-between">
+                                            <button class="btn" type="submit" [disabled]="loginForm.invalid">
+                                                Login
+                                            </button>
+
                                             <div class="login-btn">
-                                                <button class="btn" (click)="NavigateToRegister()">
+                                                <button class="btn-outlined" (click)="NavigateToRegister()">
                                                     Register
                                                 </button>
                                             </div>
-                                        </div>
-                                    </form>
+
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

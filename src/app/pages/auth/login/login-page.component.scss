@@ -34,7 +34,7 @@
 // }
 // For new login page
 #login {
-    background-image: url("assets/img/photos/background.png");
+    background-image: url("assets/img/photos/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     .login-img {
@@ -68,6 +68,15 @@
         padding: 10px;
         width: 100%;
     }
+    .login-form .btn-outlined {
+        display: block;
+        background: transparent;
+        border: 0;
+        color: #fff;
+        text-decoration: underline;
+        padding: 10px;
+        width: 100%;
+    }
     .login-form .btn:disabled {
         cursor: not-allowed;
     }
@@ -77,5 +86,16 @@
     }
     .login-btn {
         margin-top: 15px;
+    }
+    @media screen and (max-width: 600px) {
+        .login-form-fields {
+            margin: 0 auto;
+        }
+        .login-logo {
+            width: 180px;
+        }
+        .login-form {
+            width: 400px;
+        }
     }
 }

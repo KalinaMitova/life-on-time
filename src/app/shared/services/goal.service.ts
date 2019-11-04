@@ -75,12 +75,14 @@ export class GoalService {
       )
   }
 
-  getGoalsByCategory( category: string ): Observable<Array<Goal>> {
-    return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+  getGoalsByCategory( category: string ) {
+    return this.http.get( BASE_URL + USER_GOALS_END )
       .pipe(
         map( data => {
           if ( data[ 'dataValue' ][ category ] ) {
-            return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
+            const completedGoals = [];
+            const upcommingGoals = [];
+            data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
               const goalLeftDays = Math.round( ( Date.now() - +( new Date( goal.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
 
               goal.goalLeftDays = goalLeftDays;
@@ -113,14 +115,67 @@ export class GoalService {
                 }
                 return task;
               } )
-              return goal;
+              if ( goal.status == '1' ) {
+                completedGoals.push( goal );
+              } else {
+                upcommingGoals.push( goal );
+              }
             } )
+            return { completedGoals, upcommingGoals }
           } else {
-            return [];
+            return { completedGoals: [], upcommingGoals: [] };
           }
         } )
       );
   }
+
+  // getGoalsByCategory( category: string ): Observable<Array<Goal>> {
+  //   return this.http.get<Array<Goal>>( BASE_URL + USER_GOALS_END )
+  //     .pipe(
+  //       map( data => {
+  //         if ( data[ 'dataValue' ][ category ] ) {
+  //           return data[ 'dataValue' ][ category ][ 'goals' ].map( goal => {
+  //             const goalLeftDays = Math.round( ( Date.now() - +( new Date( goal.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
+
+  //             goal.goalLeftDays = goalLeftDays;
+  //             if ( goal.until_date ) {
+  //               const goalDueDateAsString = goal.until_date.split( '-' );
+  //               goal.until_date = {
+  //                 day: Number( goalDueDateAsString[ 2 ] ),
+  //                 month: Number( goalDueDateAsString[ 1 ] ),
+  //                 year: Number( goalDueDateAsString[ 0 ] )
+  //               };
+  //             }
+
+  //             if ( goal.created_at ) {
+  //               const goalCreatedDateAsString = ( goal.created_at.split( ' ' ) )[ 0 ].split( '-' );
+  //               goal.created_at = {
+  //                 day: Number( goalCreatedDateAsString[ 2 ] ),
+  //                 month: Number( goalCreatedDateAsString[ 1 ] ),
+  //                 year: Number( goalCreatedDateAsString[ 0 ] )
+  //               };
+  //             }
+
+  //             goal.tasks.map( task => {
+  //               const taskLeftDays = Math.round( ( Date.now() - +( new Date( task.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
+  //               task.taskLeftDays = taskLeftDays;
+  //               const taskDueDateAsString = task.until_date.split( '-' );
+  //               task.until_date = {
+  //                 day: Number( taskDueDateAsString[ 2 ] ),
+  //                 month: Number( taskDueDateAsString[ 1 ] ),
+  //                 year: Number( taskDueDateAsString[ 0 ] )
+  //               }
+  //               return task;
+  //             } )
+
+  //             return goal;
+  //           } )
+  //         } else {
+  //           return [];
+  //         }
+  //       } )
+  //     );
+  // }
 
   getUserLastThreeGoalsStatistic(): Observable<Array<any>> {
     return this.http.get<Array<any>>( BASE_URL + USER_LAST_THREE_GOALS_END )
@@ -207,16 +262,22 @@ export class GoalService {
       );
   }
 
-  postCreateGoal( goal: GoalCreate ) {
-    return this.http.post( BASE_CRUD_URL, goal );
+  postCreateGoal( goal: GoalCreate ): Observable<Goal> {
+    return this.http.post<Goal>( BASE_CRUD_URL, goal );
   }
 
-  getGoalById( id: number ): Observable<Goal> {
-    return this.http.get<Goal>( BASE_URL + `/${id}` );
+  getIsGoalTasksAllCompletedByGoalId( id: string ) {
+    return this.http.get( BASE_CRUD_URL + `/${id}` )
+      .pipe(
+        map( data => {
+          console.log( data[ 'data' ] );
+          return data[ 'data' ].tasks.find( t => t.status == '0' ) === undefined
+        } )
+      );
   }
 
-  putEditGoalById( id: string, goal: GoalCreate ) {
-    return this.http.put( `${BASE_CRUD_URL}/${id}`, goal );
+  putEditGoalById( id: string, goal: GoalCreate ): Observable<Goal> {
+    return this.http.put<Goal>( `${BASE_CRUD_URL}/${id}`, goal );
   }
 
   deleteGoalById( id: string ) {

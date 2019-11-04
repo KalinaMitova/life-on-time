@@ -13,7 +13,6 @@ export class SpeechRecognitionService {
     let final_transcript = '';
 
     return Observable.create( observer => {
-      //debugger;
       if ( 'webkitSpeechRecognition' in window ) {
         this.speechRecognition = new webkitSpeechRecognition();;
         this.speechRecognition.continuous = true;

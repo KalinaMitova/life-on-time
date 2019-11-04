@@ -7,6 +7,8 @@ import { Category } from "../models/category";
 import { UserAppInfo } from '../models/userAppInfo';
 
 const BASE_URL = environment.apiUrl + 'me';
+const USER_GOALS_END = '/goals';
+const USER_TASKS_END = '/tasks';
 const CALENDAR_END = '/calendar';
 const FULL_CALENDAR_END = '/fullcalendar';
 // api / me / calendar -> Връща само масив от таскове и цели
@@ -117,28 +119,32 @@ export class UserService {
       )
   }
 
-  getIdeasAndGoalsDueDate() {
+
+  //this end point returns only uncompleted goals and tasks
+  getTaskAndGoalsForCalendar() {
     return this.http.get( BASE_URL + CALENDAR_END )
       .pipe(
         map( data => {
           const items = [];
           data[ 'data' ][ 'tasks' ].forEach( task => {
+            const taskLeftDays: Number = Math.round( ( Date.now() - +( new Date( task.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
             items.push( {
-              title: task[ 'title' ],
+              title: task.status === 1 ? `<del>${task[ 'title' ]} </del>` : task[ 'title' ],
               date: task[ 'until_date' ],
               url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#a-${task.id}`,
-              backgroundColor: "#009DA0",
-              borderColor: "#009DA0",
+              backgroundColor: taskLeftDays > 1 ? '#FF6B64' : "#808955",
+              borderColor: taskLeftDays > 1 ? '#FF6B64' : "#808955",
               //textColor: "#FF8D60",
             } )
           } )
           data[ 'data' ][ 'goals' ].forEach( goal => {
+            const goalLeftDays: Number = Math.round( ( Date.now() - +( new Date( goal.until_date ) ) ) / ( 60 * 60 * 24 * 1000 ) );
             items.push( {
-              title: goal[ 'title' ],
+              title: goal.status === 1 ? `<del>${goal[ 'title' ]}</del>` : goal[ 'title' ],
               date: goal[ 'until_date' ],
               url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#g-${goal.id}`,
-              backgroundColor: "#FF8D60",
-              borderColor: "#FF8D60",
+              backgroundColor: goalLeftDays > 1 ? '#FF6B64' : "#808955",
+              borderColor: goalLeftDays > 1 ? '#FF6B64' : "#808955",
               //textColor: "#009DA0",
             } )
           } )

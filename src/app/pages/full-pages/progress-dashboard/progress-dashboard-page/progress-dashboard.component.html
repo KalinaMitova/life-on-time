@@ -88,7 +88,7 @@
             </div>
             <div class="card-content">
                 <div class="card-body calendar">
-                    <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents">
+                    <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents" (eventRender)="eventRender($event)">
                     </full-calendar>
                 </div>
             </div>

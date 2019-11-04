@@ -52,15 +52,15 @@ export class TaskService {
     return this.http.get<Task>( BASE_CRUD_URL + `/${id}` );
   }
 
-  putEditTaskById( id: string, task: TaskCreate ) {
-    return this.http.put( BASE_CRUD_URL + `/${id}`, task );
+  putEditTaskById( id: string, task: TaskCreate ): Observable<Task> {
+    return this.http.put<Task>( BASE_CRUD_URL + `/${id}`, task );
   }
 
   deleteTaskById( id: string ) {
     return this.http.delete( BASE_CRUD_URL + `/${id}` );
   }
 
-  postCreateTask( task: TaskCreate ) {
-    return this.http.post( BASE_CRUD_URL, task );
+  postCreateTask( task: TaskCreate ): Observable<Task> {
+    return this.http.post<Task>( BASE_CRUD_URL, task );
   }
 }

@@ -21,8 +21,14 @@ import { ItemInfo } from 'app/shared/models/itemInfo';
 } )
 export class CalendarPageComponent implements OnInit, OnDestroy {
 
-  calendarPlugins = [ dayGridPlugin, interactionPlugin ];
+  calendarPlugins = [
+    dayGridPlugin,
+    interactionPlugin,
+  ];
   events: any;
+  // calendarOptions = {
+  //   eventRender: ( event ) => this._eventRender( event ),
+  // }
 
   private dueDatesSubs: Subscription;
   private eventSubs: Subscription;
@@ -39,7 +45,7 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dueDatesSubs =
-      this.userService.getIdeasAndGoalsDueDate()
+      this.userService.getTaskAndGoalsForCalendar()
         .subscribe( data => {
           this.events = data;
         } );
@@ -59,6 +65,11 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
           const navigatePath = this.globalService.getAppCategories().find( c => c.id === goal.category_id ).pathEnd;
           this.router.navigate( [ '/goals', navigatePath ] )
         } )
+  }
+
+  eventRender( event ) {
+    const title = event.el.getElementsByClassName( 'fc-title' )[ 0 ].textContent;
+    event.el.getElementsByClassName( 'fc-title' )[ 0 ].innerHTML = title;
   }
 
   onDateClick( arg ) {

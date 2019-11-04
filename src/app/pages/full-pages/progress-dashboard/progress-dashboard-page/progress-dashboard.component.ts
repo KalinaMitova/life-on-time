@@ -93,7 +93,7 @@ export class ProgressDashboardComponent implements OnInit, OnDestroy {
       } );
 
     this.calendarSubs =
-      this.userServise.getIdeasAndGoalsDueDate()
+      this.userServise.getTaskAndGoalsForCalendar()
         .subscribe( data => {
           this.calendarEvents = data;
         } )
@@ -106,6 +106,10 @@ export class ProgressDashboardComponent implements OnInit, OnDestroy {
       //this.barChart$ = this.goalService.getUserGoalsAndTasksByCategoryAsNumber()
       this.donutCharts$ = this.goalService.getUserLastThreeGoalsStatistic();;
     }
+  }
+  eventRender( event ) {
+    const title = event.el.getElementsByClassName( 'fc-title' )[ 0 ].textContent;
+    event.el.getElementsByClassName( 'fc-title' )[ 0 ].innerHTML = title;
   }
 
   ngOnDestroy() {

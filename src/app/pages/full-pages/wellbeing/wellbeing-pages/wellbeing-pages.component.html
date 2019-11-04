@@ -2,21 +2,11 @@
     <div class="row">
         <div class="col-12 mt-3 mb-1">
             <div class="content-header">WELLBEING | {{title | titlecase}} me</div>
-            <p class="content-sub-header">You will find really good and helpful resources in this section.</p>
-        <!-- 
-            Relax me
-
-            'Switch off and relax with mindfulness and meditation'
-
-            Inspire me
-
-            'Get inspired and motivated for the day ahead'
-
-            Teach me
-
-            'Here you can Learn & develop so you can reach your goals'
-        -->
-        
+            <p class="content-sub-header" *ngIf="title === 'relax'">Switch off and relax with mindfulness and meditation
+            </p>
+            <p class="content-sub-header" *ngIf="title === 'inspire'">Get inspired and motivated for the day ahead</p>
+            <p class="content-sub-header" *ngIf="title === 'teach'">Here you can Learn & develop so you can reach your goals
+            </p>
         </div>
     </div>
 

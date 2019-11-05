@@ -132,8 +132,8 @@ export class UserService {
               title: task.status === 1 ? `<del>${task[ 'title' ]} </del>` : task[ 'title' ],
               date: task[ 'until_date' ],
               url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#a-${task.id}`,
-              backgroundColor: taskLeftDays > 1 ? '#FF6B64' : "#808955",
-              borderColor: taskLeftDays > 1 ? '#FF6B64' : "#808955",
+              backgroundColor: taskLeftDays > 0 ? '#FF6B64' : "#808955",
+              borderColor: taskLeftDays > 0 ? '#FF6B64' : "#808955",
               //textColor: "#FF8D60",
             } )
           } )
@@ -143,8 +143,8 @@ export class UserService {
               title: goal.status === 1 ? `<del>${goal[ 'title' ]}</del>` : goal[ 'title' ],
               date: goal[ 'until_date' ],
               url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#g-${goal.id}`,
-              backgroundColor: goalLeftDays > 1 ? '#FF6B64' : "#808955",
-              borderColor: goalLeftDays > 1 ? '#FF6B64' : "#808955",
+              backgroundColor: goalLeftDays > 0 ? '#FF6B64' : "#808955",
+              borderColor: goalLeftDays > 0 ? '#FF6B64' : "#808955",
               //textColor: "#009DA0",
             } )
           } )

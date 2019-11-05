@@ -134,7 +134,6 @@ export class UserService {
               url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}#a-${task.id}`,
               backgroundColor: taskLeftDays > 0 ? '#FF6B64' : "#808955",
               borderColor: taskLeftDays > 0 ? '#FF6B64' : "#808955",
-              //textColor: "#FF8D60",
             } )
           } )
           data[ 'data' ][ 'goals' ].forEach( goal => {
@@ -155,49 +154,49 @@ export class UserService {
   }
 
   //this end point returns uncompleted goals and tasks due date by years, months and days
-  getIdeasAndGoalsDueDateFullCAlendar() {
-    return this.http.get( BASE_URL + FULL_CALENDAR_END )
-      .pipe(
-        map( data => {
-          const items = [];
-          const dataArray = Object.keys( data[ 'data' ] ).map( key => data[ 'data' ][ key ] );
-          dataArray.map( year => {
-            const yearsArray = Object.keys( year ).map( key => year[ key ] );
-            yearsArray
-              .filter( m => !( m instanceof Array ) )
-              .map( m => {
-                const monthArray = Object.keys( m ).map( key => m[ key ] );
-                monthArray.map( day => {
-                  if ( day[ 'tasks' ] ) {
-                    day[ 'tasks' ].forEach( task => {
-                      items.push( {
-                        title: task[ 'title' ],
-                        date: task[ 'until_date' ],
-                        url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
-                        backgroundColor: "#009DA0",
-                        borderColor: "#009DA0",
-                        //textColor: "#FF8D60",
-                      } )
-                    } )
-                  }
-                  if ( day[ 'goals' ] ) {
-                    day[ 'goals' ].forEach( goal => {
-                      items.push( {
-                        title: goal[ 'title' ],
-                        date: goal[ 'until_date' ],
-                        url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
-                        backgroundColor: "#FF8D60",
-                        borderColor: "#FF8D60",
-                        //textColor: "#009DA0",
-                      } )
-                    } )
-                  }
-                  day;
-                } );
-              } )
-          } )
-          return items;
-        } )
-      )
-  }
+  // getIdeasAndGoalsDueDateFullCAlendar() {
+  //   return this.http.get( BASE_URL + FULL_CALENDAR_END )
+  //     .pipe(
+  //       map( data => {
+  //         const items = [];
+  //         const dataArray = Object.keys( data[ 'data' ] ).map( key => data[ 'data' ][ key ] );
+  //         dataArray.map( year => {
+  //           const yearsArray = Object.keys( year ).map( key => year[ key ] );
+  //           yearsArray
+  //             .filter( m => !( m instanceof Array ) )
+  //             .map( m => {
+  //               const monthArray = Object.keys( m ).map( key => m[ key ] );
+  //               monthArray.map( day => {
+  //                 if ( day[ 'tasks' ] ) {
+  //                   day[ 'tasks' ].forEach( task => {
+  //                     items.push( {
+  //                       title: task[ 'title' ],
+  //                       date: task[ 'until_date' ],
+  //                       url: `goals/${task[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
+  //                       backgroundColor: "#009DA0",
+  //                       borderColor: "#009DA0",
+  //                       //textColor: "#FF8D60",
+  //                     } )
+  //                   } )
+  //                 }
+  //                 if ( day[ 'goals' ] ) {
+  //                   day[ 'goals' ].forEach( goal => {
+  //                     items.push( {
+  //                       title: goal[ 'title' ],
+  //                       date: goal[ 'until_date' ],
+  //                       url: `goals/${goal[ 'category_name' ].split( ' ' ).map( w => w.toLowerCase() ).join( '-' )}`,
+  //                       backgroundColor: "#FF8D60",
+  //                       borderColor: "#FF8D60",
+  //                       //textColor: "#009DA0",
+  //                     } )
+  //                   } )
+  //                 }
+  //                 day;
+  //               } );
+  //             } )
+  //         } )
+  //         return items;
+  //       } )
+  //     )
+  // }
 }

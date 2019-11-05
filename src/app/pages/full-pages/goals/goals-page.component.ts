@@ -47,6 +47,7 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private modalStatusSubscription: Subscription;
   private pathSubs: Subscription;
   private goalTasksCompletedSubs: Subscription;
+  private getTasksSubs: Subscription;
 
   constructor (
     private modalService: ModalService,
@@ -140,7 +141,18 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.createTaskSubscription = this.taskService.postCreateTask( task )
       .subscribe( data => {
-        this.loadPageGoals();
+        this.goalTasksCompletedSubs = this.goalService.getGoalInfoForStatus( goalId )
+          .subscribe( goalInfo => {
+            if ( goalInfo.status == '1' ) {
+              const item = {
+                id: goalId,
+                status: 0
+              }
+              this.changeGoalStatus( goalId, item )
+            } else {
+              this.loadPageGoals();
+            }
+          } )
       } )
   }
 
@@ -171,10 +183,17 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.loadPageGoals();
         } )
     } else if ( itemInfo.itemType === 'action' ) {
-      this.deleteSubscription = this.taskService.deleteTaskById( itemInfo.itemId )
-        .subscribe( data => {
-          this.loadPageGoals();
-        } )
+      this.getTasksSubs =
+        this.taskService.getTaskById( itemInfo.itemId )
+          .subscribe( data => {
+            const tasksGoalId = data[ 'data' ][ 'goal_id' ];
+            this.deleteSubscription =
+              this.taskService.deleteTaskById( itemInfo.itemId )
+                .subscribe( data => {
+                  this.autoChangeGoalStatusDependingTasksStatus( tasksGoalId )
+                } )
+          } )
+
     }
   }
 
@@ -184,33 +203,72 @@ export class GoalsPageComponent implements OnInit, AfterViewInit, OnDestroy {
       status: itemInfo.status === 0 ? 1 : 0
     }
     if ( itemInfo.itemType === 'goal' ) {
-      this.editGoalSubscription = this.goalService.putEditGoalById( itemInfo.itemId, item )
-        .subscribe( data => {
-          this.loadPageGoals();
-        } );
+      this.autoChangeGoalStatusDependingTasksStatus( item.id );
+      //this.changeGoalStatus( itemInfo.itemId, item )
     } else if ( itemInfo.itemType === 'action' ) {
       this.editTaskSubscription = this.taskService.putEditTaskById( itemInfo.itemId, item )
         .subscribe( data => {
           const action = data[ 'data' ];
-          if ( action.status == '1' ) {
-            console.log( action.goal_id );
-            const goalId = action.goal_id;
-
-            this.goalTasksCompletedSubs = this.goalService.getIsGoalTasksAllCompletedByGoalId( goalId )
-              .subscribe( isGoalAllTasksCompleted => {
-                //Autocomplete Goal, when all tasks are completed
-                if ( isGoalAllTasksCompleted === true ) {
-                  this.editGoalSubscription = this.goalService.putEditGoalById( goalId, { id: goalId, status: 1 } )
-                    .subscribe( data => {
-                      this.loadPageGoals();
-                    } );
-                }
-              } )
-          } else {
-            this.loadPageGoals();
-          }
+          const goalId = action.goal_id;
+          this.autoChangeGoalStatusDependingTasksStatus( goalId );
+          // this.goalTasksCompletedSubs = this.goalService.getGoalInfoForStatus( goalId )
+          //   .subscribe( goalInfo => {
+          //     //Autocomplete Goal, when all tasks are completed
+          //     if ( goalInfo.isTasksCompleted === true ) {
+          //       if ( goalInfo.status == '0' ) {
+          //         const item = {
+          //           id: goalId,
+          //           status: 1
+          //         }
+          //         this.changeGoalStatus( goalId, item )
+          //       }
+          //     } else {
+          //       //Autouncomplete Goal, when not all tasks are completed
+          //       if ( goalInfo.status == '1' ) {
+          //         const item = {
+          //           id: goalId,
+          //           status: 0
+          //         }
+          //         this.changeGoalStatus( goalId, item )
+          //       }
+          //     }
+          //     this.loadPageGoals();
+          //   } )
         } );
     }
+  }
+
+  private autoChangeGoalStatusDependingTasksStatus( goalId: string ) {
+    this.goalTasksCompletedSubs = this.goalService.getGoalInfoForStatus( goalId )
+      .subscribe( goalInfo => {
+        //Autocomplete Goal, when all tasks are completed
+        if ( goalInfo.isTasksCompleted === true ) {
+          if ( goalInfo.status == '0' ) {
+            const item = {
+              id: goalId,
+              status: 1
+            }
+            this.changeGoalStatus( goalId, item )
+          }
+        } else {
+          //Autouncomplete Goal, when not all tasks are completed
+          if ( goalInfo.status == '1' ) {
+            const item = {
+              id: goalId,
+              status: 0
+            }
+            this.changeGoalStatus( goalId, item )
+          }
+        }
+        this.loadPageGoals();
+      } )
+  }
+
+  private changeGoalStatus( goalId: string, goal ) {
+    this.editGoalSubscription = this.goalService.putEditGoalById( goalId, goal )
+      .subscribe( data => {
+        this.loadPageGoals();
+      } );
   }
 
   private loadPageGoals() {

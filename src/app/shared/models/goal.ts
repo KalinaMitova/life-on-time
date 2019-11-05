@@ -11,3 +11,8 @@ export interface Goal {
   created_at: string,
   goalLeftDays: number
 }
+
+export interface GoalForComplete {
+  status: string,
+  isTasksCompleted: boolean
+}

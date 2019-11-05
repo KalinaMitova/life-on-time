@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, debounce } from 'rxjs/operators';
 
 import { environment } from "environments/environment";
-import { Goal } from '../models/goal';
+import { Goal, GoalForComplete } from '../models/goal';
 import { GoalCreate } from '../models/goalCreate';
 import { BarChartData } from '../models/barChartData';
 import { GlobalService } from "./global.service";
@@ -266,12 +266,14 @@ export class GoalService {
     return this.http.post<Goal>( BASE_CRUD_URL, goal );
   }
 
-  getIsGoalTasksAllCompletedByGoalId( id: string ) {
-    return this.http.get( BASE_CRUD_URL + `/${id}` )
+  getGoalInfoForStatus( id: string ): Observable<GoalForComplete> {
+    return this.http.get<GoalForComplete>( BASE_CRUD_URL + `/${id}` )
       .pipe(
         map( data => {
-          console.log( data[ 'data' ] );
-          return data[ 'data' ].tasks.find( t => t.status == '0' ) === undefined
+          return {
+            isTasksCompleted: data[ 'data' ].tasks.find( t => t.status == '0' ) === undefined,
+            status: data[ 'data' ][ 'status' ]
+          }
         } )
       );
   }

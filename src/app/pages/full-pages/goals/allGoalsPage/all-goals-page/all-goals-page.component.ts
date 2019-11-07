@@ -3,7 +3,6 @@ import { GoalService } from 'app/shared/services/goal.service';
 import { Observable } from 'rxjs';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { generateKeyPair } from 'crypto';
 
 @Component( {
   selector: 'app-all-goals-page',

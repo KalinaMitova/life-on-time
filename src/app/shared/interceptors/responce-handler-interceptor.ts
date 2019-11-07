@@ -32,11 +32,11 @@ export class ResponceHandlerInterceptor implements HttpInterceptor {
             //400 must be 401
             if ( err.status === 400 ) {
               //console.log( err.status )
-              // this.toastr.error( err.error.error, 'Error:', {
-              //   closeButton: true,
-              //   timeOut: 5000,
-              //   onActivateTick: true
-              // } );
+              this.toastr.error( err.error.error, 'Error:', {
+                closeButton: true,
+                timeOut: 5000,
+                onActivateTick: true
+              } );
               this.router.navigate( [ '/user/login' ] );
             } else if ( err.status === 401 ) {
               console.log( err.status )

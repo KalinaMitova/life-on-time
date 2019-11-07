@@ -3,6 +3,7 @@ import { GoalService } from 'app/shared/services/goal.service';
 import { Observable } from 'rxjs';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { generateKeyPair } from 'crypto';
 
 @Component( {
   selector: 'app-all-goals-page',
@@ -28,8 +29,11 @@ export class AllGoalsPageComponent implements OnInit {
       const imgProps = pdf.getImageProperties( img );
       const pdfWidth = pdf.internal.pageSize.getWidth() * 0.83;
       const pdfHeight = imgProps.height / 4 > pdf.internal.pageSize.getHeight() * 0.9 ? pdf.internal.pageSize.getHeight() * 0.9 : imgProps.height / 4;
-
-      pdf.addImage( img, 'PNG', 20, 20, pdfWidth, pdfHeight );
+      const margins = {
+        top: 20,
+        left: 20,
+      };
+      pdf.addImage( img, 'PNG', margins.left, margins.top, pdfWidth, pdfHeight );
       pdf.save( 'goals.pdf' );
     } )
   }

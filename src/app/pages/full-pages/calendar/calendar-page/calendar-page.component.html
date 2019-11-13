@@ -4,11 +4,27 @@
             <div class="content-header">CALENDAR</div>
             <p class="content-sub-header">Here you can see your goals and tasks due date. You can click on date of your choice and create new goal too.</p>
         </div>
+        <div class="content-header col-sm-2" style="text-align: right;">
+            <button type="button" class="btn btn-raised btn-outline-goal-set-new round btn-min-width mr-1 mb-1" target="popup" (click)="openModal(googleCalendarmodal)">
+                Sync to Google Calendar</button>
+        </div>
     </div>
-    <div class="row">
-        <div class="col">
+    <div class=" row ">
+        <div class="col ">
             <!-- weekNumberCalculation='ISO' -->
-            <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="events" (eventRender)="eventRender($event)" (dateClick)=" onDateClick($event) "></full-calendar>
+            <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins " [events]="events " (eventRender)="eventRender($event) " (dateClick)=" onDateClick($event) "></full-calendar>
         </div>
     </div>
 </section>
+
+<ng-template #googleCalendarmodal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">Sync to Google Calendar</h4>
+        <button type="button" class="close" aria-describedby="modal-title" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <iframe height="400" width="470" src="https://lifeontime.co.uk/app/sync/google-login.php"></iframe>
+    </div>
+</ng-template>

@@ -13,8 +13,8 @@ const WP_API_URL = BASE_URL + 'wp-json/wp/v2/';
 
 const LAST_4_POSTS_END_URL = 'posts?per_page=4';
 const MEDIA_END_URL = 'media/';
-const WELLBEING_END_URL = 'wellbeing';
-const HELP_END_URL = 'app_help';
+const WELLBEING_END_URL = 'wellbeing?per_page=100';
+const HELP_END_URL = 'app_help?per_page=100';
 
 @Injectable( {
   providedIn: 'root'

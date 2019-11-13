@@ -12,7 +12,7 @@ import { GoalService } from 'app/shared/services/goal.service';
 import { GlobalService } from 'app/shared/services/global.service';
 
 import { convertDateToString } from 'app/shared/utilities';
-import { ItemInfo } from 'app/shared/models/itemInfo';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
   selector: 'app-calendar-page',
@@ -21,6 +21,8 @@ import { ItemInfo } from 'app/shared/models/itemInfo';
 } )
 export class CalendarPageComponent implements OnInit, OnDestroy {
 
+  GOOGLE_CALENDAR_URL: string = 'https://lifeontime.co.uk/app/sync/google-login.php';
+  modalRef: NgbModalRef;
   calendarPlugins = [
     dayGridPlugin,
     interactionPlugin,
@@ -54,6 +56,13 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
       this.eventService.on( 'confirm create/edit', ( actionInfo => this.createGoal( actionInfo.formValue ) ) )
   }
 
+  openModal( template ) {
+    this.modalRef = this.modalService.openFromTemplate( template );
+  }
+  close() {
+    this.modalRef.close();
+  }
+
   private createGoal( formValue ) {
     let goal: GoalCreate = formValue;
     const date = formValue.until_date;
@@ -62,7 +71,7 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
     this.createGoalSubs =
       this.goalService.postCreateGoal( goal )
         .subscribe( data => {
-          const navigatePath = this.globalService.getAppCategories().find( c => c.id === goal.category_id ).pathEnd;
+          const navigatePath = this.globalService.getAppCategories().find( c => c.id == goal.category_id ).pathEnd;
           this.router.navigate( [ '/goals', navigatePath ] )
         } )
   }

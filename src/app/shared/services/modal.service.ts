@@ -44,6 +44,9 @@ export class ModalService {
   //     return `with: ${reason}`;
   //   }
   // }
+  openFromTemplate( templateName ) {
+    return this.modalService.open( templateName );
+  }
   private setEditCreateModalProps( modalRef: NgbModalRef, itemType: string, actionType: string, itemInfo?: any, date?: SeparatedDate
   ) {
     if ( actionType === 'create' ) {

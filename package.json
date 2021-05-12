@@ -40,7 +40,7 @@
         "angular-archwizard": "^4.0.0",
         "angular-calendar": "^0.27.8",
         "bootstrap": "^4.3.1",
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "chartist": "^0.11.2",
         "chartist-plugin-legend": "^0.6.2",
         "classlist.js": "1.1.20150312",

@@ -53,7 +53,7 @@
         "html2canvas": "^1.0.0-rc.5",
         "intl": "^1.2.5",
         "jspdf": "^1.5.3",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "ng-chartist": "^3.1.0",
         "ng2-charts": "^2.2.3",
         "ng2-completer": "^2.0.8",
